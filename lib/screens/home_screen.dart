@@ -3,7 +3,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import '../config/shared_preferences.dart';
 import '../config/data.dart';
-import '../widgets/my_container.dart';
+import '../widgets/custom_container.dart';
 import '../widgets/stats_container.dart';
 import '../widgets/timetable_entry_container.dart';
 
@@ -73,8 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 24),
           if (AppData.lastIsFastingPrompt != AppData.now.day)
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              //here
-              MyContainer(
+              CustomContainer(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

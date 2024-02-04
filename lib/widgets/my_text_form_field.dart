@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class MyTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final TextEditingController pageController;
   final int? maxLength;
   final TextInputType? keyboardType;
@@ -10,13 +10,13 @@ class MyTextFormField extends StatelessWidget {
   final String? hintText;
   final String? Function(String?)? validator;
 
-  const MyTextFormField({
+  const CustomTextFormField({
     super.key,
     required this.pageController,
     this.maxLength,
     this.keyboardType,
     this.inputFormatters,
-    required this.label,
+    this.label = '',
     this.hintText,
     this.validator,
   });
@@ -29,10 +29,11 @@ class MyTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
-          label: Text(label),
-          hintText: hintText,
-          counterText: '',
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+        labelText: label,
+        hintText: hintText,
+        counterText: '',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      ),
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
     );

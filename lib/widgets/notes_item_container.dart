@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/photo_view_screen.dart';
-import 'my_container.dart';
+import 'custom_container.dart';
 
 class NotesItemContainer extends StatelessWidget {
   final String title;
@@ -18,7 +18,7 @@ class NotesItemContainer extends StatelessWidget {
                 builder: ((context) =>
                     PhotoViewScreen(title: title, image: image))));
       },
-      child: MyContainer(
+      child: CustomContainer(
         margin: const EdgeInsets.all(4),
         padding: const EdgeInsets.all(4),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
