@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../config/data.dart';
 import '../screens/form_screen.dart';
 import '../widgets/custom_button.dart';
-import '../widgets/my_pop_scope.dart';
+import '../widgets/custom_pop_scope.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});

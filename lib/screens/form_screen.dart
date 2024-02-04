@@ -4,7 +4,7 @@ import '../config/data.dart';
 import '../config/shared_preferences.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_switch_list_tile.dart';
-import '../widgets/my_text_form_field.dart';
+import '../widgets/custom_text_form_field.dart';
 import 'main_screen.dart';
 
 class FormScreen extends StatefulWidget {

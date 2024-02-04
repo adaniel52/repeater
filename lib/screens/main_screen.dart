@@ -4,7 +4,7 @@ import '../screens/form_screen.dart';
 import '../screens/settings_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/notes_screen.dart';
-import '../widgets/my_pop_scope.dart';
+import '../widgets/custom_pop_scope.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
