@@ -126,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           // const SizedBox(height: 8),
-                          const Text('Version: 0.1.0'),
+                          const Text('Version: 0.1.1'),
                           const SizedBox(height: 16),
                           const Text(
                             'Description:',
