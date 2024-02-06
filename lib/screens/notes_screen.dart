@@ -9,17 +9,15 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final int crossAxisCount =
-        screenWidth ~/ 150; // Adjust item width based on screen width
+    // final double screenWidth = MediaQuery.of(context).size.width;
 
     return Center(
       child: SizedBox(
         width: 300,
         child: GridView.builder(
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
           ),
           itemCount: NotesData.notesMenuItems.length,
           itemBuilder: (context, index) {

@@ -64,7 +64,7 @@ class AppData {
   static Future<bool> showExitConfirmationDialog(BuildContext context) async {
     bool result = await showDialog(
         context: context,
-        builder: (context) => AlertDialog(
+        builder: (context) => AlertDialog.adaptive(
               title: const Text('Confirm Exit',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               content: const Text('Are you sure to exit?'),
@@ -79,6 +79,21 @@ class AppData {
               ],
             ));
     return result;
+  }
+
+  static showCustomDialog(
+      {required BuildContext context,
+      required String title,
+      Widget? content,
+      List<Widget>? actions}) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog.adaptive(
+              title: Text(title.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              content: content,
+              actions: actions,
+            ));
   }
 }
 

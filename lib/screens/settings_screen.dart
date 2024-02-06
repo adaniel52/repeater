@@ -54,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
+                  builder: (context) => AlertDialog.adaptive(
                     title: const Text(
                       'Confirmation',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -95,6 +95,83 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 8),
+            InkWell(
+              onTap: () {
+                AppData.showCustomDialog(
+                    context: context,
+                    title: 'About',
+                    // content: Column(
+                    //   children: [
+                    //     ClipRRect(
+                    //         borderRadius: BorderRadius.circular(12),
+                    //         child: Image.asset('assets/icon.png')),
+                    //     const Text('Repeater')
+                    //   ],
+                    // ),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.asset(
+                                'assets/icon.png',
+                                width: 100,
+                              )),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Repeater',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          // const SizedBox(height: 8),
+                          const Text('Version: 0.1.0'),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Description:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const Text(
+                              'An app to assist hafiz in murajaah Quran.'),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Powered by:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const FlutterLogo(
+                            style: FlutterLogoStyle.horizontal,
+                            size: 100,
+                          )
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      // TextButton(
+                      //     onPressed: () {
+                      //       launchUrl(
+                      //           Uri.parse(
+                      //               'https://adaniel52.github.io/repeater/'),
+                      //           mode: LaunchMode.platformDefault);
+                      //     },
+                      //     child: const Text('Website')),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Close')),
+                    ]);
+              },
+              child: const CustomContainer(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('About'),
+                    Icon(Icons.chevron_right),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
