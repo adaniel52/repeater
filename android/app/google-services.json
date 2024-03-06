@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "640139110259",
+    "project_id": "repeater-5e630",
+    "storage_bucket": "repeater-5e630.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640139110259:android:2a5021db55c74815560706",
+        "android_client_info": {
+          "package_name": "com.innovvice.repeater"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOofQ3yniAeABYK92OYaJMaNid-aNn4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
