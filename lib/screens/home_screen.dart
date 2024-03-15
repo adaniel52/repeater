@@ -89,10 +89,10 @@ class HomeScreen extends StatelessWidget {
 
                   //when
                   const Row(children: [
-                    Icon(Icons.timer),
+                    Icon(Icons.access_time),
                     SizedBox(width: 8),
                     Text('8:00 AM'),
-                  ])
+                  ],)
                 ],
               ),
             ),
@@ -115,7 +115,7 @@ class StatsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.white,

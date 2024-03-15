@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../utils/show_custom_dialog.dart';
 import '../utils/show_snack_bar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
@@ -46,7 +45,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         isLoading = false;
       });
 
-      if (context.mounted) showCustomDialog(context, 'Password don\'t match.');
+      if (!mounted) return;
+      showSnackBar(context, 'Password don\'t match.');
     }
 
     //if pass match
@@ -64,7 +64,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         setState(() {
           isLoading = false;
         });
-        if (context.mounted) showSnackBar(context, error.toString());
+        if (!mounted) return;
+        showSnackBar(context, error.toString());
       }
     }
   }

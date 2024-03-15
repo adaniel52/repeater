@@ -49,7 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLoading = false;
       });
-      if (context.mounted) showSnackBar(context, error.toString());
+      if (!mounted) return;
+      showSnackBar(context, error.toString());
     }
   }
 
