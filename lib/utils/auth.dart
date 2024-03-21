@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../screens/home_screen.dart';
+import '../screens/main_screen.dart';
 import 'login_or_register.dart';
 
 class Auth extends StatelessWidget {
@@ -13,7 +13,7 @@ class Auth extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         //if logged in
         if (snapshot.hasData) {
-          return const HomeScreen();
+          return const MainScreen();
         } else {
           return const LoginOrRegister();
         }

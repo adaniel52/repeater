@@ -1,43 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import '../utils/data.dart';
 import '../widgets/scaffold_wrapper.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  //logout
-  void logout() {
-    FirebaseAuth.instance.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: const Text(
-          'Home',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: logout,
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
       body: ScaffoldWrapper(
         centered: false,
         child: Column(
           children: [
             //header
-            const Row(
+            Row(
               children: [
                 //greet
-                Text(
+                const Text(
                   'Welcome, user!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -45,59 +24,100 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                Spacer(),
+                const Spacer(),
 
                 //stats
                 StatsContainer(
                   name: 'Juz',
-                  value: '27',
+                  value: Data.juz.toString(),
                 ),
 
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
 
                 StatsContainer(
-                  name: 'Page',
-                  value: '555',
+                  name: 'Maqra',
+                  value: Data.maqra.toString(),
                 ),
               ],
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
             //tables
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 77, 77, 77),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //what
-                  Text('Review previous 2 pages'.toUpperCase()),
-                  const Text(
-                    '553 - 554',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                    ),
-                  ),
+            TodoContainer(
+              name: 'REVIEW CURRENT JUZ',
+              value: 'JUZ ${Data.juz}',
+              time: '8:00 AM',
+            ),
 
-                  const SizedBox(height: 8),
+            const SizedBox(height: 16),
 
-                  //when
-                  const Row(children: [
-                    Icon(Icons.access_time),
-                    SizedBox(width: 8),
-                    Text('8:00 AM'),
-                  ],)
-                ],
-              ),
+            TodoContainer(
+              name: 'MEMORISE NEXT MAQRA',
+              value: 'MAQRA ${Data.maqra + 1}',
+              time: '8:30 AM',
+            ),
+
+            const SizedBox(height: 16),
+
+            TodoContainer(
+              name: 'REVIEW PAST JUZ',
+              value: 'JUZ 1 - ${Data.juz}',
+              time: '9:00 AM',
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TodoContainer extends StatelessWidget {
+  final String name;
+  final String value;
+  final String time;
+  const TodoContainer({
+    super.key,
+    required this.name,
+    required this.value,
+    required this.time,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 77, 77, 77),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //what
+          Text(name.toUpperCase()),
+          Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+
+          const Divider(
+            color: Colors.grey,
+          ),
+
+          //when
+          Row(
+            children: [
+              const Icon(Icons.access_time),
+              const SizedBox(width: 8),
+              Text(time),
+            ],
+          ),
+        ],
       ),
     );
   }
