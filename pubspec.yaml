@@ -1,0 +1,45 @@
+name: repeater
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  awesome_notifications_core: ^0.9.0
+  awesome_notifications: any
+  photo_view: ^0.14.0
+  shared_preferences: ^2.2.2
+  provider: ^6.1.2
+  flutter_native_splash: ^2.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path_android: "assets/icon-zoom-out.png"
+  image_path_ios: "assets/icon.png"
+  adaptive_icon_background: "#259B78"
+  adaptive_icon_foreground: "assets/icon-zoom-out.png"
+  min_sdk_android: 16
+
+flutter_native_splash:
+  color: "#259B78"
+  image: "assets/icon-zoom-out.png"
+  android_12:
+    color: "#259B78"
+    icon_background_color: "#259B78"
+    image: "assets/icon-zoom-out.png"
