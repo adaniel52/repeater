@@ -2,7 +2,7 @@
 
     <!-- Application declaration -->
     <application
-        android:label="repeater"
+        android:label="Repeater"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
