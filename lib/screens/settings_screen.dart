@@ -101,14 +101,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 AppData.showCustomDialog(
                     context: context,
                     title: 'About',
-                    // content: Column(
-                    //   children: [
-                    //     ClipRRect(
-                    //         borderRadius: BorderRadius.circular(12),
-                    //         child: Image.asset('assets/icon.png')),
-                    //     const Text('Repeater')
-                    //   ],
-                    // ),
                     content: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -125,8 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          // const SizedBox(height: 8),
-                          const Text('Version: 0.1.1'),
+                          const Text('Version: 0.1.0'),
                           const SizedBox(height: 16),
                           const Text(
                             'Description:',
