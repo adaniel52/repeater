@@ -34,11 +34,11 @@ class PhotoViewScreen extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 // Icon with shadows for visual outline
-                icon: const Icon(
-                  Icons.arrow_back,
+                icon: Icon(
+                  Icons.adaptive.arrow_back,
                   color: Colors.white,
                   // Shadows for visual outline
-                  shadows: [
+                  shadows: const [
                     Shadow(offset: Offset(1, 1)),
                     Shadow(offset: Offset(-1, -1)),
                     Shadow(offset: Offset(1, -1)),
