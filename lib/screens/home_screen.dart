@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/models/user.dart';
+import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants.dart';
 
@@ -27,14 +28,71 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Padding(
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const IntroScreen(),
+                ),
+                (_) => false,
+              );
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
+      body: Padding(
         padding: defaultPadding,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Salam User',
               style: titleStyle,
+            ),
+            const SizedBox(height: 10),
+            (_user == null)
+                ? const Center(child: CircularProgressIndicator())
+                : Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          child: ListTile(
+                            leading: const Icon(Icons.brightness_low_outlined),
+                            title: const Text('Juz'),
+                            subtitle: Text(getJuz(_user!.page).toString()),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          child: ListTile(
+                            leading: const Icon(Icons.menu_book_outlined),
+                            title: const Text('Page'),
+                            subtitle: Text(_user!.page.toString()),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+            const SizedBox(height: 20),
+            const Text(
+              'Tasks',
+              style: titleStyle,
+            ),
+            const SizedBox(height: 10),
+            const Card(
+              margin: EdgeInsets.zero,
+              child: ListTile(
+                title: Text('Sabqi'),
+                subtitle: Text('Page 0'),
+              ),
             ),
           ],
         ),

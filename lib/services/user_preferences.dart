@@ -21,8 +21,7 @@ class UserPreferences {
     String? userJson = prefs.getString('user');
     if (userJson != null) {
       return User.fromJson(userJson);
-    } else {
-      return null;
     }
+    return null;
   }
 }

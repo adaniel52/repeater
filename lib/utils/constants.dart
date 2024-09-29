@@ -13,7 +13,7 @@ const subtitleStyle = TextStyle(
   color: greyText,
 );
 
-const defaultPadding = EdgeInsets.all(24);
+const defaultPadding = EdgeInsets.symmetric(horizontal: 14);
 const defaultBorderRadius = BorderRadius.all(
   Radius.circular(12),
 );

@@ -13,6 +13,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
   late final TextEditingController _pageController;
 
@@ -21,13 +22,14 @@ class _FormScreenState extends State<FormScreen> {
     super.initState();
     _nameController = TextEditingController();
     _pageController = TextEditingController();
+    _nameController.text = 'Guest';
   }
 
   @override
   void dispose() {
-    super.dispose();
     _nameController.dispose();
     _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -37,49 +39,61 @@ class _FormScreenState extends State<FormScreen> {
       body: Padding(
         padding: defaultPadding,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Register',
-                style: titleStyle,
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(borderRadius: defaultBorderRadius),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _pageController,
-                decoration: const InputDecoration(
-                  labelText: 'Page',
-                  hintText: '1 - 604',
-                  border: OutlineInputBorder(borderRadius: defaultBorderRadius),
-                ),
-              ),
-              const SizedBox(height: 20),
-              CustomButton(
-                labelText: 'Submit',
-                onPressed: () async {
-                  await UserPreferences.setUser(
-                    User(
-                      name: _nameController.text,
-                      page: int.tryParse(_pageController.text) ?? 0,
+          child: SizedBox(
+            width: 400,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Register',
+                    style: titleStyle,
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _pageController,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.menu_book_outlined),
+                      labelText: 'Page',
+                      hintText: '1 - 604',
+                      border: OutlineInputBorder(
+                        borderRadius: defaultBorderRadius,
+                      ),
                     ),
-                  );
-                  if (!context.mounted) return;
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const MainNavigation()),
-                    (_) => false,
-                  );
-                },
+                    onChanged: (value) {
+                      _formKey.currentState!.validate();
+                    },
+                    validator: (value) {
+                      int? page = int.tryParse(value!);
+                      if (page == null || page < 1 || page > 604) {
+                        return 'Invalid! Please choose a number between 1 and 604.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  CustomButton(
+                    labelText: 'Submit',
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await UserPreferences.setUser(
+                          User(
+                            page: int.tryParse(_pageController.text) ?? 0,
+                          ),
+                        );
+                        if (!context.mounted) return;
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const MainNavigation()),
+                          (_) => false,
+                        );
+                      }
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
