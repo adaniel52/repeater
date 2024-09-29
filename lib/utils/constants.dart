@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-const blackText = Color(0xFF000000);
 const greyText = Color(0xFF757575);
 
 const titleStyle = TextStyle(
