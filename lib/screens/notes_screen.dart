@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants.dart';
+import 'package:repeater/utils/temp.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
@@ -7,7 +8,9 @@ class NotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
-    int crossAxisCount = (width / 270).floor();
+    int crossAxisCount = (width / 300).floor();
+    double childWidth = width / crossAxisCount;
+    double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -17,30 +20,23 @@ class NotesScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: defaultPadding,
-        child: GridView.count(
+        child: GridView.builder(
           padding: const EdgeInsets.symmetric(vertical: 14),
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
-          crossAxisCount: crossAxisCount,
-          childAspectRatio: 15 / 9,
-          children: const [
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-            NoteCard(),
-          ],
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5,
+            childAspectRatio: childWidth / (childHeight + 75),
+          ),
+          itemCount: notes.length,
+          itemBuilder: (context, index) {
+            final e = notes[index];
+            return NoteCard(
+              imageUrl: e['imageUrl']!,
+              title: e['title']!,
+              subtitle: e['subtitle']!,
+            );
+          },
         ),
       ),
     );
@@ -48,43 +44,57 @@ class NotesScreen extends StatelessWidget {
 }
 
 class NoteCard extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final String subtitle;
   const NoteCard({
     super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.subtitle,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Card(
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: defaultBorderRadius,
               child: Image(
-                image: NetworkImage(
-                  'https://github.com/adaniel52/repeater/blob/app/assets/nun-sakinah.png?raw=true',
-                ),
+                image: NetworkImage(imageUrl),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                },
               ),
             ),
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text(
-            //       'Nun Sakinah',
-            //       style: titleStyle,
-            //     ),
-            //     Text(
-            //       'Lorem ipsum dolor sit adapibus felis. Lorem ipsum dolor sit adapibus felis. Lorem ipsum dolor sit adapibus felis. Lorem ipsum dolor sit adapibus felis. ',
-            //       style: subtitleStyle,
-            //       textAlign: TextAlign.justify,
-            //       maxLines: 2,
-            //       overflow: TextOverflow.ellipsis,
-            //     ),
-            //   ],
-            // ),
+            const Expanded(child: SizedBox()),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: titleStyle,
+                ),
+                Text(
+                  subtitle,
+                  style: subtitleStyle,
+                  textAlign: TextAlign.justify,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ],
         ),
       ),
