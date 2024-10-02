@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:repeater/screens/notes/note_photo_view.dart';
 import 'package:repeater/utils/constants.dart';
 
 class NoteDetailsScreen extends StatelessWidget {
@@ -21,20 +22,33 @@ class NoteDetailsScreen extends StatelessWidget {
           style: titleStyle,
         ),
       ),
-      body: Padding(
-        padding: defaultPadding,
-        child: Center(
-          child: SizedBox(
-            width: 600,
-            child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: defaultPadding,
+          child: Center(
+            child: SizedBox(
+              width: 600,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: defaultBorderRadius,
-                      child: Image(
-                        image: NetworkImage(imageUrl),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NotePhotoView(imageUrl: imageUrl),
+                          ),
+                        );
+                      },
+                      child: Hero(
+                        tag: imageUrl,
+                        child: ClipRRect(
+                          borderRadius: defaultBorderRadius,
+                          child: Image(
+                            image: NetworkImage(imageUrl),
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),

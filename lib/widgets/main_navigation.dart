@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/screens/home_screen.dart';
-import 'package:repeater/screens/notes_screen.dart';
+import 'package:repeater/screens/notes/notes_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});

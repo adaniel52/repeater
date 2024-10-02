@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/screens/note_details_screen.dart';
+import 'package:repeater/screens/notes/note_details_screen.dart';
 import 'package:repeater/utils/constants.dart';
 
 class NoteCard extends StatelessWidget {
@@ -36,21 +36,24 @@ class NoteCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: defaultBorderRadius,
-              child: Image(
-                image: NetworkImage(imageUrl),
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              (loadingProgress.expectedTotalBytes ?? 1)
-                          : null,
-                    ),
-                  );
-                },
+            Hero(
+              tag: imageUrl,
+              child: ClipRRect(
+                borderRadius: defaultBorderRadius,
+                child: Image(
+                  image: NetworkImage(imageUrl),
+                  // loadingBuilder: (context, child, loadingProgress) {
+                  //   if (loadingProgress == null) return child;
+                  //   return Center(
+                  //     child: CircularProgressIndicator(
+                  //       value: loadingProgress.expectedTotalBytes != null
+                  //           ? loadingProgress.cumulativeBytesLoaded /
+                  //               (loadingProgress.expectedTotalBytes ?? 1)
+                  //           : null,
+                  //     ),
+                  //   );
+                  // },
+                ),
               ),
             ),
             const Expanded(child: SizedBox()),

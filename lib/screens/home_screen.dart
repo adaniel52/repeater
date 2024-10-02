@@ -33,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await UserPreferences.setUser(User(page: 0));
+              if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) => const IntroScreen(),
