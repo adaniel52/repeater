@@ -25,11 +25,9 @@ class NotePhotoView extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.black,
-      body: Hero(
-        tag: imageUrl,
-        child: PhotoView(
-          imageProvider: NetworkImage(imageUrl),
-        ),
+      body: PhotoView(
+        heroAttributes: PhotoViewHeroAttributes(tag: imageUrl),
+        imageProvider: NetworkImage(imageUrl),
       ),
     );
   }

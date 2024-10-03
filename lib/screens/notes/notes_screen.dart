@@ -35,7 +35,7 @@ class NotesScreen extends StatelessWidget {
             return NoteCard(
               imageUrl: e['imageUrl']!,
               title: e['title']!,
-              subtitle: e['subtitle']!,
+              content: e['content']!,
             );
           },
         ),

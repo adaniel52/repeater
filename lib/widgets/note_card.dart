@@ -5,12 +5,12 @@ import 'package:repeater/utils/constants.dart';
 class NoteCard extends StatelessWidget {
   final String imageUrl;
   final String title;
-  final String subtitle;
+  final String content;
   const NoteCard({
     super.key,
     required this.imageUrl,
     required this.title,
-    required this.subtitle,
+    required this.content,
   });
 
   @override
@@ -26,7 +26,7 @@ class NoteCard extends StatelessWidget {
             builder: (context) => NoteDetailsScreen(
               imageUrl: imageUrl,
               title: title,
-              subtitle: subtitle,
+              content: content,
             ),
           ),
         );
@@ -63,12 +63,6 @@ class NoteCard extends StatelessWidget {
                 Text(
                   title,
                   style: titleStyle,
-                ),
-                Text(
-                  subtitle,
-                  style: subtitleStyle,
-                  textAlign: TextAlign.justify,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
