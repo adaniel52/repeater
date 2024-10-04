@@ -15,6 +15,7 @@ class _MainNavigationState extends State<MainNavigation> {
     HomeScreen(),
     NotesScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

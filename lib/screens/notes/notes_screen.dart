@@ -1,10 +1,38 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants.dart';
-import 'package:repeater/utils/temp.dart';
 import 'package:repeater/widgets/note_card.dart';
+import 'package:http/http.dart' as http;
 
-class NotesScreen extends StatelessWidget {
+class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
+
+  @override
+  State<NotesScreen> createState() => _NotesScreenState();
+}
+
+class _NotesScreenState extends State<NotesScreen> {
+  List _notes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (_notes.isEmpty) {
+      _fetchData();
+    }
+  }
+
+  Future<void> _fetchData() async {
+    final response = await http.get(
+      Uri.parse('https://adaniel52.github.io/repeater/api/notes.json'),
+    );
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      setState(() {
+        _notes = data['data'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +57,13 @@ class NotesScreen extends StatelessWidget {
             crossAxisSpacing: 10,
             childAspectRatio: childWidth / (childHeight + 70),
           ),
-          itemCount: notes.length,
+          itemCount: _notes.length,
           itemBuilder: (context, index) {
-            final e = notes[index];
+            final e = _notes[index];
             return NoteCard(
               imageUrl: e['imageUrl']!,
               title: e['title']!,
-              content: e['content']!,
+              contentUrl: e['contentUrl']!,
             );
           },
         ),
