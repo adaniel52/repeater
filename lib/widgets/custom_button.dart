@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/utils/constants.dart';
+import 'package:repeater/utils/constants/styles.dart';
 
 class CustomButton extends StatelessWidget {
   final void Function()? onPressed;
@@ -19,12 +19,12 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 12,
-          ),
+          // padding: const EdgeInsets.symmetric(
+          //   horizontal: 24,
+          //   vertical: 12,
+          // ),
           shape: const RoundedRectangleBorder(
-            borderRadius: defaultBorderRadius,
+            borderRadius: Styles.borderRadius1,
           ),
         ),
         child: Text(

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:repeater/utils/constants.dart';
+import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/note_card.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,29 +44,26 @@ class _NotesScreenState extends State<NotesScreen> {
       appBar: AppBar(
         title: const Text(
           'Notes',
-          style: titleStyle,
+          style: Styles.title,
         ),
       ),
-      body: Padding(
-        padding: defaultPadding,
-        child: GridView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: childWidth / (childHeight + 70),
-          ),
-          itemCount: _notes.length,
-          itemBuilder: (context, index) {
-            final e = _notes[index];
-            return NoteCard(
-              imageUrl: e['imageUrl']!,
-              title: e['title']!,
-              contentUrl: e['contentUrl']!,
-            );
-          },
+      body: GridView.builder(
+        padding: Styles.padding1,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: spacing2,
+          crossAxisSpacing: spacing2,
+          childAspectRatio: childWidth / (childHeight + 50),
         ),
+        itemCount: _notes.length,
+        itemBuilder: (context, index) {
+          final e = _notes[index];
+          return NoteCard(
+            imageUrl: e['imageUrl']!,
+            title: e['title']!,
+            contentUrl: e['contentUrl']!,
+          );
+        },
       ),
     );
   }

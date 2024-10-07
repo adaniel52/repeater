@@ -5,24 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "repeater",
+            "name": "debug",
             "request": "launch",
             "type": "dart",
             "args": [
-                "-v"
+                "-v",
+                "--device-timeout 5"
             ]
         },
         {
-            "name": "repeater (profile mode)",
+            "name": "profile",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "repeater (release mode)",
+            "name": "release",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "attach",
+            "request": "attach",
+            "type": "dart"
         }
     ]
 }

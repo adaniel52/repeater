@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/screens/form_screen.dart';
-import 'package:repeater/utils/constants.dart';
+import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
+import 'package:repeater/widgets/spacing.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});
@@ -10,29 +11,29 @@ class IntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: defaultPadding,
+        padding: Styles.padding1,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const ClipRRect(
-                borderRadius: defaultBorderRadius,
+                borderRadius: Styles.borderRadius1,
                 child: Image(
                   image: AssetImage('assets/icon.png'),
                   height: 200,
                 ),
               ),
-              const SizedBox(height: 20),
+              const Spacing1(),
               const Text(
                 'Repeater',
-                style: titleStyle,
+                style: Styles.title,
               ),
               const Text(
                 'An app to assist hafiz in scheduling timetables.',
                 textAlign: TextAlign.center,
-                style: subtitleStyle,
+                style: Styles.subtitle,
               ),
-              const SizedBox(height: 20),
+              const Spacing1(),
               CustomButton(
                 labelText: 'Go',
                 onPressed: () {

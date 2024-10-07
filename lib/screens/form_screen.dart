@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
-import 'package:repeater/utils/constants.dart';
+import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/main_navigation.dart';
+import 'package:repeater/widgets/spacing.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -37,7 +38,7 @@ class _FormScreenState extends State<FormScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: defaultPadding,
+        padding: Styles.padding1,
         child: Center(
           child: SizedBox(
             width: 400,
@@ -48,9 +49,9 @@ class _FormScreenState extends State<FormScreen> {
                 children: [
                   const Text(
                     'Register',
-                    style: titleStyle,
+                    style: Styles.title,
                   ),
-                  const SizedBox(height: 20),
+                  const Spacing1(),
                   TextFormField(
                     controller: _pageController,
                     decoration: const InputDecoration(
@@ -58,7 +59,7 @@ class _FormScreenState extends State<FormScreen> {
                       labelText: 'Page',
                       hintText: '1 - 604',
                       border: OutlineInputBorder(
-                        borderRadius: defaultBorderRadius,
+                        borderRadius: Styles.borderRadius1,
                       ),
                     ),
                     onChanged: (value) {
@@ -72,7 +73,7 @@ class _FormScreenState extends State<FormScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const Spacing1(),
                   CustomButton(
                     labelText: 'Submit',
                     onPressed: () async {
