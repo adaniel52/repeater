@@ -23,12 +23,20 @@
             "name": "release",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "-v",
+                "--device-timeout 5"
+            ]
         },
         {
             "name": "attach",
             "request": "attach",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "-v",
+                "--device-timeout 5"
+            ]
         }
     ]
 }

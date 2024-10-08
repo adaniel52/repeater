@@ -42,55 +42,56 @@ class NoteCard extends StatelessWidget {
                 borderRadius: Styles.borderRadius2,
                 child: Image(
                   image: NetworkImage(imageUrl),
-                  // loadingBuilder: (context, child, loadingProgress) {
-                  //   if (loadingProgress == null) return child;
-                  //   return Center(
-                  //     child: CircularProgressIndicator(
-                  //       value: loadingProgress.expectedTotalBytes != null
-                  //           ? loadingProgress.cumulativeBytesLoaded /
-                  //               (loadingProgress.expectedTotalBytes ?? 1)
-                  //           : null,
-                  //     ),
-                  //   );
-                  // },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                (loadingProgress.expectedTotalBytes ?? 1)
+                            : null,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
             const Expanded(child: SizedBox()),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: Styles.title,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Container(
-                  //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  //       decoration: BoxDecoration(
-                  //         color: Colors.lightGreen[100],
-                  //         borderRadius: Styles.borderRadius2,
-                  //       ),
-                  //       child: Text(
-                  //         'Tajweed',
-                  //         // style: TextStyle(backgroundColor: Colors.amber),
-                  //       ),
-                  //     ),
-                  //     SizedBox(width: 4),
-                  //     Container(
-                  //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  //       decoration: BoxDecoration(
-                  //         color: Colors.orange[100],
-                  //         borderRadius: Styles.borderRadius2,
-                  //       ),
-                  //       child: Text(
-                  //         'Recommended',
-                  //         // style: TextStyle(backgroundColor: Colors.amber),
-                  //       ),
-                  //     ),
-                  //   ],
-                )
+                Row(
+                  children: [
+                    Text(
+                      title,
+                      style: Styles.title,
+                    ),
+                  ],
+                ),
+                // Row(
+                //   children: [
+                //     Container(
+                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                //       decoration: BoxDecoration(
+                //         color: Colors.lightGreen[100],
+                //         borderRadius: Styles.borderRadius2,
+                //       ),
+                //       child: Text(
+                //         'Tajweed',
+                //       ),
+                //     ),
+                //     SizedBox(width: 4),
+                //     Container(
+                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                //       decoration: BoxDecoration(
+                //         color: Colors.orange[100],
+                //         borderRadius: Styles.borderRadius2,
+                //       ),
+                //       child: Text(
+                //         'Recommended',
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ],
