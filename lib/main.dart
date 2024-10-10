@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
+import 'package:repeater/widgets/main_navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class _MainAppState extends State<MainApp> {
         colorSchemeSeed: Colors.green,
         // brightness: Brightness.dark,
       ),
-      home: const IntroScreen(),
+      home: const MainNavigation(),
     );
   }
 }

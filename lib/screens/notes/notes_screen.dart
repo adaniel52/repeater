@@ -53,7 +53,7 @@ class _NotesScreenState extends State<NotesScreen> {
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: spacing2,
           crossAxisSpacing: spacing2,
-          childAspectRatio: childWidth / (childHeight + 40),
+          childAspectRatio: childWidth / (childHeight + 50),
         ),
         itemCount: _notes.length,
         itemBuilder: (context, index) {
