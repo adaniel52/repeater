@@ -2,35 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
 class CustomButton extends StatelessWidget {
+  final double width;
   final void Function()? onPressed;
-  final String labelText;
+  final Widget child;
 
   const CustomButton({
     super.key,
+    this.width = 400,
     this.onPressed,
-    required this.labelText,
+    required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 400,
+      width: width,
       height: 50,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          // padding: const EdgeInsets.symmetric(
-          //   horizontal: 24,
-          //   vertical: 12,
-          // ),
           shape: const RoundedRectangleBorder(
             borderRadius: Styles.borderRadius1,
           ),
         ),
-        child: Text(
-          labelText,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        child: child,
       ),
     );
   }

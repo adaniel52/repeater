@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/models/user.dart';
-import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/custom_button.dart';
-import 'package:repeater/widgets/main_navigation.dart';
 import 'package:repeater/widgets/spacing.dart';
 
 class FormScreen extends StatefulWidget {
@@ -74,24 +70,24 @@ class _FormScreenState extends State<FormScreen> {
                     },
                   ),
                   const Spacing1(),
-                  CustomButton(
-                    labelText: 'Submit',
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await UserPreferences.setUser(
-                          User(
-                            page: int.tryParse(_pageController.text) ?? 0,
-                          ),
-                        );
-                        if (!context.mounted) return;
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const MainNavigation()),
-                          (_) => false,
-                        );
-                      }
-                    },
-                  ),
+                  // CustomButton(
+                  //   labelText: 'Submit',
+                  //   onPressed: () async {
+                  //     if (_formKey.currentState!.validate()) {
+                  //       await UserPreferences.setUser(
+                  //         User(
+                  //           page: int.tryParse(_pageController.text) ?? 0,
+                  //         ),
+                  //       );
+                  //       if (!context.mounted) return;
+                  //       Navigator.of(context).pushAndRemoveUntil(
+                  //         MaterialPageRoute(
+                  //             builder: (context) => const MainNavigation()),
+                  //         (_) => false,
+                  //       );
+                  //     }
+                  //   },
+                  // ),
                 ],
               ),
             ),

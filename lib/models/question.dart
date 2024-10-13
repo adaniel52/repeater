@@ -1,15 +1,17 @@
-enum InputType {
-  time,
-}
+// enum InputType {
+//   time,
+// }
 
 class Question {
   final String title;
   final String questionText;
-  final String inputType;
+  final String? inputType;
+  dynamic answer;
 
   Question({
     required this.title,
     required this.questionText,
-    required this.inputType,
+    this.inputType,
+    this.answer,
   });
 }

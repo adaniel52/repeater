@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/models/question.dart';
-import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
-import 'package:repeater/widgets/spacing.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -15,6 +13,8 @@ class _FormScreenState extends State<FormScreen> {
   late PageController _pageController;
   int _currentIndex = 0;
 
+  String var1 = '';
+
   @override
   void initState() {
     super.initState();
@@ -23,19 +23,19 @@ class _FormScreenState extends State<FormScreen> {
 
   final List<Question> _questions = [
     Question(
-      title: 'Daily Review Time',
+      title: 'Which juz have you memorized?',
       questionText:
           'How much time can you spend reviewing your memorisation daily?',
-      inputType: '',
     ),
     Question(
       title: 'Preferred Reminder Interval',
       questionText:
           'How often would you like to be reminded to review a memorised page?',
-      inputType: '',
     ),
     //   'How many pages would you like to be reminded to review a memorised page?',
   ];
+
+  void _handleSubmit() {}
 
   @override
   Widget build(BuildContext context) {
@@ -59,62 +59,11 @@ class _FormScreenState extends State<FormScreen> {
           });
         },
         physics: NeverScrollableScrollPhysics(),
-        itemCount: totalQuestions,
+        // itemCount: totalQuestions,
         itemBuilder: (context, index) {
-          final question = _questions[index];
-          return Padding(
-            padding: Styles.padding1,
-            child: Center(
-              child: SizedBox(
-                width: 400,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      question.title,
-                      style: Styles.title,
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      question.questionText,
-                      textAlign: TextAlign.center,
-                    ),
-                    Spacing1(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: Styles.borderRadius1,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Spacing2(),
-                        DropdownButton(
-                          borderRadius: Styles.borderRadius1,
-                          value: 'm',
-                          items: [
-                            DropdownMenuItem(
-                              value: 'm',
-                              child: Text('minutes'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'h',
-                              child: Text('hours'),
-                            ),
-                          ],
-                          onChanged: (value) {},
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
+          // final question = _questions[index];
+          // return QuestionScreen(question: question);
+          return CheckboxForm();
         },
       ),
       bottomNavigationBar: BottomAppBar(
@@ -122,33 +71,95 @@ class _FormScreenState extends State<FormScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             (currentQuestion != 1)
-                ? IconButton(
-                    icon: Icon(Icons.arrow_back),
+                ? CustomButton(
+                    width: 130,
                     onPressed: () {
                       _pageController.previousPage(
                         duration: Duration(milliseconds: 300),
                         curve: Curves.ease,
                       );
                     },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.adaptive.arrow_back,
+                          size: 16,
+                        ),
+                        Text(
+                          'Previous',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   )
                 : SizedBox(),
             (currentQuestion != totalQuestions)
-                ? IconButton(
-                    icon: Icon(Icons.arrow_forward),
+                ? CustomButton(
+                    width: 130,
                     onPressed: () {
                       _pageController.nextPage(
                         duration: Duration(milliseconds: 300),
                         curve: Curves.ease,
                       );
                     },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Next',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Icon(
+                          Icons.adaptive.arrow_forward,
+                          size: 16,
+                        ),
+                      ],
+                    ),
                   )
-                : SizedBox(
-                    width: 100,
-                    child: CustomButton(labelText: 'Submit'),
+                : CustomButton(
+                    width: 130,
+                    onPressed: _handleSubmit,
+                    child: Text('Submit'),
                   )
           ],
         ),
       ),
+    );
+  }
+}
+
+class CheckboxForm extends StatefulWidget {
+  const CheckboxForm({super.key});
+
+  @override
+  State<CheckboxForm> createState() => _CheckboxFormState();
+}
+
+class _CheckboxFormState extends State<CheckboxForm> {
+  Map<String, bool> options = {
+    '1': false,
+    '2': false,
+    '3': false,
+    '4': false,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: options.keys.map((key) {
+        return CheckboxListTile.adaptive(
+          title: Text('Juz $key'),
+          value: options[key],
+          onChanged: (value) {
+            setState(() {
+              options[key] = value!;
+            });
+          },
+        );
+      }).toList(),
     );
   }
 }

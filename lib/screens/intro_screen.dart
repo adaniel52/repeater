@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/screens/form_screen.dart';
+import 'package:repeater/screens/form/form_screen.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/spacing.dart';
@@ -35,7 +35,6 @@ class IntroScreen extends StatelessWidget {
               ),
               const Spacing1(),
               CustomButton(
-                labelText: 'Go',
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -43,6 +42,7 @@ class IntroScreen extends StatelessWidget {
                     ),
                   );
                 },
+                child: Text('Go'),
               ),
             ],
           ),
