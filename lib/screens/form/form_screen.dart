@@ -15,19 +15,31 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   final _formKey = GlobalKey<FormState>();
+  List<String> options = ['None', 'Partially', 'Fully'];
   late final TextEditingController _juzController;
+  late final TextEditingController _rubuController;
 
   bool hasKhatam = false;
+  Map<int, String> juzProgress = {};
+
+  void _initProgress() {
+    for (var i = 1; i <= 30; i++) {
+      juzProgress[i] = 'None';
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _juzController = TextEditingController();
+    _rubuController = TextEditingController();
+    _initProgress();
   }
 
   @override
   void dispose() {
     _juzController.dispose();
+    _rubuController.dispose();
     super.dispose();
   }
 
@@ -40,8 +52,8 @@ class _FormScreenState extends State<FormScreen> {
           style: Styles.title,
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Center(
           child: SizedBox(
             width: 400,
             child: Padding(
@@ -51,46 +63,22 @@ class _FormScreenState extends State<FormScreen> {
                 child: Column(
                   children: [
                     _khatamForm(),
+                    Divider(),
+                    if (!hasKhatam) ...[
+                      Spacing2(),
+                      Text('Fill in your current memorization info.'),
+                      Spacing1(),
+                      _juzForm(),
+                      Spacing2(),
+                      _rubuForm(),
+                      Spacing1(),
+                      Divider(),
+                    ],
+                    _juzProgressForm(),
                     Spacing2(),
-                    TextFormField(
-                      controller: _juzController,
-                      decoration: InputDecoration(
-                        labelText: 'Juz',
-                        hintText: '1 - 30',
-                        border: OutlineInputBorder(
-                            borderRadius: Styles.borderRadius1),
-                      ),
-                      onChanged: (_) {
-                        _formKey.currentState!.validate();
-                      },
-                      validator: (value) {
-                        int? juz = int.tryParse(value!);
-                        if (juz == null || juz < 1 || juz > 30) {
-                          return 'Invalid input.';
-                        }
-                        return null;
-                      },
-                    ),
+                    Divider(),
                     Spacing1(),
-                    CustomButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          await UserPreferences.setUser(
-                            User(
-                              juz: int.tryParse(_juzController.text) ?? 0,
-                            ),
-                          );
-                          if (!context.mounted) return;
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) => const MainNavigation(),
-                            ),
-                            (_) => false,
-                          );
-                        }
-                      },
-                      child: Text('Submit'),
-                    ),
+                    _submitButton(),
                   ],
                 ),
               ),
@@ -103,7 +91,7 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _khatamForm() => ListTile(
         contentPadding: Styles.padding0,
-        title: Text('Have you khatam?'),
+        title: Text('Khatam'),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -129,176 +117,68 @@ class _FormScreenState extends State<FormScreen> {
           ],
         ),
       );
-}
 
-// class FormScreen extends StatefulWidget {
-//   const FormScreen({super.key});
+  Widget _juzForm() => TextFormField(
+        controller: _juzController,
+        decoration: InputDecoration(
+          labelText: 'Juz',
+          hintText: '1 - 30',
+          border: OutlineInputBorder(borderRadius: Styles.borderRadius1),
+        ),
+        onChanged: (_) {
+          _formKey.currentState!.validate();
+        },
+        validator: (value) {
+          int? juz = int.tryParse(value!);
+          if (juz == null || juz < 1 || juz > 30) {
+            return 'Invalid input.';
+          }
+          return null;
+        },
+      );
 
-//   @override
-//   State<FormScreen> createState() => _FormScreenState();
-// }
+  Widget _rubuForm() => TextFormField(
+        controller: _rubuController,
+        decoration: InputDecoration(
+          labelText: 'Rubu',
+          hintText: '1 - 8',
+          border: OutlineInputBorder(borderRadius: Styles.borderRadius1),
+        ),
+        onChanged: (_) {
+          _formKey.currentState!.validate();
+        },
+        validator: (value) {
+          int? juz = int.tryParse(value!);
+          if (juz == null || juz < 1 || juz > 8) {
+            return 'Invalid input.';
+          }
+          return null;
+        },
+      );
 
-// class _FormScreenState extends State<FormScreen> {
-//   late PageController _pageController;
-//   int _currentIndex = 0;
-
-//   String var1 = '';
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _pageController = PageController();
-//   }
-
-//   final List<Question> _questions = [
-//     Question(
-//       title: 'Which juz have you memorized?',
-//       questionText:
-//           'How much time can you spend reviewing your memorisation daily?',
-//     ),
-//     Question(
-//       title: 'Preferred Reminder Interval',
-//       questionText:
-//           'How often would you like to be reminded to review a memorised page?',
-//     ),
-//     Question(title: '', questionText: ''),
-//     Question(title: '', questionText: ''),
-//     Question(title: '', questionText: ''),
-//     //   'How many pages would you like to be reminded to review a memorised page?',
-//   ];
-
-//   void _handleSubmit() {}
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final currentQuestion = _currentIndex + 1;
-//     final totalQuestions = _questions.length;
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Question $currentQuestion of $totalQuestions'),
-//         bottom: PreferredSize(
-//           preferredSize: Size.zero,
-//           child: LinearProgressIndicator(
-//             value: _currentIndex / totalQuestions,
-//           ),
-//         ),
-//       ),
-//       body: PageView.builder(
-//         controller: _pageController,
-//         onPageChanged: (index) {
-//           setState(() {
-//             _currentIndex = index;
-//           });
-//         },
-//         physics: NeverScrollableScrollPhysics(),
-//         // itemCount: totalQuestions,
-//         itemBuilder: (context, index) {
-//           // final question = _questions[index];
-//           // return QuestionScreen(question: question);
-//           return CheckboxForm();
-//         },
-//       ),
-//       bottomNavigationBar: BottomAppBar(
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             (currentQuestion != 1)
-//                 ? CustomButton(
-//                     width: 130,
-//                     onPressed: () {
-//                       _pageController.previousPage(
-//                         duration: Duration(milliseconds: 300),
-//                         curve: Curves.ease,
-//                       );
-//                     },
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Icon(
-//                           Icons.adaptive.arrow_back,
-//                           size: 16,
-//                         ),
-//                         Text(
-//                           'Previous',
-//                           style: TextStyle(
-//                               fontSize: 16, fontWeight: FontWeight.bold),
-//                         ),
-//                       ],
-//                     ),
-//                   )
-//                 : SizedBox(),
-//             (currentQuestion != totalQuestions)
-//                 ? CustomButton(
-//                     width: 130,
-//                     onPressed: () {
-//                       _pageController.nextPage(
-//                         duration: Duration(milliseconds: 300),
-//                         curve: Curves.ease,
-//                       );
-//                     },
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Text(
-//                           'Next',
-//                           style: TextStyle(
-//                               fontSize: 16, fontWeight: FontWeight.bold),
-//                         ),
-//                         Icon(
-//                           Icons.adaptive.arrow_forward,
-//                           size: 16,
-//                         ),
-//                       ],
-//                     ),
-//                   )
-//                 : CustomButton(
-//                     width: 130,
-//                     onPressed: _handleSubmit,
-//                     child: Text('Submit'),
-//                   )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class JuzProgressForm extends StatefulWidget {
-  const JuzProgressForm({super.key});
-
-  @override
-  State<JuzProgressForm> createState() => _JuzProgressFormState();
-}
-
-class _JuzProgressFormState extends State<JuzProgressForm> {
-  Map<String, String> progress = {
-    '1': 'None',
-    '2': 'None',
-    '3': 'None',
-    '4': 'None',
-  };
-  List<String> options = ['None', 'Partially', 'Fully'];
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: progress.keys
-          .map(
+  Widget _juzProgressForm() => Column(
+        children: [
+          Spacing2(),
+          Text('Which juz have you still remembered?'),
+          Spacing2(),
+          ...juzProgress.keys.map(
             (juz) => ListTile(
+              contentPadding: Styles.padding0,
               title: Text('Juz $juz'),
               trailing: SizedBox(
-                width: 250,
+                // width: 250,
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: options
                       .map(
                         (option) => Padding(
-                          padding: const EdgeInsets.only(left: 4),
+                          padding: const EdgeInsets.only(left: spacing2),
                           child: ChoiceChip(
                             label: Text(option),
-                            selected: progress[juz] == option,
+                            selected: juzProgress[juz] == option,
                             onSelected: (value) {
                               setState(() {
-                                progress[juz] = option;
+                                juzProgress[juz] = option;
                               });
                             },
                           ),
@@ -308,8 +188,28 @@ class _JuzProgressFormState extends State<JuzProgressForm> {
                 ),
               ),
             ),
-          )
-          .toList(),
-    );
-  }
+          ),
+        ],
+      );
+
+  Widget _submitButton() => CustomButton(
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            await UserPreferences.setUser(
+              User(
+                juz: int.tryParse(_juzController.text) ?? 0,
+                juzProgress: {'': ''},
+              ),
+            );
+            if (!mounted) return;
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const MainNavigation(),
+              ),
+              (_) => false,
+            );
+          }
+        },
+        child: Text('Submit'),
+      );
 }

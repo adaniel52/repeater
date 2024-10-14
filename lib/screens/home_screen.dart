@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              await UserPreferences.setUser(User(juz: 0));
+              await UserPreferences.resetUser();
               if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
@@ -60,33 +60,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const Spacing1(),
                 (_user == null)
-                    ? const Center(child: CircularProgressIndicator())
-                    : Row(
-                        children: [
-                          Expanded(
-                            child: Card(
-                              margin: Styles.padding0,
-                              child: ListTile(
-                                leading:
-                                    const Icon(Icons.brightness_low_outlined),
-                                title: const Text('Juz'),
-                                subtitle: Text(_user!.juz.toString()),
-                              ),
-                            ),
-                          ),
-                          const Spacing2(),
-                          Expanded(
-                            child: Card(
-                              margin: Styles.padding0,
-                              child: ListTile(
-                                leading: const Icon(Icons.menu_book_outlined),
-                                title: const Text('Page'),
-                                subtitle: Text('0'),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    ? const Text('Usernotfound!')
+                    : Text(_user!.toJson()),
+                // : Row(
+                //     children: [
+                //       Expanded(
+                //         child: Card(
+                //           margin: Styles.padding0,
+                //           child: ListTile(
+                //             leading:
+                //                 const Icon(Icons.brightness_low_outlined),
+                //             title: const Text('Juz'),
+                //             subtitle: Text(_user!.juz.toString()),
+                //           ),
+                //         ),
+                //       ),
+                //       const Spacing2(),
+                //       Expanded(
+                //         child: Card(
+                //           margin: Styles.padding0,
+                //           child: ListTile(
+                //             leading: const Icon(Icons.menu_book_outlined),
+                //             title: const Text('Page'),
+                //             subtitle: Text('0'),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
                 const Spacing1(),
                 const Text(
                   'Tasks',
