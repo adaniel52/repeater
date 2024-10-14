@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton({
     super.key,
-    this.width = 400,
+    this.width = double.infinity,
     this.onPressed,
     required this.child,
   });

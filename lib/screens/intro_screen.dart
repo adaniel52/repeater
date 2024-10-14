@@ -10,41 +10,44 @@ class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: Styles.padding1,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const ClipRRect(
-                borderRadius: Styles.borderRadius1,
-                child: Image(
-                  image: AssetImage('assets/icon.png'),
-                  height: 200,
+      body: Center(
+        child: SizedBox(
+          width: 400,
+          child: Padding(
+            padding: Styles.padding1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const ClipRRect(
+                  borderRadius: Styles.borderRadius1,
+                  child: Image(
+                    image: AssetImage('assets/icon.png'),
+                    height: 200,
+                  ),
                 ),
-              ),
-              const Spacing1(),
-              const Text(
-                'Repeater',
-                style: Styles.title,
-              ),
-              const Text(
-                'An app to assist hafiz in scheduling timetables.',
-                textAlign: TextAlign.center,
-                style: Styles.subtitle,
-              ),
-              const Spacing1(),
-              CustomButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const FormScreen(),
-                    ),
-                  );
-                },
-                child: Text('Go'),
-              ),
-            ],
+                const Spacing1(),
+                const Text(
+                  'Repeater',
+                  style: Styles.title,
+                ),
+                const Text(
+                  'An app to assist hafiz in scheduling timetables.',
+                  textAlign: TextAlign.center,
+                  style: Styles.subtitle,
+                ),
+                const Spacing1(),
+                CustomButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const FormScreen(),
+                      ),
+                    );
+                  },
+                  child: Text('Go'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

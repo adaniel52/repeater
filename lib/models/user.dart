@@ -1,22 +1,24 @@
 import 'dart:convert';
 
+const juzKey = 'juz';
+
 class User {
-  int _page;
+  int _juz;
 
   User({
-    required int page,
-  }) : _page = page;
+    required int juz,
+  }) : _juz = juz;
 
-  int get page => _page;
+  int get juz => _juz;
 
   String toJson() => json.encode({
-        'page': _page,
+        juzKey: _juz,
       });
 
   factory User.fromJson(String source) {
     final data = json.decode(source);
     return User(
-      page: data['page'],
+      juz: data[juzKey],
     );
   }
 }

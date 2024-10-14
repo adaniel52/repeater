@@ -3,7 +3,6 @@ import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/utils/calculations.dart';
 import 'package:repeater/widgets/spacing.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              await UserPreferences.setUser(User(page: 0));
+              await UserPreferences.setUser(User(juz: 0));
               if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
@@ -71,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 leading:
                                     const Icon(Icons.brightness_low_outlined),
                                 title: const Text('Juz'),
-                                subtitle: Text(getJuz(_user!.page).toString()),
+                                subtitle: Text(_user!.juz.toString()),
                               ),
                             ),
                           ),
@@ -82,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ListTile(
                                 leading: const Icon(Icons.menu_book_outlined),
                                 title: const Text('Page'),
-                                subtitle: Text(_user!.page.toString()),
+                                subtitle: Text('0'),
                               ),
                             ),
                           ),
