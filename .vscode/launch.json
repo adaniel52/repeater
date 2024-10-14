@@ -7,11 +7,7 @@
         {
             "name": "debug",
             "request": "launch",
-            "type": "dart",
-            "args": [
-                "-v",
-                "--device-timeout 5"
-            ]
+            "type": "dart"
         },
         {
             "name": "profile",
@@ -23,20 +19,12 @@
             "name": "release",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release",
-            "args": [
-                "-v",
-                "--device-timeout 5"
-            ]
+            "flutterMode": "release"
         },
         {
             "name": "attach",
             "request": "attach",
-            "type": "dart",
-            "args": [
-                "-v",
-                "--device-timeout 5"
-            ]
+            "type": "dart"
         }
     ]
 }

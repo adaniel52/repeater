@@ -31,6 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          'Salam User',
+          style: Styles.title,
+        ),
         actions: [
           IconButton(
             onPressed: () async {
@@ -51,74 +55,74 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: Styles.padding1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Salam User',
-                  style: Styles.title,
-                ),
-                const Spacing1(),
-                (_user == null)
-                    ? const Text('Usernotfound!')
-                    : Text(_user!.toJson()),
-                // : Row(
-                //     children: [
-                //       Expanded(
-                //         child: Card(
-                //           margin: Styles.padding0,
-                //           child: ListTile(
-                //             leading:
-                //                 const Icon(Icons.brightness_low_outlined),
-                //             title: const Text('Juz'),
-                //             subtitle: Text(_user!.juz.toString()),
-                //           ),
-                //         ),
-                //       ),
-                //       const Spacing2(),
-                //       Expanded(
-                //         child: Card(
-                //           margin: Styles.padding0,
-                //           child: ListTile(
-                //             leading: const Icon(Icons.menu_book_outlined),
-                //             title: const Text('Page'),
-                //             subtitle: Text('0'),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                const Spacing1(),
-                const Text(
-                  'Tasks',
-                  style: Styles.title,
-                ),
-                const Spacing1(),
-                const Card(
-                  margin: Styles.padding0,
-                  child: ListTile(
-                    title: Text('Sabqi'),
-                    subtitle: Text('Page 0'),
+            child: (_user == null)
+                ? Text('Loading')
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Tasks',
+                        style: Styles.title,
+                      ),
+                      const Spacing1(),
+                      const Card(
+                        margin: Styles.padding0,
+                        child: ListTile(
+                          title: Text('Sabqi'),
+                          subtitle: Text('Page 0'),
+                        ),
+                      ),
+                      const Spacing2(),
+                      const Card(
+                        margin: Styles.padding0,
+                        child: ListTile(
+                          title: Text('Sabqi'),
+                          subtitle: Text('Page 0'),
+                        ),
+                      ),
+                      const Spacing2(),
+                      const Card(
+                        margin: Styles.padding0,
+                        child: ListTile(
+                          title: Text('Sabqi'),
+                          subtitle: Text('Page 0'),
+                        ),
+                      ),
+                      Spacing1(),
+                      Text(
+                        'Memorization Progress',
+                        style: Styles.title,
+                      ),
+                      Spacing1(),
+                      Card(
+                        margin: Styles.padding0,
+                        child: ListTile(
+                          leading: const Icon(Icons.brightness_low_outlined),
+                          title: const Text('Current Juz'),
+                          subtitle: Text(_user!.juz.toString()),
+                        ),
+                      ),
+                      Spacing1(),
+                      Text(
+                        'Review Progress',
+                        style: Styles.title,
+                      ),
+                      Spacing2(),
+                      ..._user!.juzProgress.keys.map((e) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: spacing2),
+                          child: Card(
+                            margin: Styles.padding0,
+                            child: ListTile(
+                              leading: Icon(Icons.circle),
+                              title: Text('Juz $e'),
+                              subtitle: Text(_user!.juzProgress[e]),
+                            ),
+                          ),
+                        );
+                      })
+                    ],
                   ),
-                ),
-                const Spacing2(),
-                const Card(
-                  margin: Styles.padding0,
-                  child: ListTile(
-                    title: Text('Sabqi'),
-                    subtitle: Text('Page 0'),
-                  ),
-                ),
-                const Spacing2(),
-                const Card(
-                  margin: Styles.padding0,
-                  child: ListTile(
-                    title: Text('Sabqi'),
-                    subtitle: Text('Page 0'),
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ),

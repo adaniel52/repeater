@@ -20,11 +20,11 @@ class _FormScreenState extends State<FormScreen> {
   late final TextEditingController _rubuController;
 
   bool hasKhatam = false;
-  Map<int, String> juzProgress = {};
+  Map<String, String> juzProgress = {};
 
   void _initProgress() {
     for (var i = 1; i <= 30; i++) {
-      juzProgress[i] = 'None';
+      juzProgress[i.toString()] = 'None';
     }
   }
 
@@ -121,7 +121,7 @@ class _FormScreenState extends State<FormScreen> {
   Widget _juzForm() => TextFormField(
         controller: _juzController,
         decoration: InputDecoration(
-          labelText: 'Juz',
+          labelText: 'Juz*',
           hintText: '1 - 30',
           border: OutlineInputBorder(borderRadius: Styles.borderRadius1),
         ),
@@ -140,7 +140,7 @@ class _FormScreenState extends State<FormScreen> {
   Widget _rubuForm() => TextFormField(
         controller: _rubuController,
         decoration: InputDecoration(
-          labelText: 'Rubu',
+          labelText: 'Rubu*',
           hintText: '1 - 8',
           border: OutlineInputBorder(borderRadius: Styles.borderRadius1),
         ),
@@ -166,7 +166,6 @@ class _FormScreenState extends State<FormScreen> {
               contentPadding: Styles.padding0,
               title: Text('Juz $juz'),
               trailing: SizedBox(
-                // width: 250,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: options
@@ -198,7 +197,7 @@ class _FormScreenState extends State<FormScreen> {
             await UserPreferences.setUser(
               User(
                 juz: int.tryParse(_juzController.text) ?? 0,
-                juzProgress: {'': ''},
+                juzProgress: juzProgress,
               ),
             );
             if (!mounted) return;

@@ -14,7 +14,6 @@ class UserPreferences {
   static Future<void> setUser(User user) async {
     final prefs = await _getPreferences();
     await prefs.setString('user', user.toJson());
-    print(user.toJson());
   }
 
   static Future<User?> getUser() async {
@@ -30,7 +29,7 @@ class UserPreferences {
     await setUser(
       User(
         juz: 0,
-        juzProgress: {},
+        juzProgress: {'1': 'None'},
       ),
     );
   }

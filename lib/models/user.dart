@@ -5,16 +5,16 @@ const juzProgressKey = 'juzProgress';
 
 class User {
   int _juz;
-  Map<String, String> _juzProgress;
+  Map _juzProgress;
 
   User({
     required int juz,
-    required Map<String, String> juzProgress,
+    required Map juzProgress,
   })  : _juz = juz,
         _juzProgress = juzProgress;
 
   int get juz => _juz;
-  Map<String, String> get juzProgress => _juzProgress;
+  Map get juzProgress => _juzProgress;
 
   String toJson() => json.encode({
         juzKey: _juz,
