@@ -1,31 +1,38 @@
 import 'dart:convert';
 
 const juzKey = 'juz';
-const juzProgressKey = 'juzProgress';
+const rubuKey = 'rubu';
+const reviewProgressKey = 'reviewProgress';
 
 class User {
   int _juz;
-  Map _juzProgress;
+  int _rubu;
+  Map _reviewProgress;
 
   User({
     required int juz,
-    required Map juzProgress,
+    required int rubu,
+    required Map reviewProgress,
   })  : _juz = juz,
-        _juzProgress = juzProgress;
+        _rubu = rubu,
+        _reviewProgress = reviewProgress;
 
   int get juz => _juz;
-  Map get juzProgress => _juzProgress;
+  int get rubu => _rubu;
+  Map get reviewProgress => _reviewProgress;
 
   String toJson() => json.encode({
         juzKey: _juz,
-        juzProgressKey: _juzProgress,
+        rubuKey: _rubu,
+        reviewProgressKey: _reviewProgress,
       });
 
   factory User.fromJson(String source) {
     final data = json.decode(source);
     return User(
       juz: data[juzKey],
-      juzProgress: data[juzProgressKey],
+      rubu: data[rubuKey],
+      reviewProgress: data[reviewProgressKey],
     );
   }
 }

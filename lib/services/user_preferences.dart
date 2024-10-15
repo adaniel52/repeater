@@ -29,7 +29,8 @@ class UserPreferences {
     await setUser(
       User(
         juz: 0,
-        juzProgress: {'1': 'None'},
+        rubu: 0,
+        reviewProgress: {},
       ),
     );
   }

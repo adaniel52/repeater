@@ -88,37 +88,61 @@ class _HomeScreenState extends State<HomeScreen> {
                           subtitle: Text('Page 0'),
                         ),
                       ),
-                      Spacing1(),
-                      Text(
-                        'Memorization Progress',
-                        style: Styles.title,
-                      ),
-                      Spacing1(),
-                      Card(
-                        margin: Styles.padding0,
-                        child: ListTile(
-                          leading: const Icon(Icons.brightness_low_outlined),
-                          title: const Text('Current Juz'),
-                          subtitle: Text(_user!.juz.toString()),
+                      if (_user!.juz != 0) ...[
+                        Spacing1(),
+                        Text(
+                          'Memorization Progress',
+                          style: Styles.title,
                         ),
-                      ),
+                        Spacing1(),
+                        Card(
+                          margin: Styles.padding0,
+                          child: ListTile(
+                            leading: const Icon(Icons.book_outlined),
+                            title: const Text('Current Juz'),
+                            subtitle: Text(_user!.juz.toString()),
+                          ),
+                        ),
+                        Spacing2(),
+                        Card(
+                          margin: Styles.padding0,
+                          child: ListTile(
+                            leading: const Icon(Icons.brightness_low_outlined),
+                            title: const Text('Current Rubu'),
+                            subtitle: Text(_user!.rubu.toString()),
+                          ),
+                        ),
+                      ],
                       Spacing1(),
                       Text(
                         'Review Progress',
                         style: Styles.title,
                       ),
                       Spacing2(),
-                      ..._user!.juzProgress.keys.map((e) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: spacing2),
-                          child: Card(
-                            margin: Styles.padding0,
-                            child: ListTile(
-                              leading: Icon(Icons.circle),
-                              title: Text('Juz $e'),
-                              subtitle: Text(_user!.juzProgress[e]),
-                            ),
+                      ..._user!.reviewProgress.keys.map((e) {
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5,
                           ),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            Color selectedColor;
+                            switch (_user!.reviewProgress[e]) {
+                              case 'Partially':
+                                selectedColor = Colors.greenAccent;
+                                break;
+                              case 'Fully':
+                                selectedColor = Colors.green;
+                                break;
+                              default:
+                                selectedColor = Colors.grey;
+                            }
+                            return Container(
+                              color: selectedColor,
+                              child: Text('Juz $e'),
+                            );
+                          },
                         );
                       })
                     ],

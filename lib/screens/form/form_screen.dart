@@ -20,11 +20,11 @@ class _FormScreenState extends State<FormScreen> {
   late final TextEditingController _rubuController;
 
   bool hasKhatam = false;
-  Map<String, String> juzProgress = {};
+  Map<String, String> reviewProgress = {};
 
   void _initProgress() {
     for (var i = 1; i <= 30; i++) {
-      juzProgress[i.toString()] = 'None';
+      reviewProgress[i.toString()] = 'None';
     }
   }
 
@@ -52,34 +52,37 @@ class _FormScreenState extends State<FormScreen> {
           style: Styles.title,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: SizedBox(
-            width: 400,
-            child: Padding(
-              padding: Styles.padding1,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    _khatamForm(),
-                    Divider(),
-                    if (!hasKhatam) ...[
-                      Spacing2(),
-                      Text('Fill in your current memorization info.'),
-                      Spacing1(),
-                      _juzForm(),
-                      Spacing2(),
-                      _rubuForm(),
-                      Spacing1(),
+      body: Scrollbar(
+        interactive: true,
+        child: SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              width: 400,
+              child: Padding(
+                padding: Styles.padding1,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      _khatamForm(),
                       Divider(),
+                      if (!hasKhatam) ...[
+                        Spacing2(),
+                        Text('Fill in your current memorization info.'),
+                        Spacing1(),
+                        _juzForm(),
+                        Spacing2(),
+                        _rubuForm(),
+                        Spacing1(),
+                        Divider(),
+                      ],
+                      _reviewProgressForm(),
+                      Spacing2(),
+                      Divider(),
+                      Spacing1(),
+                      _submitButton(),
                     ],
-                    _juzProgressForm(),
-                    Spacing2(),
-                    Divider(),
-                    Spacing1(),
-                    _submitButton(),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -156,12 +159,12 @@ class _FormScreenState extends State<FormScreen> {
         },
       );
 
-  Widget _juzProgressForm() => Column(
+  Widget _reviewProgressForm() => Column(
         children: [
           Spacing2(),
           Text('Which juz have you still remembered?'),
           Spacing2(),
-          ...juzProgress.keys.map(
+          ...reviewProgress.keys.map(
             (juz) => ListTile(
               contentPadding: Styles.padding0,
               title: Text('Juz $juz'),
@@ -174,10 +177,10 @@ class _FormScreenState extends State<FormScreen> {
                           padding: const EdgeInsets.only(left: spacing2),
                           child: ChoiceChip(
                             label: Text(option),
-                            selected: juzProgress[juz] == option,
+                            selected: reviewProgress[juz] == option,
                             onSelected: (value) {
                               setState(() {
-                                juzProgress[juz] = option;
+                                reviewProgress[juz] = option;
                               });
                             },
                           ),
@@ -197,7 +200,8 @@ class _FormScreenState extends State<FormScreen> {
             await UserPreferences.setUser(
               User(
                 juz: int.tryParse(_juzController.text) ?? 0,
-                juzProgress: juzProgress,
+                rubu: int.tryParse(_rubuController.text) ?? 0,
+                reviewProgress: reviewProgress,
               ),
             );
             if (!mounted) return;

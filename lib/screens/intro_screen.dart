@@ -21,7 +21,7 @@ class IntroScreen extends StatelessWidget {
                 const ClipRRect(
                   borderRadius: Styles.borderRadius1,
                   child: Image(
-                    image: AssetImage('assets/icon.png'),
+                    image: AssetImage('assets/icon/icon.png'),
                     height: 200,
                   ),
                 ),
@@ -44,7 +44,7 @@ class IntroScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Go'),
+                  child: Text('Get Started!'),
                 ),
               ],
             ),
