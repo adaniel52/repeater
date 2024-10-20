@@ -120,31 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Spacing2(),
                       ..._user!.reviewProgress.keys.map((e) {
-                        return GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 5,
-                          ),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            Color selectedColor;
-                            switch (_user!.reviewProgress[e]) {
-                              case 'Partially':
-                                selectedColor = Colors.greenAccent;
-                                break;
-                              case 'Fully':
-                                selectedColor = Colors.green;
-                                break;
-                              default:
-                                selectedColor = Colors.grey;
-                            }
-                            return Container(
-                              color: selectedColor,
-                              child: Text('Juz $e'),
-                            );
-                          },
-                        );
-                      })
+                        return Text('Juz $e');
+                      }),
                     ],
                   ),
           ),

@@ -22,12 +22,6 @@ class _FormScreenState extends State<FormScreen> {
   bool hasKhatam = false;
   Map<String, String> reviewProgress = {};
 
-  void _initProgress() {
-    for (var i = 1; i <= 30; i++) {
-      reviewProgress[i.toString()] = 'None';
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -43,8 +37,33 @@ class _FormScreenState extends State<FormScreen> {
     super.dispose();
   }
 
+  void _initProgress() {
+    for (var i = 1; i <= 30; i++) {
+      reviewProgress[i.toString()] = 'None';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    void handleSubmit() async {
+      if (_formKey.currentState!.validate()) {
+        await UserPreferences.setUser(
+          User(
+            juz: int.tryParse(_juzController.text) ?? 0,
+            rubu: int.tryParse(_rubuController.text) ?? 0,
+            reviewProgress: reviewProgress,
+          ),
+        );
+        if (!context.mounted) return;
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const MainNavigation(),
+          ),
+          (_) => false,
+        );
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -80,7 +99,7 @@ class _FormScreenState extends State<FormScreen> {
                       Spacing2(),
                       Divider(),
                       Spacing1(),
-                      _submitButton(),
+                      _submitButton(handleSubmit),
                     ],
                   ),
                 ),
@@ -194,25 +213,8 @@ class _FormScreenState extends State<FormScreen> {
         ],
       );
 
-  Widget _submitButton() => CustomButton(
-        onPressed: () async {
-          if (_formKey.currentState!.validate()) {
-            await UserPreferences.setUser(
-              User(
-                juz: int.tryParse(_juzController.text) ?? 0,
-                rubu: int.tryParse(_rubuController.text) ?? 0,
-                reviewProgress: reviewProgress,
-              ),
-            );
-            if (!mounted) return;
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => const MainNavigation(),
-              ),
-              (_) => false,
-            );
-          }
-        },
+  Widget _submitButton(void Function() onPressed) => CustomButton(
+        onPressed: onPressed,
         child: Text('Submit'),
       );
 }
