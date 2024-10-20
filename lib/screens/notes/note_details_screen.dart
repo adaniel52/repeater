@@ -44,10 +44,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        title: Text(widget.title),
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
 
-class NotePhotoView extends StatelessWidget {
+class NotePhotoView extends StatefulWidget {
   final String imageUrl;
   const NotePhotoView({
     super.key,
@@ -9,11 +10,35 @@ class NotePhotoView extends StatelessWidget {
   });
 
   @override
+  State<NotePhotoView> createState() => _NotePhotoViewState();
+}
+
+class _NotePhotoViewState extends State<NotePhotoView> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [
+        SystemUiOverlay.top,
+        SystemUiOverlay.bottom,
+      ],
+    );
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // foregroundColor: Colors.white,
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
+        forceMaterialTransparency: true,
         iconTheme: const IconThemeData(
           color: Colors.white,
           shadows: [
@@ -26,8 +51,9 @@ class NotePhotoView extends StatelessWidget {
       ),
       backgroundColor: Colors.black,
       body: PhotoView(
-        heroAttributes: PhotoViewHeroAttributes(tag: imageUrl),
-        imageProvider: NetworkImage(imageUrl),
+        enablePanAlways: true,
+        heroAttributes: PhotoViewHeroAttributes(tag: widget.imageUrl),
+        imageProvider: NetworkImage(widget.imageUrl),
       ),
     );
   }

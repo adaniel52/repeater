@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/theme_provider.dart';
 import 'package:repeater/services/user_preferences.dart';
-import 'package:repeater/utils/constants/styles.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -61,51 +60,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Settings',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        title: Text('Settings'),
       ),
-      body: Padding(
-        padding: Styles.padding1,
-        child: Column(
-          children: [
-            // SwitchListTile(
-            //   secondary: Icon(Icons.dark_mode),
-            //   title: Text('Dark Theme'),
-            //   // subtitle: Text('Reset the app as if it was new'),
-            //   value: Provider.of<ThemeProvider>(context).isDarkTheme,
-            //   onChanged: (_) {
-            //     Provider.of<ThemeProvider>(context, listen: false)
-            //         .toggleDarkTheme();
-            //   },
-            // ),
-            ListTile(
-              leading: Icon(Icons.dark_mode),
-              title: Text('Theme'),
-              trailing: DropdownButton(
-                  value: selectedTheme,
-                  items: ['Light', 'Dark', 'System'].map((e) {
-                    return DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedTheme = value;
-                    });
-                    themeProvider.setThemeMode(_mapStringtoThemeMode(value!));
-                  }),
-            ),
-            ListTile(
-              leading: Icon(Icons.delete),
-              title: Text('Reset Data'),
-              subtitle: Text('Reset the app as if it was new'),
-              onTap: _resetData,
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          ListTile(
+            leading: Icon(Icons.dark_mode),
+            title: Text('Theme'),
+            trailing: DropdownButton(
+                value: selectedTheme,
+                items: ['System', 'Light', 'Dark'].map((e) {
+                  return DropdownMenuItem(
+                    value: e,
+                    child: Text(e),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedTheme = value;
+                  });
+                  themeProvider.setThemeMode(_mapStringtoThemeMode(value!));
+                }),
+          ),
+          ListTile(
+            leading: Icon(Icons.delete),
+            title: Text('Reset Data'),
+            subtitle: Text('Reset the app as if it was new'),
+            onTap: _resetData,
+          ),
+        ],
       ),
     );
   }

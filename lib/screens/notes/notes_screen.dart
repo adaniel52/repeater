@@ -44,10 +44,7 @@ class _NotesScreenState extends State<NotesScreen> {
     double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Notes',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        title: Text('Notes'),
       ),
       body: GridView.builder(
         padding: Styles.padding1,

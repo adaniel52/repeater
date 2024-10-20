@@ -28,12 +28,12 @@ class IntroScreen extends StatelessWidget {
                 const Spacing1(),
                 Text(
                   'Repeater',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
-                const Text(
+                Text(
                   'An app to assist hafiz in scheduling timetables.',
                   textAlign: TextAlign.center,
-                  style: Styles.subtitle,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const Spacing1(),
                 CustomButton(

@@ -66,10 +66,7 @@ class _FormScreenState extends State<FormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Form',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        title: Text('Form'),
       ),
       body: Scrollbar(
         interactive: true,

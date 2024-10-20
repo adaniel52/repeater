@@ -30,10 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Salam User',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        title: Text('Salam User'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -45,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       'Tasks',
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const Spacing1(),
                     const Card(
@@ -75,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Spacing1(),
                       Text(
                         'Memorization Progress',
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       Spacing1(),
                       Card(
@@ -99,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Spacing1(),
                     Text(
                       'Review Progress',
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     Spacing2(),
                     ..._user!.reviewProgress.keys.map((e) {
