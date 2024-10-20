@@ -9,7 +9,7 @@ class Styles {
   static const title = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: blackText,
+    // color: blackText,
   );
 
   static const subtitle = TextStyle(

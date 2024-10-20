@@ -63,7 +63,7 @@ class NoteCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: Styles.title,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
                 ),

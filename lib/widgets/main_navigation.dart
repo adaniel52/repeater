@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/screens/home_screen.dart';
 import 'package:repeater/screens/notes/notes_screen.dart';
+import 'package:repeater/screens/settings_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -14,6 +15,7 @@ class _MainNavigationState extends State<MainNavigation> {
   static const _screens = [
     HomeScreen(),
     NotesScreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -27,8 +29,21 @@ class _MainNavigationState extends State<MainNavigation> {
           });
         },
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.note), label: 'Notes'),
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.note_outlined),
+            selectedIcon: Icon(Icons.note),
+            label: 'Notes',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings_outlined),
+            selectedIcon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
       body: _screens[currentIndex],

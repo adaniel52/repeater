@@ -68,7 +68,7 @@ class _FormScreenState extends State<FormScreen> {
       appBar: AppBar(
         title: Text(
           'Form',
-          style: Styles.title,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: Scrollbar(

@@ -46,7 +46,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: Styles.title,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: SingleChildScrollView(

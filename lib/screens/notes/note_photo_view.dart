@@ -12,7 +12,7 @@ class NotePhotoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
+        // foregroundColor: Colors.white,
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(
           color: Colors.white,

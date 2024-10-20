@@ -26,9 +26,9 @@ class IntroScreen extends StatelessWidget {
                   ),
                 ),
                 const Spacing1(),
-                const Text(
+                Text(
                   'Repeater',
-                  style: Styles.title,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const Text(
                   'An app to assist hafiz in scheduling timetables.',
