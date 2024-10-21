@@ -36,8 +36,7 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     int crossAxisCount = (width / 300).floor();
-    double childWidth =
-        (width - 28 - 4 * (crossAxisCount - 1)) / crossAxisCount;
+    double childWidth = (width - 28) / crossAxisCount;
     double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
@@ -47,9 +46,9 @@ class _NotesScreenState extends State<NotesScreen> {
         padding: Styles.screenPadding,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
-          childAspectRatio: childWidth / (childHeight + 35),
+          // mainAxisSpacing: 4,
+          // crossAxisSpacing: 4,
+          childAspectRatio: childWidth / (childHeight + 50),
         ),
         itemCount: _notes.length,
         itemBuilder: (context, index) {

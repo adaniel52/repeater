@@ -7,10 +7,11 @@ import 'package:repeater/widgets/init.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await UserPreferences.init();
+  await UserPreferences().init();
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => UserPreferences()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: const MainApp(),

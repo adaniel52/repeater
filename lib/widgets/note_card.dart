@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/screens/notes/note_details_screen.dart';
 import 'package:repeater/utils/constants/styles.dart';
+import 'package:repeater/widgets/gap.dart';
 
 class NoteCard extends StatelessWidget {
   final String imageUrl;
@@ -15,13 +16,13 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: const RoundedRectangleBorder(
-            borderRadius: Styles.mediumBorderRadius),
-        padding: Styles.noPadding,
-      ),
-      onPressed: () {
+    return InkWell(
+      // style: ElevatedButton.styleFrom(
+      //   shape: const RoundedRectangleBorder(
+      //       borderRadius: Styles.mediumBorderRadius),
+      //   padding: Styles.noPadding,
+      // ),
+      onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => NoteDetailsScreen(
@@ -34,43 +35,37 @@ class NoteCard extends StatelessWidget {
       },
       child: Padding(
         padding: Styles.mediumPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Hero(
-              tag: imageUrl,
-              child: ClipRRect(
-                borderRadius: Styles.smallBorderRadius,
-                child: Image(
-                  image: NetworkImage(imageUrl),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                (loadingProgress.expectedTotalBytes ?? 1)
-                            : null,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            const Expanded(child: SizedBox()),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.headlineMedium,
+        child: Image(
+          image: NetworkImage(imageUrl),
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Hero(
+                    tag: imageUrl,
+                    child: ClipRRect(
+                      borderRadius: Styles.mediumBorderRadius,
+                      child: child,
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  ),
+                  SmallGap(),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ],
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        (loadingProgress.expectedTotalBytes ?? 1)
+                    : null,
+              ),
+            );
+          },
         ),
       ),
     );

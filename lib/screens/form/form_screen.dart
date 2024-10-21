@@ -53,7 +53,7 @@ class _FormScreenState extends State<FormScreen> {
 
   void _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
-      await UserPreferences.setUser(
+      await UserPreferences().setUser(
         User(
           juz: int.tryParse(_juzController.text) ?? 0,
           rubu: int.tryParse(_rubuController.text) ?? 0,
@@ -61,11 +61,10 @@ class _FormScreenState extends State<FormScreen> {
         ),
       );
       if (!mounted) return;
-      Navigator.of(context).pushAndRemoveUntil(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const MainNavigation(),
         ),
-        (_) => false,
       );
     } else {
       _scrollToTextField();
@@ -91,6 +90,7 @@ class _FormScreenState extends State<FormScreen> {
                   child: Column(
                     children: [
                       _khatamForm(),
+                      LargeGap(),
                       Divider(),
                       if (!hasKhatam) ...[
                         LargeGap(
@@ -99,15 +99,16 @@ class _FormScreenState extends State<FormScreen> {
                         Text('Fill in your current memorization info.'),
                         MediumGap(),
                         _juzForm(),
-                        LargeGap(),
-                        _rubuForm(),
                         MediumGap(),
+                        _rubuForm(),
+                        LargeGap(),
                         Divider(),
                       ],
+                      LargeGap(),
                       _reviewProgressForm(),
                       LargeGap(),
                       Divider(),
-                      MediumGap(),
+                      LargeGap(),
                       _submitButton(),
                     ],
                   ),
@@ -123,29 +124,29 @@ class _FormScreenState extends State<FormScreen> {
   Widget _khatamForm() => ListTile(
         contentPadding: Styles.noPadding,
         title: Text('Khatam'),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ChoiceChip(
-              label: Text('Yes'),
-              selected: hasKhatam,
-              onSelected: (_) {
-                setState(() {
-                  hasKhatam = true;
-                });
-              },
-            ),
-            LargeGap(),
-            ChoiceChip(
-              label: Text('No'),
-              selected: !hasKhatam,
-              onSelected: (_) {
-                setState(() {
-                  hasKhatam = false;
-                });
-              },
-            ),
-          ],
+        trailing: SizedBox(
+          width: 150,
+          child: SegmentedButton(
+            segments: [
+              ButtonSegment(value: 'Yes', label: Text('Yes')),
+              ButtonSegment(value: 'No', label: Text('No')),
+            ],
+            selected: hasKhatam ? {'Yes'} : {'No'},
+            onSelectionChanged: (value) {
+              switch (value.first) {
+                case 'Yes':
+                  setState(() {
+                    hasKhatam = true;
+                  });
+                  break;
+                default:
+                  setState(() {
+                    hasKhatam = false;
+                  });
+                  break;
+              }
+            },
+          ),
         ),
       );
 
@@ -192,9 +193,8 @@ class _FormScreenState extends State<FormScreen> {
       );
 
   Widget _reviewProgressForm() => Column(children: [
-        LargeGap(),
         Text('Which juz have you still remembered?'),
-        LargeGap(),
+        MediumGap(),
         ...reviewProgress.keys.map((juz) {
           return ListTile(
             contentPadding: Styles.noPadding,

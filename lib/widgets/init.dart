@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
@@ -18,26 +19,26 @@ class _InitState extends State<Init> {
     _checkIfRegistered();
   }
 
-  Future<void> _checkIfRegistered() async {
-    final User? user = await UserPreferences.getUser();
-    if (!mounted) return;
-    if (user!.reviewProgress.isEmpty) {
-      Navigator.pushAndRemoveUntil(
+  void _checkIfRegistered() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final User? user =
+          Provider.of<UserPreferences>(context, listen: false).getUser();
+      // if (!mounted) return;
+      if (user!.reviewProgress.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainNavigation(),
+          ),
+        );
+      }
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => IntroScreen(),
         ),
-        (_) => false,
       );
-    } else {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MainNavigation(),
-        ),
-        (_) => false,
-      );
-    }
+    });
   }
 
   @override

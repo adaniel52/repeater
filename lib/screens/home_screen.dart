@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/models/user.dart';
+import 'package:provider/provider.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/gap.dart';
@@ -12,27 +12,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  User? _user;
-  @override
-  void initState() {
-    super.initState();
-    _loadUser();
-  }
-
-  Future<void> _loadUser() async {
-    User? user = await UserPreferences.getUser();
-    setState(() {
-      _user = user;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final userPrefs = Provider.of<UserPreferences>(context);
+    final user = userPrefs.getUser();
     return Scaffold(
       appBar: AppBar(
         title: Text('Salam User'),
       ),
-      body: (_user == null)
+      body: (user == null)
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Padding(
@@ -58,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         subtitle: Text('Page 0'),
                       ),
                     ),
-                    if (_user!.juz != 0) ...[
+                    if (user.juz != 0) ...[
                       LargeGap(),
                       Text(
                         'Memorization Progress',
@@ -72,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ListTile(
                                 leading: const Icon(Icons.book_outlined),
                                 title: const Text('Current Juz'),
-                                subtitle: Text(_user!.juz.toString()),
+                                subtitle: Text(user.juz.toString()),
                               ),
                             ),
                           ),
@@ -83,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 leading:
                                     const Icon(Icons.brightness_low_outlined),
                                 title: const Text('Current Rubu'),
-                                subtitle: Text(_user!.rubu.toString()),
+                                subtitle: Text(user.rubu.toString()),
                               ),
                             ),
                           ),
@@ -96,8 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     MediumGap(),
-                    ..._user!.reviewProgress.keys.map((e) {
-                      return Text('Juz $e: ${_user!.reviewProgress[e]}');
+                    ...user.reviewProgress.keys.map((e) {
+                      return Text('Juz $e: ${user.reviewProgress[e]}');
                     }),
                   ],
                 ),

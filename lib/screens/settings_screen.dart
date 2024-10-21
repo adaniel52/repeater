@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/theme_provider.dart';
 import 'package:repeater/services/user_preferences.dart';
+import 'package:repeater/utils/constants/styles.dart';
+import 'package:repeater/widgets/gap.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -44,51 +46,72 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _resetData() async {
-    await UserPreferences.resetUser();
+    await UserPreferences().resetUser();
     if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const IntroScreen(),
       ),
-      (_) => false,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: Column(
-        children: [
-          ListTile(
-            leading: Icon(Icons.dark_mode),
-            title: Text('Theme'),
-            trailing: DropdownButton(
-                value: selectedTheme,
-                items: ['System', 'Light', 'Dark'].map((e) {
-                  return DropdownMenuItem(
-                    value: e,
-                    child: Text(e),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedTheme = value;
-                  });
-                  themeProvider.setThemeMode(_mapStringtoThemeMode(value!));
-                }),
-          ),
-          ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Reset Data'),
-            onTap: _resetData,
-          ),
-        ],
+      body: Padding(
+        padding: Styles.screenPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Preferences',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            MediumGap(),
+            _setThemeTile(themeProvider),
+            LargeGap(),
+            Text(
+              'Danger Zone',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            MediumGap(),
+            _resetDataTile(),
+          ],
+        ),
       ),
     );
   }
+
+  Widget _setThemeTile(ThemeProvider themeProvider) => ListTile(
+        contentPadding: Styles.noPadding,
+        leading: Icon(Icons.dark_mode),
+        title: Text('Theme'),
+        trailing: DropdownButton(
+          borderRadius: Styles.mediumBorderRadius,
+          value: selectedTheme,
+          items: ['System', 'Light', 'Dark'].map((e) {
+            return DropdownMenuItem(
+              value: e,
+              child: Text(e),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              selectedTheme = value;
+            });
+            themeProvider.setThemeMode(_mapStringtoThemeMode(value!));
+          },
+        ),
+      );
+
+  Widget _resetDataTile() => ListTile(
+        contentPadding: Styles.noPadding,
+        leading: Icon(Icons.delete),
+        title: Text('Reset Data'),
+        onTap: _resetData,
+      );
 }
