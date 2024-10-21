@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/utils/constants/styles.dart';
 
 class CustomButton extends StatelessWidget {
   final double width;
@@ -18,13 +17,8 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       width: width,
       height: 50,
-      child: ElevatedButton(
+      child: FilledButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          shape: const RoundedRectangleBorder(
-            borderRadius: Styles.borderRadius1,
-          ),
-        ),
         child: child,
       ),
     );

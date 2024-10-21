@@ -4,7 +4,7 @@ import 'package:flutter_html_video/flutter_html_video.dart';
 import 'package:repeater/screens/notes/note_photo_view.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:http/http.dart' as http;
-import 'package:repeater/widgets/spacing.dart';
+import 'package:repeater/widgets/gap.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
   final String imageUrl;
@@ -48,7 +48,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: Styles.padding1,
+          padding: Styles.screenPadding,
           child: Center(
             child: SizedBox(
               width: 600,
@@ -66,16 +66,16 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                     child: Hero(
                       tag: widget.imageUrl,
                       child: ClipRRect(
-                        borderRadius: Styles.borderRadius1,
+                        borderRadius: Styles.mediumBorderRadius,
                         child: Image(
                           image: NetworkImage(widget.imageUrl),
                         ),
                       ),
                     ),
                   ),
-                  const Spacing1(),
+                  const MediumGap(),
                   const Divider(),
-                  const Spacing1(),
+                  const MediumGap(),
                   Html(
                     data: htmlContent,
                     extensions: [

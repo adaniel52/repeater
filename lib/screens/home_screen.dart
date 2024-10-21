@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/spacing.dart';
+import 'package:repeater/widgets/gap.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,80 +32,77 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Salam User'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: Styles.padding1,
-          child: (_user == null)
-              ? Text('Loading')
-              : Column(
+      body: (_user == null)
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: Styles.screenPadding,
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Tasks',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    const Spacing1(),
-                    const Card(
-                      margin: Styles.padding0,
+                    const MediumGap(),
+                    const Card.filled(
                       child: ListTile(
                         title: Text('Sabqi'),
                         subtitle: Text('Page 0'),
                       ),
                     ),
-                    const Spacing2(),
-                    const Card(
-                      margin: Styles.padding0,
-                      child: ListTile(
-                        title: Text('Sabqi'),
-                        subtitle: Text('Page 0'),
-                      ),
-                    ),
-                    const Spacing2(),
-                    const Card(
-                      margin: Styles.padding0,
+                    const SmallGap(),
+                    const Card.filled(
                       child: ListTile(
                         title: Text('Sabqi'),
                         subtitle: Text('Page 0'),
                       ),
                     ),
                     if (_user!.juz != 0) ...[
-                      Spacing1(),
+                      LargeGap(),
                       Text(
                         'Memorization Progress',
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                      Spacing1(),
-                      Card(
-                        margin: Styles.padding0,
-                        child: ListTile(
-                          leading: const Icon(Icons.book_outlined),
-                          title: const Text('Current Juz'),
-                          subtitle: Text(_user!.juz.toString()),
-                        ),
-                      ),
-                      Spacing2(),
-                      Card(
-                        margin: Styles.padding0,
-                        child: ListTile(
-                          leading: const Icon(Icons.brightness_low_outlined),
-                          title: const Text('Current Rubu'),
-                          subtitle: Text(_user!.rubu.toString()),
-                        ),
+                      MediumGap(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Card.filled(
+                              child: ListTile(
+                                leading: const Icon(Icons.book_outlined),
+                                title: const Text('Current Juz'),
+                                subtitle: Text(_user!.juz.toString()),
+                              ),
+                            ),
+                          ),
+                          SmallGap(),
+                          Expanded(
+                            child: Card.filled(
+                              child: ListTile(
+                                leading:
+                                    const Icon(Icons.brightness_low_outlined),
+                                title: const Text('Current Rubu'),
+                                subtitle: Text(_user!.rubu.toString()),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                    Spacing1(),
+                    LargeGap(),
                     Text(
                       'Review Progress',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    Spacing2(),
+                    MediumGap(),
                     ..._user!.reviewProgress.keys.map((e) {
-                      return Text('Juz $e');
+                      return Text('Juz $e: ${_user!.reviewProgress[e]}');
                     }),
                   ],
                 ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/services/theme_provider.dart';
 import 'package:repeater/services/user_preferences.dart';
-import 'package:repeater/utils/constants/app_styles.dart';
+import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/init.dart';
 
 void main() async {
@@ -31,8 +31,8 @@ class _MainAppState extends State<MainApp> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Repeater',
-      theme: AppStyles.lightTheme,
-      darkTheme: AppStyles.darkTheme,
+      theme: Styles.lightTheme,
+      darkTheme: Styles.darkTheme,
       themeMode: themeProvider.themeMode,
       home: const Init(),
     );

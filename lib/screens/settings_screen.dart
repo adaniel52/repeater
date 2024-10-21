@@ -85,7 +85,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTile(
             leading: Icon(Icons.delete),
             title: Text('Reset Data'),
-            subtitle: Text('Reset the app as if it was new'),
             onTap: _resetData,
           ),
         ],

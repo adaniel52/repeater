@@ -17,8 +17,9 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        shape: const RoundedRectangleBorder(borderRadius: Styles.borderRadius1),
-        padding: Styles.padding0,
+        shape: const RoundedRectangleBorder(
+            borderRadius: Styles.mediumBorderRadius),
+        padding: Styles.noPadding,
       ),
       onPressed: () {
         Navigator.of(context).push(
@@ -32,14 +33,14 @@ class NoteCard extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: Styles.padding2,
+        padding: Styles.mediumPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
               tag: imageUrl,
               child: ClipRRect(
-                borderRadius: Styles.borderRadius2,
+                borderRadius: Styles.smallBorderRadius,
                 child: Image(
                   image: NetworkImage(imageUrl),
                   loadingBuilder: (context, child, loadingProgress) {
@@ -67,31 +68,6 @@ class NoteCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Row(
-                //   children: [
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Colors.lightGreen[100],
-                //         borderRadius: Styles.borderRadius2,
-                //       ),
-                //       child: Text(
-                //         'Tajweed',
-                //       ),
-                //     ),
-                //     SizedBox(width: 4),
-                //     Container(
-                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //       decoration: BoxDecoration(
-                //         color: Colors.orange[100],
-                //         borderRadius: Styles.borderRadius2,
-                //       ),
-                //       child: Text(
-                //         'Recommended',
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ],

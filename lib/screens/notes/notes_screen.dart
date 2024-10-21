@@ -17,9 +17,7 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   void initState() {
     super.initState();
-    if (_notes.isEmpty) {
-      _fetchData();
-    }
+    _fetchData();
   }
 
   Future<void> _fetchData() async {
@@ -39,20 +37,19 @@ class _NotesScreenState extends State<NotesScreen> {
     double width = MediaQuery.sizeOf(context).width;
     int crossAxisCount = (width / 300).floor();
     double childWidth =
-        (width - spacing1 * 2 - spacing2 * (crossAxisCount - 1)) /
-            crossAxisCount;
+        (width - 28 - 4 * (crossAxisCount - 1)) / crossAxisCount;
     double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
         title: Text('Notes'),
       ),
       body: GridView.builder(
-        padding: Styles.padding1,
+        padding: Styles.screenPadding,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
-          mainAxisSpacing: spacing2,
-          crossAxisSpacing: spacing2,
-          childAspectRatio: childWidth / (childHeight + 45),
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          childAspectRatio: childWidth / (childHeight + 35),
         ),
         itemCount: _notes.length,
         itemBuilder: (context, index) {

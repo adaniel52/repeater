@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:repeater/screens/form/form_screen.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
-import 'package:repeater/widgets/spacing.dart';
+import 'package:repeater/widgets/gap.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});
@@ -14,18 +14,18 @@ class IntroScreen extends StatelessWidget {
         child: SizedBox(
           width: 400,
           child: Padding(
-            padding: Styles.padding1,
+            padding: Styles.screenPadding,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const ClipRRect(
-                  borderRadius: Styles.borderRadius1,
+                  borderRadius: Styles.largeBorderRadius,
                   child: Image(
                     image: AssetImage('assets/icon/icon.png'),
                     height: 200,
                   ),
                 ),
-                const Spacing1(),
+                const LargeGap(),
                 Text(
                   'Repeater',
                   style: Theme.of(context).textTheme.headlineLarge,
@@ -35,7 +35,7 @@ class IntroScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                const Spacing1(),
+                const LargeGap(),
                 CustomButton(
                   onPressed: () {
                     Navigator.of(context).push(

@@ -4,7 +4,7 @@ import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/main_navigation.dart';
-import 'package:repeater/widgets/spacing.dart';
+import 'package:repeater/widgets/gap.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -15,9 +15,10 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   final _formKey = GlobalKey<FormState>();
-  List<String> options = ['None', 'Partially', 'Fully'];
+  final _textFieldKey = GlobalKey();
   late final TextEditingController _juzController;
   late final TextEditingController _rubuController;
+  late final ScrollController _scrollController;
 
   bool hasKhatam = false;
   Map<String, String> reviewProgress = {};
@@ -27,6 +28,7 @@ class _FormScreenState extends State<FormScreen> {
     super.initState();
     _juzController = TextEditingController();
     _rubuController = TextEditingController();
+    _scrollController = ScrollController();
     _initProgress();
   }
 
@@ -34,6 +36,7 @@ class _FormScreenState extends State<FormScreen> {
   void dispose() {
     _juzController.dispose();
     _rubuController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -43,27 +46,34 @@ class _FormScreenState extends State<FormScreen> {
     }
   }
 
+  void _scrollToTextField() {
+    final context = _textFieldKey.currentContext!;
+    Scrollable.ensureVisible(context, duration: Duration(milliseconds: 500));
+  }
+
+  void _handleSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      await UserPreferences.setUser(
+        User(
+          juz: int.tryParse(_juzController.text) ?? 0,
+          rubu: int.tryParse(_rubuController.text) ?? 0,
+          reviewProgress: reviewProgress,
+        ),
+      );
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const MainNavigation(),
+        ),
+        (_) => false,
+      );
+    } else {
+      _scrollToTextField();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void handleSubmit() async {
-      if (_formKey.currentState!.validate()) {
-        await UserPreferences.setUser(
-          User(
-            juz: int.tryParse(_juzController.text) ?? 0,
-            rubu: int.tryParse(_rubuController.text) ?? 0,
-            reviewProgress: reviewProgress,
-          ),
-        );
-        if (!context.mounted) return;
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const MainNavigation(),
-          ),
-          (_) => false,
-        );
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Form'),
@@ -75,7 +85,7 @@ class _FormScreenState extends State<FormScreen> {
             child: SizedBox(
               width: 400,
               child: Padding(
-                padding: Styles.padding1,
+                padding: Styles.screenPadding,
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -83,20 +93,22 @@ class _FormScreenState extends State<FormScreen> {
                       _khatamForm(),
                       Divider(),
                       if (!hasKhatam) ...[
-                        Spacing2(),
+                        LargeGap(
+                          key: _textFieldKey,
+                        ),
                         Text('Fill in your current memorization info.'),
-                        Spacing1(),
+                        MediumGap(),
                         _juzForm(),
-                        Spacing2(),
+                        LargeGap(),
                         _rubuForm(),
-                        Spacing1(),
+                        MediumGap(),
                         Divider(),
                       ],
                       _reviewProgressForm(),
-                      Spacing2(),
+                      LargeGap(),
                       Divider(),
-                      Spacing1(),
-                      _submitButton(handleSubmit),
+                      MediumGap(),
+                      _submitButton(),
                     ],
                   ),
                 ),
@@ -109,7 +121,7 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Widget _khatamForm() => ListTile(
-        contentPadding: Styles.padding0,
+        contentPadding: Styles.noPadding,
         title: Text('Khatam'),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
@@ -123,7 +135,7 @@ class _FormScreenState extends State<FormScreen> {
                 });
               },
             ),
-            Spacing2(),
+            LargeGap(),
             ChoiceChip(
               label: Text('No'),
               selected: !hasKhatam,
@@ -142,7 +154,9 @@ class _FormScreenState extends State<FormScreen> {
         decoration: InputDecoration(
           labelText: 'Juz*',
           hintText: '1 - 30',
-          border: OutlineInputBorder(borderRadius: Styles.borderRadius1),
+          border: OutlineInputBorder(
+            borderRadius: Styles.mediumBorderRadius,
+          ),
         ),
         onChanged: (_) {
           _formKey.currentState!.validate();
@@ -150,7 +164,7 @@ class _FormScreenState extends State<FormScreen> {
         validator: (value) {
           int? juz = int.tryParse(value!);
           if (juz == null || juz < 1 || juz > 30) {
-            return 'Invalid input.';
+            return 'Invalid input';
           }
           return null;
         },
@@ -161,7 +175,9 @@ class _FormScreenState extends State<FormScreen> {
         decoration: InputDecoration(
           labelText: 'Rubu*',
           hintText: '1 - 8',
-          border: OutlineInputBorder(borderRadius: Styles.borderRadius1),
+          border: OutlineInputBorder(
+            borderRadius: Styles.mediumBorderRadius,
+          ),
         ),
         onChanged: (_) {
           _formKey.currentState!.validate();
@@ -169,49 +185,51 @@ class _FormScreenState extends State<FormScreen> {
         validator: (value) {
           int? juz = int.tryParse(value!);
           if (juz == null || juz < 1 || juz > 8) {
-            return 'Invalid input.';
+            return 'Invalid input';
           }
           return null;
         },
       );
 
-  Widget _reviewProgressForm() => Column(
-        children: [
-          Spacing2(),
-          Text('Which juz have you still remembered?'),
-          Spacing2(),
-          ...reviewProgress.keys.map(
-            (juz) => ListTile(
-              contentPadding: Styles.padding0,
-              title: Text('Juz $juz'),
-              trailing: SizedBox(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: options
-                      .map(
-                        (option) => Padding(
-                          padding: const EdgeInsets.only(left: spacing2),
-                          child: ChoiceChip(
-                            label: Text(option),
-                            selected: reviewProgress[juz] == option,
-                            onSelected: (value) {
-                              setState(() {
-                                reviewProgress[juz] = option;
-                              });
-                            },
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
+  Widget _reviewProgressForm() => Column(children: [
+        LargeGap(),
+        Text('Which juz have you still remembered?'),
+        LargeGap(),
+        ...reviewProgress.keys.map((juz) {
+          return ListTile(
+            contentPadding: Styles.noPadding,
+            title: Text('Juz $juz'),
+            trailing: SizedBox(
+              width: 270,
+              child: SegmentedButton(
+                segments: [
+                  ButtonSegment(
+                    value: 'None',
+                    label: FittedBox(child: Text('None')),
+                  ),
+                  ButtonSegment(
+                    value: 'Partially',
+                    label: FittedBox(child: Text('Partially')),
+                  ),
+                  ButtonSegment(
+                    value: 'Fully',
+                    label: FittedBox(child: Text('Fully')),
+                  ),
+                ],
+                selected: {reviewProgress[juz]},
+                onSelectionChanged: (value) {
+                  setState(() {
+                    reviewProgress[juz] = value.first!;
+                  });
+                },
               ),
             ),
-          ),
-        ],
-      );
+          );
+        }),
+      ]);
 
-  Widget _submitButton(void Function() onPressed) => CustomButton(
-        onPressed: onPressed,
+  Widget _submitButton() => CustomButton(
+        onPressed: _handleSubmit,
         child: Text('Submit'),
       );
 }
