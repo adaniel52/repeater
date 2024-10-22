@@ -11,7 +11,7 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  int currentIndex = 0;
+  int index = 0;
   static const _screens = [
     HomeScreen(),
     NotesScreen(),
@@ -20,33 +20,67 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.note_outlined),
-            selectedIcon: Icon(Icons.note),
-            label: 'Notes',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+      bottomNavigationBar: (width < 640)
+          ? NavigationBar(
+              selectedIndex: index,
+              onDestinationSelected: (value) {
+                setState(() {
+                  index = value;
+                });
+              },
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.note_outlined),
+                  selectedIcon: Icon(Icons.note),
+                  label: 'Notes',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.settings_outlined),
+                  selectedIcon: Icon(Icons.settings),
+                  label: 'Settings',
+                ),
+              ],
+            )
+          : null,
+      body: Row(
+        children: [
+          if (width >= 640)
+            NavigationRail(
+              selectedIndex: index,
+              onDestinationSelected: (value) {
+                setState(() {
+                  index = value;
+                });
+              },
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.note_outlined),
+                  selectedIcon: Icon(Icons.note),
+                  label: Text('Notes'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.settings_outlined),
+                  selectedIcon: Icon(Icons.settings),
+                  label: Text('Settings'),
+                ),
+              ],
+            ),
+          Expanded(child: _screens[index]),
         ],
       ),
-      body: _screens[currentIndex],
     );
   }
 }

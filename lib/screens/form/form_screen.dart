@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
+import 'package:repeater/widgets/choice_chips.dart';
 import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/main_navigation.dart';
 import 'package:repeater/widgets/gap.dart';
@@ -53,18 +54,19 @@ class _FormScreenState extends State<FormScreen> {
 
   void _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
-      await UserPreferences().setUser(
+      await UserPreferences().createUser(
         User(
-          juz: int.tryParse(_juzController.text) ?? 0,
-          rubu: int.tryParse(_rubuController.text) ?? 0,
+          juz: int.tryParse(_juzController.text),
+          rubu: int.tryParse(_rubuController.text),
           reviewProgress: reviewProgress,
         ),
       );
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => const MainNavigation(),
         ),
+        (_) => false,
       );
     } else {
       _scrollToTextField();
@@ -93,14 +95,8 @@ class _FormScreenState extends State<FormScreen> {
                       LargeGap(),
                       Divider(),
                       if (!hasKhatam) ...[
-                        LargeGap(
-                          key: _textFieldKey,
-                        ),
-                        Text('Fill in your current memorization info.'),
-                        MediumGap(),
-                        _juzForm(),
-                        MediumGap(),
-                        _rubuForm(),
+                        LargeGap(key: _textFieldKey),
+                        _memorizationInfoForm(),
                         LargeGap(),
                         Divider(),
                       ],
@@ -121,112 +117,91 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget _khatamForm() => ListTile(
-        contentPadding: Styles.noPadding,
-        title: Text('Khatam'),
-        trailing: SizedBox(
-          width: 150,
-          child: SegmentedButton(
-            segments: [
-              ButtonSegment(value: 'Yes', label: Text('Yes')),
-              ButtonSegment(value: 'No', label: Text('No')),
-            ],
-            selected: hasKhatam ? {'Yes'} : {'No'},
-            onSelectionChanged: (value) {
-              switch (value.first) {
-                case 'Yes':
-                  setState(() {
-                    hasKhatam = true;
-                  });
-                  break;
-                default:
-                  setState(() {
-                    hasKhatam = false;
-                  });
-                  break;
+  Widget _memorizationInfoForm() => Column(
+        children: [
+          Text('Fill in your current memorization info.'),
+          MediumGap(),
+          TextFormField(
+            controller: _juzController,
+            decoration: InputDecoration(
+              labelText: 'Juz*',
+              hintText: '1 - 30',
+              border: OutlineInputBorder(
+                borderRadius: Styles.mediumBorderRadius,
+              ),
+            ),
+            onChanged: (_) {
+              _formKey.currentState!.validate();
+            },
+            validator: (value) {
+              int? juz = int.tryParse(value!);
+              if (juz == null || juz < 1 || juz > 30) {
+                return 'Invalid input';
+              } else {
+                return null;
               }
             },
           ),
-        ),
-      );
-
-  Widget _juzForm() => TextFormField(
-        controller: _juzController,
-        decoration: InputDecoration(
-          labelText: 'Juz*',
-          hintText: '1 - 30',
-          border: OutlineInputBorder(
-            borderRadius: Styles.mediumBorderRadius,
+          MediumGap(),
+          TextFormField(
+            controller: _rubuController,
+            decoration: InputDecoration(
+              labelText: 'Rubu*',
+              hintText: '1 - 8',
+              border: OutlineInputBorder(
+                borderRadius: Styles.mediumBorderRadius,
+              ),
+            ),
+            onChanged: (_) {
+              _formKey.currentState!.validate();
+            },
+            validator: (value) {
+              int? rubu = int.tryParse(value!);
+              if (rubu == null || rubu < 1 || rubu > 8) {
+                return 'Invalid input';
+              } else {
+                return null;
+              }
+            },
           ),
-        ),
-        onChanged: (_) {
-          _formKey.currentState!.validate();
-        },
-        validator: (value) {
-          int? juz = int.tryParse(value!);
-          if (juz == null || juz < 1 || juz > 30) {
-            return 'Invalid input';
-          }
-          return null;
-        },
+        ],
       );
 
-  Widget _rubuForm() => TextFormField(
-        controller: _rubuController,
-        decoration: InputDecoration(
-          labelText: 'Rubu*',
-          hintText: '1 - 8',
-          border: OutlineInputBorder(
-            borderRadius: Styles.mediumBorderRadius,
-          ),
+  Widget _khatamForm() => ListTile(
+        contentPadding: Styles.noPadding,
+        title: Text('Khatam'),
+        trailing: ChoiceChips(
+          options: ['Yes', 'No'],
+          selected: hasKhatam ? 'Yes' : 'No',
+          onSelected: (value) {
+            setState(() {
+              hasKhatam = value == 'Yes' ? true : false;
+            });
+          },
         ),
-        onChanged: (_) {
-          _formKey.currentState!.validate();
-        },
-        validator: (value) {
-          int? juz = int.tryParse(value!);
-          if (juz == null || juz < 1 || juz > 8) {
-            return 'Invalid input';
-          }
-          return null;
-        },
       );
 
-  Widget _reviewProgressForm() => Column(children: [
-        Text('Which juz have you still remembered?'),
-        MediumGap(),
-        ...reviewProgress.keys.map((juz) {
-          return ListTile(
-            contentPadding: Styles.noPadding,
-            title: Text('Juz $juz'),
-            trailing: SizedBox(
-              width: 270,
-              child: SegmentedButton(
-                segments: [
-                  ButtonSegment(
-                    value: 'None',
-                    label: FittedBox(child: Text('None')),
-                  ),
-                  ButtonSegment(
-                    value: 'Partially',
-                    label: FittedBox(child: Text('Partially')),
-                  ),
-                  ButtonSegment(
-                    value: 'Fully',
-                    label: FittedBox(child: Text('Fully')),
-                  ),
-                ],
-                selected: {reviewProgress[juz]},
-                onSelectionChanged: (value) {
+  Widget _reviewProgressForm() => Column(
+        children: [
+          Text('Which rubu have you still remembered?'),
+          MediumGap(),
+          ...reviewProgress.keys.map((juz) {
+            return ListTile(
+              contentPadding: Styles.noPadding,
+              title: Text('Juz $juz'),
+              trailing: ChoiceChips(
+                options: ['None', 'Partially', 'Fully'],
+                selected: reviewProgress[juz]!,
+                onSelected: (value) {
                   setState(() {
-                    reviewProgress[juz] = value.first!;
+                    reviewProgress[juz] = value;
                   });
                 },
               ),
-            ),
-          );
-        }),
-      ]);
+            );
+          }),
+        ],
+      );
 
   Widget _submitButton() => CustomButton(
         onPressed: _handleSubmit,

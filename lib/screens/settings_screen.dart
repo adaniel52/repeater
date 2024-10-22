@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
+import 'package:repeater/widgets/choice_chips.dart';
 import 'package:repeater/widgets/gap.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  String? selectedTheme;
+  late String selectedTheme;
 
   @override
   void initState() {
@@ -25,10 +26,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _resetData() async {
     await UserPreferences().resetUser();
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const IntroScreen(),
       ),
+      (_) => false,
     );
   }
 
@@ -39,28 +41,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: Styles.screenPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Preferences',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              MediumGap(),
-              _setThemeTile(userPrefs),
-              LargeGap(),
-              Text(
-                'Danger Zone',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              MediumGap(),
-              _resetDataTile(),
-            ],
+      body: ListView(
+        padding: Styles.screenPadding,
+        children: [
+          Text(
+            'Preferences',
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
-        ),
+          MediumGap(),
+          _setThemeTile(userPrefs),
+          LargeGap(),
+          Text(
+            'Danger Zone',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          MediumGap(),
+          _resetDataTile(),
+        ],
       ),
     );
   }
@@ -69,16 +66,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         contentPadding: Styles.noPadding,
         leading: Icon(Icons.dark_mode),
         title: Text('Theme'),
-        trailing: DropdownButton(
-          borderRadius: Styles.mediumBorderRadius,
-          value: selectedTheme,
-          items: ['System', 'Light', 'Dark'].map((e) {
-            return DropdownMenuItem(
-              value: e,
-              child: Text(e),
-            );
-          }).toList(),
-          onChanged: (value) {
+        trailing: ChoiceChips(
+          options: ['System', 'Light', 'Dark'],
+          selected: selectedTheme,
+          onSelected: (value) {
             setState(() {
               selectedTheme = value;
             });

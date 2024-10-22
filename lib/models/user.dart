@@ -6,25 +6,25 @@ const reviewProgressKey = 'reviewProgress';
 const themeModeKey = 'themeMode';
 
 class User {
-  int _juz;
-  int _rubu;
-  Map _reviewProgress;
+  int? _juz;
+  int? _rubu;
+  Map? _reviewProgress;
   String? _themeMode;
 
   User({
-    required int juz,
-    required int rubu,
-    required Map reviewProgress,
+    int? juz,
+    int? rubu,
+    Map? reviewProgress,
     String? themeMode,
   })  : _juz = juz,
         _rubu = rubu,
         _reviewProgress = reviewProgress,
         _themeMode = themeMode;
 
-  int get juz => _juz;
-  int get rubu => _rubu;
-  Map get reviewProgress => _reviewProgress;
-  String? get themeMode => _themeMode;
+  int? get juz => _juz;
+  int? get rubu => _rubu;
+  Map? get reviewProgress => _reviewProgress;
+  String get themeMode => _themeMode ?? 'System';
 
   String toJson() => json.encode({
         juzKey: _juz,
@@ -36,10 +36,11 @@ class User {
   factory User.fromJson(String source) {
     final data = json.decode(source);
     return User(
-        juz: data[juzKey] ?? 0,
-        rubu: data[rubuKey] ?? 0,
-        reviewProgress: data[reviewProgressKey] ?? {},
-        themeMode: data[themeModeKey]);
+      juz: data[juzKey],
+      rubu: data[rubuKey],
+      reviewProgress: data[reviewProgressKey],
+      themeMode: data[themeModeKey],
+    );
   }
 
   User copyWith({

@@ -23,85 +23,78 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: (user == null)
           ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Padding(
-                padding: Styles.screenPadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tasks',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const MediumGap(),
-                    const Card.filled(
-                      child: ListTile(
-                        title: Text('Sabqi'),
-                        subtitle: Text('Page 0'),
-                      ),
-                    ),
-                    const SmallGap(),
-                    const Card.filled(
-                      child: ListTile(
-                        title: Text('Sabqi'),
-                        subtitle: Text('Page 0'),
-                      ),
-                    ),
-                    if (user.juz != 0) ...[
-                      LargeGap(),
-                      Text(
-                        'Memorization Progress',
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      MediumGap(),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Card.filled(
-                              child: ListTile(
-                                leading: const Icon(Icons.book_outlined),
-                                title: const Text('Current Juz'),
-                                subtitle: Text(user.juz.toString()),
-                              ),
-                            ),
-                          ),
-                          SmallGap(),
-                          Expanded(
-                            child: Card.filled(
-                              child: ListTile(
-                                leading:
-                                    const Icon(Icons.brightness_low_outlined),
-                                title: const Text('Current Rubu'),
-                                subtitle: Text(user.rubu.toString()),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                    LargeGap(),
-                    Text(
-                      'Review Progress',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    MediumGap(),
-                    ...user.reviewProgress.keys.map((e) {
-                      // return Text('Juz $e: ${user.reviewProgress[e]}');
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          top: e == '1' ? 0 : Styles.smallSpacing,
-                        ),
+          : ListView(
+              padding: Styles.screenPadding,
+              children: [
+                Text(
+                  'Tasks',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const MediumGap(),
+                const Card.filled(
+                  child: ListTile(
+                    title: Text('Sabqi'),
+                    subtitle: Text('Page 0'),
+                  ),
+                ),
+                const SmallGap(),
+                const Card.filled(
+                  child: ListTile(
+                    title: Text('Sabqi'),
+                    subtitle: Text('Page 0'),
+                  ),
+                ),
+                if (user.juz != null) ...[
+                  LargeGap(),
+                  Text(
+                    'Memorization Progress',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  MediumGap(),
+                  Row(
+                    children: [
+                      Expanded(
                         child: Card.filled(
                           child: ListTile(
-                            title: Text('Juz $e'),
-                            subtitle: Text(user.reviewProgress[e]),
+                            leading: const Icon(Icons.book_outlined),
+                            title: const Text('Current Juz'),
+                            subtitle: Text(user.juz.toString()),
                           ),
                         ),
-                      );
-                    }),
-                  ],
+                      ),
+                      SmallGap(),
+                      Expanded(
+                        child: Card.filled(
+                          child: ListTile(
+                            leading: const Icon(Icons.brightness_low_outlined),
+                            title: const Text('Current Rubu'),
+                            subtitle: Text(user.rubu.toString()),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+                LargeGap(),
+                Text(
+                  'Review Progress',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
-              ),
+                MediumGap(),
+                ...user.reviewProgress!.keys.map((e) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: e == '1' ? 0 : Styles.smallSpacing,
+                    ),
+                    child: Card.filled(
+                      child: ListTile(
+                        title: Text('Juz $e'),
+                        subtitle: Text(user.reviewProgress![e]),
+                      ),
+                    ),
+                  );
+                }),
+              ],
             ),
     );
   }

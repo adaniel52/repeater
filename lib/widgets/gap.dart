@@ -6,8 +6,8 @@ class SmallGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 5,
-      height: 5,
+      width: 4,
+      height: 4,
     );
   }
 }
@@ -18,8 +18,8 @@ class MediumGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 10,
-      height: 10,
+      width: 12,
+      height: 12,
     );
   }
 }

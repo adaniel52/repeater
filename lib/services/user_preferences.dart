@@ -16,7 +16,7 @@ class UserPreferences extends ChangeNotifier {
 
   SharedPreferences? get prefs => _preferences;
 
-  Future<void> setUser(User user) async {
+  Future<void> createUser(User user) async {
     if (_preferences == null) return;
     await _preferences!.setString('user', user.toJson());
     notifyListeners();
@@ -47,13 +47,8 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> resetUser() async {
-    User defaultUser = User(
-      juz: 0,
-      rubu: 0,
-      reviewProgress: {},
-      themeMode: null,
-    );
-    await setUser(defaultUser);
+    User defaultUser = User();
+    await createUser(defaultUser);
     notifyListeners();
   }
 }
