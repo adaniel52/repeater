@@ -17,6 +17,7 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   void initState() {
     super.initState();
+
     _fetchData();
   }
 
@@ -26,9 +27,11 @@ class _NotesScreenState extends State<NotesScreen> {
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      setState(() {
-        _notes = data['data'];
-      });
+      if (mounted) {
+        setState(() {
+          _notes = data['data'];
+        });
+      }
     }
   }
 
@@ -36,7 +39,9 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     int crossAxisCount = (width / 300).floor();
-    double childWidth = (width - 28) / crossAxisCount;
+    double childWidth =
+        (width - 28 - Styles.largeSpacing * (crossAxisCount - 1)) /
+            crossAxisCount;
     double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
@@ -46,9 +51,9 @@ class _NotesScreenState extends State<NotesScreen> {
         padding: Styles.screenPadding,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
-          // mainAxisSpacing: 4,
-          // crossAxisSpacing: 4,
-          childAspectRatio: childWidth / (childHeight + 50),
+          mainAxisSpacing: Styles.largeSpacing,
+          crossAxisSpacing: Styles.largeSpacing,
+          childAspectRatio: childWidth / (childHeight + 40),
         ),
         itemCount: _notes.length,
         itemBuilder: (context, index) {

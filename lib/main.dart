@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:repeater/services/theme_provider.dart';
+import 'package:repeater/utils/theme_mode.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/init.dart';
@@ -12,7 +12,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserPreferences()),
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        // ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: const MainApp(),
     ),
@@ -29,12 +29,13 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final userPrefs = Provider.of<UserPreferences>(context);
+    final themeMode = mapStringtoThemeMode(userPrefs.getUser()!.themeMode!);
     return MaterialApp(
       title: 'Repeater',
       theme: Styles.lightTheme,
       darkTheme: Styles.darkTheme,
-      themeMode: themeProvider.themeMode,
+      themeMode: themeMode,
       home: const Init(),
     );
   }

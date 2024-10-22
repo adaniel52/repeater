@@ -23,21 +23,21 @@ class _InitState extends State<Init> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final User? user =
           Provider.of<UserPreferences>(context, listen: false).getUser();
-      // if (!mounted) return;
-      if (user!.reviewProgress.isNotEmpty) {
-        Navigator.pushReplacement(
-          context,
+      if (user != null && user.reviewProgress.isNotEmpty) {
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => MainNavigation(),
           ),
+          (_) => false,
+        );
+      } else {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => IntroScreen(),
+          ),
+          (_) => false,
         );
       }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => IntroScreen(),
-        ),
-      );
     });
   }
 

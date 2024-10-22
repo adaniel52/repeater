@@ -16,9 +16,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userPrefs = Provider.of<UserPreferences>(context);
     final user = userPrefs.getUser();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Salam User'),
+        title: Text('Home'),
       ),
       body: (user == null)
           ? Center(child: CircularProgressIndicator())
@@ -85,7 +86,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     MediumGap(),
                     ...user.reviewProgress.keys.map((e) {
-                      return Text('Juz $e: ${user.reviewProgress[e]}');
+                      // return Text('Juz $e: ${user.reviewProgress[e]}');
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: e == '1' ? 0 : Styles.smallSpacing,
+                        ),
+                        child: Card.filled(
+                          child: ListTile(
+                            title: Text('Juz $e'),
+                            subtitle: Text(user.reviewProgress[e]),
+                          ),
+                        ),
+                      );
                     }),
                   ],
                 ),

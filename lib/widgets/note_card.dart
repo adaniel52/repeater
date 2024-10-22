@@ -17,11 +17,6 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // style: ElevatedButton.styleFrom(
-      //   shape: const RoundedRectangleBorder(
-      //       borderRadius: Styles.mediumBorderRadius),
-      //   padding: Styles.noPadding,
-      // ),
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -33,40 +28,37 @@ class NoteCard extends StatelessWidget {
           ),
         );
       },
-      child: Padding(
-        padding: Styles.mediumPadding,
-        child: Image(
-          image: NetworkImage(imageUrl),
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Hero(
-                    tag: imageUrl,
-                    child: ClipRRect(
-                      borderRadius: Styles.mediumBorderRadius,
-                      child: child,
-                    ),
+      child: Image(
+        image: NetworkImage(imageUrl),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Hero(
+                  tag: imageUrl,
+                  child: ClipRRect(
+                    borderRadius: Styles.mediumBorderRadius,
+                    child: child,
                   ),
-                  SmallGap(),
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ],
-              );
-            }
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        (loadingProgress.expectedTotalBytes ?? 1)
-                    : null,
-              ),
+                ),
+                SmallGap(),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ],
             );
-          },
-        ),
+          }
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                      (loadingProgress.expectedTotalBytes ?? 1)
+                  : null,
+            ),
+          );
+        },
       ),
     );
   }

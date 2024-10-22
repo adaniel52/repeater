@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
-import 'package:repeater/services/theme_provider.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/gap.dart';
@@ -19,30 +18,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    selectedTheme = _mapThemeModeToString(themeProvider.themeMode);
-  }
-
-  ThemeMode _mapStringtoThemeMode(String theme) {
-    switch (theme) {
-      case 'Light':
-        return ThemeMode.light;
-      case 'Dark':
-        return ThemeMode.dark;
-      default:
-        return ThemeMode.system;
-    }
-  }
-
-  String _mapThemeModeToString(ThemeMode themeMode) {
-    switch (themeMode) {
-      case ThemeMode.light:
-        return 'Light';
-      case ThemeMode.dark:
-        return 'Dark';
-      default:
-        return 'System';
-    }
+    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+    selectedTheme = userPrefs.getUser()!.themeMode;
   }
 
   void _resetData() async {
@@ -57,36 +34,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final userPrefs = Provider.of<UserPreferences>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: Padding(
-        padding: Styles.screenPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Preferences',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            MediumGap(),
-            _setThemeTile(themeProvider),
-            LargeGap(),
-            Text(
-              'Danger Zone',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            MediumGap(),
-            _resetDataTile(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: Styles.screenPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Preferences',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              MediumGap(),
+              _setThemeTile(userPrefs),
+              LargeGap(),
+              Text(
+                'Danger Zone',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              MediumGap(),
+              _resetDataTile(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _setThemeTile(ThemeProvider themeProvider) => ListTile(
+  Widget _setThemeTile(UserPreferences userPrefs) => ListTile(
         contentPadding: Styles.noPadding,
         leading: Icon(Icons.dark_mode),
         title: Text('Theme'),
@@ -103,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             setState(() {
               selectedTheme = value;
             });
-            themeProvider.setThemeMode(_mapStringtoThemeMode(value!));
+            userPrefs.updateUser(themeMode: value);
           },
         ),
       );

@@ -58,6 +58,10 @@ class Styles {
   static const mediumPadding = EdgeInsets.all(8);
   static const largePadding = EdgeInsets.all(12);
 
+  static const double smallSpacing = 4;
+  static const double mediumSpacing = 8;
+  static const double largeSpacing = 12;
+
   static const largeBorderRadius = BorderRadius.all(Radius.circular(16));
   static const mediumBorderRadius = BorderRadius.all(Radius.circular(12));
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));

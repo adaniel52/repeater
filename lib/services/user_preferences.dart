@@ -22,6 +22,23 @@ class UserPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateUser({
+    int? juz,
+    int? rubu,
+    Map? reviewProgress,
+    String? themeMode,
+  }) async {
+    if (_preferences == null) return;
+    final user = getUser()!.copyWith(
+      juz: juz,
+      rubu: rubu,
+      reviewProgress: reviewProgress,
+      themeMode: themeMode,
+    );
+    await _preferences!.setString('user', user.toJson());
+    notifyListeners();
+  }
+
   User? getUser() {
     if (_preferences == null) return null;
     String? userJson = _preferences!.getString('user');
