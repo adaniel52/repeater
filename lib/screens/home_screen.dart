@@ -14,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    int crossAxisCount = (width / 200).floor();
     final userPrefs = Provider.of<UserPreferences>(context);
     final user = userPrefs.getUser();
 
@@ -31,13 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const MediumGap(),
-                const Card.filled(
-                  child: ListTile(
-                    title: Text('Sabqi'),
-                    subtitle: Text('Page 0'),
-                  ),
-                ),
-                const SmallGap(),
                 const Card.filled(
                   child: ListTile(
                     title: Text('Sabqi'),
@@ -81,19 +76,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 MediumGap(),
-                ...user.reviewProgress!.keys.map((e) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      top: e == '1' ? 0 : Styles.smallSpacing,
-                    ),
-                    child: Card.filled(
+                GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      mainAxisSpacing: Styles.smallSpacing,
+                      crossAxisSpacing: Styles.smallSpacing,
+                      childAspectRatio: 2),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: user.memorization!.length,
+                  itemBuilder: (context, index) {
+                    final juz = user.memorization![index];
+                    return Card.filled(
                       child: ListTile(
-                        title: Text('Juz $e'),
-                        subtitle: Text(user.reviewProgress![e]),
+                        title: Text('Juz ${index + 1}'),
+                        subtitle: Text(juz.fluency),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                )
+                // ...user.memorization!.keys.map((e) {
+                //   return Padding(
+                //     padding: EdgeInsets.only(
+                //       top: e == '1' ? 0 : Styles.smallSpacing,
+                //     ),
+                //     child: Card.filled(
+                //       child: ListTile(
+                //         title: Text('Juz $e'),
+                //         subtitle: Text(user.memorization![e]),
+                //       ),
+                //     ),
+                //   );
+                // }),
               ],
             ),
     );

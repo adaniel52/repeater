@@ -20,7 +20,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       bottomNavigationBar: (width < 640)
           ? NavigationBar(
@@ -60,6 +60,7 @@ class _MainNavigationState extends State<MainNavigation> {
                 });
               },
               backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+              labelType: NavigationRailLabelType.all,
               destinations: [
                 NavigationRailDestination(
                   icon: Icon(Icons.home_outlined),

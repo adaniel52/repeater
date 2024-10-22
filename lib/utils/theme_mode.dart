@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-ThemeMode mapStringtoThemeMode(String theme) {
+ThemeMode mapStringtoThemeMode(String? theme) {
   switch (theme) {
     case 'Light':
       return ThemeMode.light;
@@ -11,7 +11,7 @@ ThemeMode mapStringtoThemeMode(String theme) {
   }
 }
 
-String mapThemeModeToString(ThemeMode themeMode) {
+String mapThemeModeToString(ThemeMode? themeMode) {
   switch (themeMode) {
     case ThemeMode.light:
       return 'Light';

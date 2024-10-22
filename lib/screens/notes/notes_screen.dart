@@ -38,9 +38,10 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     int crossAxisCount = (width / 300).floor();
-    double childWidth =
-        (width - 28 - Styles.largeSpacing * (crossAxisCount - 1)) /
-            crossAxisCount;
+    double childWidth = (width -
+            2 * Styles.screenSpacing -
+            Styles.largeSpacing * (crossAxisCount - 1)) /
+        crossAxisCount;
     double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(

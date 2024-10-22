@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,14 +25,14 @@ class UserPreferences extends ChangeNotifier {
   Future<void> updateUser({
     int? juz,
     int? rubu,
-    Map? reviewProgress,
-    String? themeMode,
+    List<Juz>? memorization,
+    ThemeMode? themeMode,
   }) async {
     if (_preferences == null) return;
     final user = getUser()!.copyWith(
       juz: juz,
       rubu: rubu,
-      reviewProgress: reviewProgress,
+      memorization: memorization,
       themeMode: themeMode,
     );
     await _preferences!.setString('user', user.toJson());

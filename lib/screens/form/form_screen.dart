@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/choice_chips.dart';
 import 'package:repeater/widgets/custom_button.dart';
-import 'package:repeater/widgets/main_navigation.dart';
 import 'package:repeater/widgets/gap.dart';
+import 'package:repeater/widgets/main_navigation.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -22,7 +23,7 @@ class _FormScreenState extends State<FormScreen> {
   late final ScrollController _scrollController;
 
   bool hasKhatam = false;
-  Map<String, String> reviewProgress = {};
+  List<Juz> memorization = List.generate(30, (_) => Juz());
 
   @override
   void initState() {
@@ -30,7 +31,6 @@ class _FormScreenState extends State<FormScreen> {
     _juzController = TextEditingController();
     _rubuController = TextEditingController();
     _scrollController = ScrollController();
-    _initProgress();
   }
 
   @override
@@ -39,12 +39,6 @@ class _FormScreenState extends State<FormScreen> {
     _rubuController.dispose();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _initProgress() {
-    for (var i = 1; i <= 30; i++) {
-      reviewProgress[i.toString()] = 'None';
-    }
   }
 
   void _scrollToTextField() {
@@ -58,7 +52,7 @@ class _FormScreenState extends State<FormScreen> {
         User(
           juz: int.tryParse(_juzController.text),
           rubu: int.tryParse(_rubuController.text),
-          reviewProgress: reviewProgress,
+          memorization: memorization,
         ),
       );
       if (!mounted) return;
@@ -101,7 +95,7 @@ class _FormScreenState extends State<FormScreen> {
                         Divider(),
                       ],
                       LargeGap(),
-                      _reviewProgressForm(),
+                      _memorizationForm(),
                       LargeGap(),
                       Divider(),
                       LargeGap(),
@@ -181,20 +175,20 @@ class _FormScreenState extends State<FormScreen> {
         ),
       );
 
-  Widget _reviewProgressForm() => Column(
+  Widget _memorizationForm() => Column(
         children: [
-          Text('Which rubu have you still remembered?'),
+          Text('How much have you still remembered?'),
           MediumGap(),
-          ...reviewProgress.keys.map((juz) {
+          ...memorization.map((juz) {
             return ListTile(
               contentPadding: Styles.noPadding,
-              title: Text('Juz $juz'),
+              title: Text('Juz ${memorization.indexOf(juz) + 1}'),
               trailing: ChoiceChips(
                 options: ['None', 'Partially', 'Fully'],
-                selected: reviewProgress[juz]!,
+                selected: juz.fluency,
                 onSelected: (value) {
                   setState(() {
-                    reviewProgress[juz] = value;
+                    juz.fluency = value;
                   });
                 },
               ),

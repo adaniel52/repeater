@@ -52,12 +52,13 @@ class Styles {
       Color(0xFFE0E0E0); // Light Grey for text
   static const Color textSecondaryDarkColor = Color(0xFFBDBDBD); // Grey
 
-  static const screenPadding = EdgeInsets.all(14);
   static const noPadding = EdgeInsets.all(0);
-  static const smallPadding = EdgeInsets.all(4);
-  static const mediumPadding = EdgeInsets.all(8);
-  static const largePadding = EdgeInsets.all(12);
+  static const screenPadding = EdgeInsets.all(screenSpacing);
+  static const smallPadding = EdgeInsets.all(smallSpacing);
+  static const mediumPadding = EdgeInsets.all(mediumSpacing);
+  static const largePadding = EdgeInsets.all(largeSpacing);
 
+  static const double screenSpacing = 14;
   static const double smallSpacing = 4;
   static const double mediumSpacing = 8;
   static const double largeSpacing = 12;
