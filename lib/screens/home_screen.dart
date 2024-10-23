@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:repeater/services/schedule_service.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/gap.dart';
@@ -19,6 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final userPrefs = Provider.of<UserPreferences>(context);
     final user = userPrefs.getUser();
 
+    List<int> schedule =
+        ScheduleService(DateTime.now().subtract(Duration(days: 1)))
+            .getTodaySchedule();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -33,10 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const MediumGap(),
-                const Card.filled(
+                Card.filled(
                   child: ListTile(
-                    title: Text('Sabqi'),
-                    subtitle: Text('Page 0'),
+                    title: Text('Sabaq'),
+                    subtitle: Text(
+                      'Maqra ${schedule.toString()}',
+                    ),
                   ),
                 ),
                 if (user.juz != null) ...[

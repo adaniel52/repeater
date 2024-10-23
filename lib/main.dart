@@ -13,10 +13,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  await UserPreferences().init();
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(JuzAdapter());
   Hive.registerAdapter(RubuAdapter());
+  await UserPreferences().init();
 
   runApp(
     MultiProvider(
