@@ -36,9 +36,7 @@ class _NotePhotoViewState extends State<NotePhotoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // foregroundColor: Colors.white,
-        // backgroundColor: Colors.transparent,
-        forceMaterialTransparency: true,
+        backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(
           color: Colors.white,
           shadows: [

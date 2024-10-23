@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Styles {
-  // Theme data for light and dark mode
   static ThemeData lightTheme = ThemeData(
     colorSchemeSeed: Colors.teal,
     brightness: Brightness.light,
@@ -45,12 +44,11 @@ class Styles {
     ),
   );
 
-  static const Color textPrimaryColor = Color(0xFF212121); // Dark Grey
-  static const Color textSecondaryColor = Color(0xFF757575); // Grey
+  static const Color textPrimaryColor = Color(0xFF212121);
+  static const Color textSecondaryColor = Color(0xFF757575);
 
-  static const Color textPrimaryDarkColor =
-      Color(0xFFE0E0E0); // Light Grey for text
-  static const Color textSecondaryDarkColor = Color(0xFFBDBDBD); // Grey
+  static const Color textPrimaryDarkColor = Color(0xFFE0E0E0);
+  static const Color textSecondaryDarkColor = Color(0xFFBDBDBD);
 
   static const noPadding = EdgeInsets.all(0);
   static const screenPadding = EdgeInsets.all(screenSpacing);

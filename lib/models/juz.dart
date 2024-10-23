@@ -1,24 +1,23 @@
+import 'package:hive/hive.dart';
+import 'package:repeater/models/rubu.dart';
+
+part 'juz.g.dart';
+
+@HiveType(typeId: 1)
 class Juz {
-  final List<Rubu> _rubu;
+  @HiveField(0)
+  final List<Rubu> _rubus;
+
+  @HiveField(1)
   String? _fluency;
 
   Juz({
-    List<Rubu>? rubu,
+    List<Rubu>? rubus,
     String? fluency,
-  })  : _rubu = rubu ??
-            [
-              Rubu(number: 1),
-              Rubu(number: 2),
-              Rubu(number: 3),
-              Rubu(number: 4),
-              Rubu(number: 5),
-              Rubu(number: 6),
-              Rubu(number: 7),
-              Rubu(number: 8),
-            ],
+  })  : _rubus = rubus ?? List.generate(8, (_) => Rubu()),
         _fluency = fluency;
 
-  List<Rubu> get rubu => _rubu;
+  List<Rubu> get rubus => _rubus;
   String get fluency => _fluency ?? 'None';
 
   set fluency(String value) {
@@ -26,30 +25,12 @@ class Juz {
   }
 
   Juz copyWith({
-    List<Rubu>? rubu,
+    List<Rubu>? rubus,
     String? fluency,
   }) {
     return Juz(
-      rubu: rubu ?? this.rubu,
+      rubus: rubus ?? this.rubus,
       fluency: fluency ?? this.fluency,
     );
   }
-}
-
-class Rubu {
-  final int _number;
-  DateTime? _lastReviewed;
-
-  Rubu({
-    required int number,
-    DateTime? lastReviewed,
-  })  : _number = number,
-        _lastReviewed = lastReviewed;
-
-  int get number => _number;
-  // DateTime? get lastReviewed => _lastReviewed;
-
-  // set lastReviewed(DateTime? value) {
-  //   _lastReviewed = value;
-  // }
 }

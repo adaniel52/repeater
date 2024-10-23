@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/utils/theme_mode.dart';
 import 'package:repeater/widgets/choice_chips.dart';
 import 'package:repeater/widgets/gap.dart';
 
@@ -15,7 +14,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late ThemeMode selectedTheme;
+  late String selectedTheme;
 
   @override
   void initState() {
@@ -69,13 +68,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text('Theme'),
         trailing: ChoiceChips(
           options: ['System', 'Light', 'Dark'],
-          selected: mapThemeModeToString(selectedTheme),
+          selected: selectedTheme,
           onSelected: (value) {
-            final theme = mapStringtoThemeMode(value);
             setState(() {
-              selectedTheme = theme;
+              selectedTheme = value;
             });
-            userPrefs.updateUser(themeMode: theme);
+            userPrefs.updateUser(themeMode: value);
           },
         ),
       );

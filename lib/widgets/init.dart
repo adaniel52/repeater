@@ -23,7 +23,7 @@ class _InitState extends State<Init> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final User? user =
           Provider.of<UserPreferences>(context, listen: false).getUser();
-      if (user != null && user.memorization != null) {
+      if (user != null) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => MainNavigation(),

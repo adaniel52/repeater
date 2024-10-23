@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    int crossAxisCount = (width / 200).floor();
+    int crossAxisCount = (width / 175).floor();
     final userPrefs = Provider.of<UserPreferences>(context);
     final user = userPrefs.getUser();
 
@@ -72,42 +72,77 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
                 LargeGap(),
                 Text(
-                  'Review Progress',
+                  'Overall Progress',
                   style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                MediumGap(),
+                Text(
+                  'Sort by',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 MediumGap(),
                 GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossAxisCount,
-                      mainAxisSpacing: Styles.smallSpacing,
-                      crossAxisSpacing: Styles.smallSpacing,
-                      childAspectRatio: 2),
+                    crossAxisCount: crossAxisCount,
+                    mainAxisSpacing: Styles.smallSpacing,
+                    crossAxisSpacing: Styles.smallSpacing,
+                    childAspectRatio: 1.5,
+                  ),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: user.memorization!.length,
                   itemBuilder: (context, index) {
                     final juz = user.memorization![index];
                     return Card.filled(
-                      child: ListTile(
-                        title: Text('Juz ${index + 1}'),
-                        subtitle: Text(juz.fluency),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text('Juz ${index + 1}'),
+                            subtitle: Text('Last reviewed: none'),
+                          ),
+                          Expanded(child: SizedBox()),
+                          Padding(
+                            padding: Styles.mediumPadding,
+                            child: LinearProgressIndicator(
+                              borderRadius: Styles.smallBorderRadius,
+                              value: juz.rubus
+                                      .where((e) => e.isStillRemembered)
+                                      .length /
+                                  8,
+                            ),
+                          ),
+                          // GridView.builder(
+                          //   gridDelegate:
+                          //       SliverGridDelegateWithFixedCrossAxisCount(
+                          //     crossAxisCount: 4,
+                          //     mainAxisSpacing: Styles.smallSpacing,
+                          //     crossAxisSpacing: Styles.smallSpacing,
+                          //   ),
+                          //   padding: Styles.smallPadding,
+                          //   shrinkWrap: true,
+                          //   physics: NeverScrollableScrollPhysics(),
+                          //   itemCount: 8,
+                          //   itemBuilder: (context, index) {
+                          //     final entry = juz.rubus[index];
+                          //     return Card.filled(
+                          //       color: entry.isStillRemembered
+                          //           ? Colors.greenAccent
+                          //           : Colors.white10,
+                          //       shape: RoundedRectangleBorder(
+                          //           borderRadius: Styles.smallBorderRadius),
+                          //       child: Center(
+                          //         child: Text(
+                          //           (index + 1).toString(),
+                          //         ),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
+                        ],
                       ),
                     );
                   },
                 )
-                // ...user.memorization!.keys.map((e) {
-                //   return Padding(
-                //     padding: EdgeInsets.only(
-                //       top: e == '1' ? 0 : Styles.smallSpacing,
-                //     ),
-                //     child: Card.filled(
-                //       child: ListTile(
-                //         title: Text('Juz $e'),
-                //         subtitle: Text(user.memorization![e]),
-                //       ),
-                //     ),
-                //   );
-                // }),
               ],
             ),
     );

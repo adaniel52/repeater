@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences extends ChangeNotifier {
   static final UserPreferences _instance = UserPreferences._internal();
-  SharedPreferences? _preferences;
+  late Box<User> _userBox;
+
   UserPreferences._internal();
 
   factory UserPreferences() => _instance;
 
   Future<void> init() async {
-    _preferences ??= await SharedPreferences.getInstance();
+    _userBox = await Hive.openBox<User>('userBox');
   }
 
-  SharedPreferences? get prefs => _preferences;
-
   Future<void> createUser(User user) async {
-    if (_preferences == null) return;
-    await _preferences!.setString('user', user.toJson());
+    await _userBox.put('user', user);
     notifyListeners();
   }
 
@@ -26,24 +24,20 @@ class UserPreferences extends ChangeNotifier {
     int? juz,
     int? rubu,
     List<Juz>? memorization,
-    ThemeMode? themeMode,
+    String? themeMode,
   }) async {
-    if (_preferences == null) return;
     final user = getUser()!.copyWith(
       juz: juz,
       rubu: rubu,
       memorization: memorization,
       themeMode: themeMode,
     );
-    await _preferences!.setString('user', user.toJson());
+    await createUser(user);
     notifyListeners();
   }
 
   User? getUser() {
-    if (_preferences == null) return null;
-    String? userJson = _preferences!.getString('user');
-    if (userJson == null) return null;
-    return User.fromJson(userJson);
+    return _userBox.get('user');
   }
 
   Future<void> resetUser() async {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 class Test extends StatefulWidget {
@@ -26,9 +24,6 @@ class _TestState extends State<Test> {
 
   @override
   Widget build(BuildContext context) {
-    for (var j = 1; j <= 30; j++) {
-      log(reviewProgress[j - 1].rubu.progress.toString());
-    }
     return Scaffold(
       body: SingleChildScrollView(
         child: Table(
