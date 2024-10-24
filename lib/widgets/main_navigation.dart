@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repeater/screens/home_screen.dart';
+import 'package:repeater/screens/home/home_screen.dart';
 import 'package:repeater/screens/notes/notes_screen.dart';
 import 'package:repeater/screens/settings_screen.dart';
 

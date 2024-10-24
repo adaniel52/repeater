@@ -46,43 +46,48 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: Styles.screenPadding,
-          child: Center(
-            child: SizedBox(
-              width: 600,
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NotePhotoView(imageUrl: widget.imageUrl),
-                        ),
-                      );
-                    },
-                    child: Hero(
-                      tag: widget.imageUrl,
-                      child: ClipRRect(
-                        borderRadius: Styles.mediumBorderRadius,
-                        child: Image(
-                          image: NetworkImage(widget.imageUrl),
+      body: Scrollbar(
+        interactive: true,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: Styles.screenPadding,
+            child: Center(
+              child: SizedBox(
+                width: 600,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NotePhotoView(imageUrl: widget.imageUrl),
+                          ),
+                        );
+                      },
+                      child: Hero(
+                        tag: widget.imageUrl,
+                        child: ClipRRect(
+                          borderRadius: Styles.mediumBorderRadius,
+                          child: Image(
+                            image: NetworkImage(widget.imageUrl),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const MediumGap(),
-                  const Divider(),
-                  const MediumGap(),
-                  Html(
-                    data: htmlContent,
-                    extensions: [
-                      VideoHtmlExtension(),
-                    ],
-                  ),
-                ],
+                    const MediumGap(),
+                    const Divider(),
+                    const MediumGap(),
+                    (htmlContent == '')
+                        ? CircularProgressIndicator()
+                        : Html(
+                            data: htmlContent,
+                            extensions: [
+                              VideoHtmlExtension(),
+                            ],
+                          ),
+                  ],
+                ),
               ),
             ),
           ),

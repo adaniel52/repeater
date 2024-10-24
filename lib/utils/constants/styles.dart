@@ -15,7 +15,7 @@ class Styles {
       style: primaryButtonStyle,
     ),
     appBarTheme: AppBarTheme(
-      titleTextStyle: headlineMedium,
+      titleTextStyle: headlineLarge,
     ),
     cardTheme: cardTheme,
   );
@@ -34,7 +34,7 @@ class Styles {
       style: primaryButtonStyleDark,
     ),
     appBarTheme: AppBarTheme(
-      titleTextStyle: headlineMediumDark,
+      titleTextStyle: headlineLargeDark,
     ),
     cardTheme: cardTheme,
     inputDecorationTheme: InputDecorationTheme(
@@ -56,7 +56,7 @@ class Styles {
   static const mediumPadding = EdgeInsets.all(mediumSpacing);
   static const largePadding = EdgeInsets.all(largeSpacing);
 
-  static const double screenSpacing = 14;
+  static const double screenSpacing = 16;
   static const double smallSpacing = 4;
   static const double mediumSpacing = 8;
   static const double largeSpacing = 12;

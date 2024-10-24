@@ -90,12 +90,12 @@ class _FormScreenState extends State<FormScreen> {
                       Divider(),
                       if (!hasKhatam) ...[
                         LargeGap(key: _textFieldKey),
-                        _memorizationInfoForm(),
+                        ..._memorizationInfoForm(),
                         LargeGap(),
                         Divider(),
                       ],
                       LargeGap(),
-                      _memorizationForm(),
+                      ..._memorizationForm(),
                       LargeGap(),
                       Divider(),
                       LargeGap(),
@@ -111,56 +111,6 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget _memorizationInfoForm() => Column(
-        children: [
-          Text('Fill in your current memorization info.'),
-          MediumGap(),
-          TextFormField(
-            controller: _juzController,
-            decoration: InputDecoration(
-              labelText: 'Juz*',
-              hintText: '1 - 30',
-              border: OutlineInputBorder(
-                borderRadius: Styles.mediumBorderRadius,
-              ),
-            ),
-            onChanged: (_) {
-              _formKey.currentState!.validate();
-            },
-            validator: (value) {
-              int? juz = int.tryParse(value!);
-              if (juz == null || juz < 1 || juz > 30) {
-                return 'Invalid input';
-              } else {
-                return null;
-              }
-            },
-          ),
-          MediumGap(),
-          TextFormField(
-            controller: _rubuController,
-            decoration: InputDecoration(
-              labelText: 'Rubu*',
-              hintText: '1 - 8',
-              border: OutlineInputBorder(
-                borderRadius: Styles.mediumBorderRadius,
-              ),
-            ),
-            onChanged: (_) {
-              _formKey.currentState!.validate();
-            },
-            validator: (value) {
-              int? rubu = int.tryParse(value!);
-              if (rubu == null || rubu < 1 || rubu > 8) {
-                return 'Invalid input';
-              } else {
-                return null;
-              }
-            },
-          ),
-        ],
-      );
-
   Widget _khatamForm() => ListTile(
         contentPadding: Styles.noPadding,
         title: Text('Khatam'),
@@ -175,27 +125,73 @@ class _FormScreenState extends State<FormScreen> {
         ),
       );
 
-  Widget _memorizationForm() => Column(
-        children: [
-          Text('How much have you still remembered?'),
-          MediumGap(),
-          ...memorization.map((juz) {
-            return ListTile(
-              contentPadding: Styles.noPadding,
-              title: Text('Juz ${memorization.indexOf(juz) + 1}'),
-              trailing: ChoiceChips(
-                options: ['None', 'Partially', 'Fully'],
-                selected: juz.fluency,
-                onSelected: (value) {
-                  setState(() {
-                    juz.fluency = value;
-                  });
-                },
-              ),
-            );
-          }),
-        ],
-      );
+  List<Widget> _memorizationInfoForm() => [
+        Text('Fill in your current memorization info.'),
+        MediumGap(),
+        TextFormField(
+          controller: _juzController,
+          decoration: InputDecoration(
+            labelText: 'Juz*',
+            hintText: '1 - 30',
+            border: OutlineInputBorder(
+              borderRadius: Styles.mediumBorderRadius,
+            ),
+          ),
+          onChanged: (_) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            int? juz = int.tryParse(value!);
+            if (juz == null || juz < 1 || juz > 30) {
+              return 'Invalid input';
+            } else {
+              return null;
+            }
+          },
+        ),
+        MediumGap(),
+        TextFormField(
+          controller: _rubuController,
+          decoration: InputDecoration(
+            labelText: 'Rubu*',
+            hintText: '1 - 8',
+            border: OutlineInputBorder(
+              borderRadius: Styles.mediumBorderRadius,
+            ),
+          ),
+          onChanged: (_) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            int? rubu = int.tryParse(value!);
+            if (rubu == null || rubu < 1 || rubu > 8) {
+              return 'Invalid input';
+            } else {
+              return null;
+            }
+          },
+        ),
+      ];
+
+  List<Widget> _memorizationForm() => [
+        Text('How much have you still remembered?'),
+        MediumGap(),
+        ...memorization.map((juz) {
+          return ListTile(
+            contentPadding: Styles.noPadding,
+            title: Text('Juz ${memorization.indexOf(juz) + 1}'),
+            trailing: ChoiceChips(
+              options: ['None', 'Partially', 'Fully'],
+              selected: juz.fluency,
+              onSelected: (value) {
+                setState(() {
+                  juz.fluency = value;
+                });
+              },
+            ),
+          );
+        }),
+      ];
 
   Widget _submitButton() => CustomButton(
         onPressed: _handleSubmit,

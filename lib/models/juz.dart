@@ -19,6 +19,14 @@ class Juz {
 
   List<Rubu> get rubus => _rubus;
   String get fluency => _fluency ?? 'None';
+  bool get isMemorized {
+    for (var e in _rubus) {
+      if (!e.isMemorized) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   set fluency(String value) {
     _fluency = value;

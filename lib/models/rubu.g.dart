@@ -16,7 +16,7 @@ class RubuAdapter extends TypeAdapter<Rubu> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Rubu().._isStillRemembered = fields[0] as bool?;
+    return Rubu().._isMemorized = fields[0] as bool?;
   }
 
   @override
@@ -24,7 +24,7 @@ class RubuAdapter extends TypeAdapter<Rubu> {
     writer
       ..writeByte(1)
       ..writeByte(0)
-      ..write(obj._isStillRemembered);
+      ..write(obj._isMemorized);
   }
 
   @override

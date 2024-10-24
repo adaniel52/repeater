@@ -5,13 +5,15 @@ part 'rubu.g.dart';
 @HiveType(typeId: 2)
 class Rubu {
   @HiveField(0)
-  bool? _isStillRemembered;
+  bool? _isMemorized;
 
-  Rubu({bool? isStillRemembered}) : _isStillRemembered = isStillRemembered;
+  Rubu({
+    bool? isMemorized,
+  }) : _isMemorized = isMemorized;
 
-  bool get isStillRemembered => _isStillRemembered ?? false;
+  bool get isMemorized => _isMemorized ?? false;
 
-  set isStillRemembered(bool value) {
-    _isStillRemembered = value;
+  set isMemorized(bool value) {
+    _isMemorized = value;
   }
 }
