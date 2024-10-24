@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
+import 'package:repeater/models/rubu.dart';
 import 'package:repeater/models/user.dart';
 
 class UserPreferences extends ChangeNotifier {
@@ -20,29 +21,41 @@ class UserPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
+  User? getUser() {
+    return _userBox.get('user');
+  }
+
   Future<void> updateUser({
     int? juz,
     int? rubu,
-    List<Juz>? memorization,
+    List<Juz>? juzs,
     String? themeMode,
   }) async {
     final user = getUser()!.copyWith(
       juz: juz,
       rubu: rubu,
-      memorization: memorization,
+      juzs: juzs,
       themeMode: themeMode,
     );
     await createUser(user);
     notifyListeners();
   }
 
-  User? getUser() {
-    return _userBox.get('user');
-  }
-
   Future<void> resetUser() async {
     User defaultUser = User();
     await createUser(defaultUser);
     notifyListeners();
+  }
+
+  Future<void> updateRubu(int juzNumber, int rubuNumber, Rubu rubu) async {
+    User? user = getUser();
+
+    Juz updatedJuz = user!.juzs[juzNumber - 1].copyWith(
+      rubus: List.from(user.juzs[juzNumber - 1].rubus)..[rubuNumber - 1] = rubu,
+    );
+
+    List<Juz> updatedJuzs = List.from(user.juzs)..[juzNumber - 1] = updatedJuz;
+
+    await updateUser(juzs: updatedJuzs);
   }
 }

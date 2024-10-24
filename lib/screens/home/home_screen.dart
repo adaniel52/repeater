@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/models/user.dart';
-import 'package:repeater/screens/home/task_form_screen.dart';
+import 'package:repeater/screens/home/juz_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
@@ -82,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CustomButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TaskFormScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => JuzDetailsScreen(number: 1),
+                    ),
                   );
                 },
                 child: Text('Memorize New Juz'),
@@ -149,15 +151,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: user.memorization!.length,
+          itemCount: user.juzs.length,
           itemBuilder: (context, index) {
-            final juz = user.memorization![index];
+            final juz = user.juzs[index];
             return Card.filled(
               child: Column(
                 children: [
                   ListTile(
                     title: Text('Juz ${index + 1}'),
-                    // subtitle: Text('Last reviewed: none'),
+                    trailing: IconButton(
+                      icon: Icon(Icons.more_vert),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                JuzDetailsScreen(number: index + 1),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   Expanded(child: SizedBox()),
                   Padding(

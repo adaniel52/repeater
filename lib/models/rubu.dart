@@ -11,6 +11,14 @@ class Rubu {
     bool? isMemorized,
   }) : _isMemorized = isMemorized;
 
+  Rubu copyWith({
+    bool? isMemorized,
+  }) {
+    return Rubu(
+      isMemorized: isMemorized ?? this.isMemorized,
+    );
+  }
+
   bool get isMemorized => _isMemorized ?? false;
 
   set isMemorized(bool value) {

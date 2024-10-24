@@ -3,11 +3,6 @@ import 'package:repeater/models/juz.dart';
 
 part 'user.g.dart';
 
-const juzKey = 'juz';
-const rubuKey = 'rubu';
-const memorizationKey = 'memorization';
-const themeModeKey = 'themeMode';
-
 @HiveType(typeId: 0)
 class User {
   @HiveField(0)
@@ -17,7 +12,7 @@ class User {
   int? _rubu;
 
   @HiveField(2)
-  List<Juz>? _memorization;
+  List<Juz> _juzs;
 
   @HiveField(3)
   String? _themeMode;
@@ -25,45 +20,28 @@ class User {
   User({
     int? juz,
     int? rubu,
-    List<Juz>? memorization,
+    List<Juz>? juzs,
     String? themeMode,
   })  : _juz = juz,
         _rubu = rubu,
-        _memorization = memorization,
+        _juzs = juzs ?? List.generate(30, (_) => Juz()),
         _themeMode = themeMode;
 
   int? get juz => _juz;
   int? get rubu => _rubu;
-  List<Juz>? get memorization => _memorization;
+  List<Juz> get juzs => _juzs;
   String get themeMode => _themeMode ?? 'System';
-
-  // String toJson() => json.encode({
-  //       juzKey: _juz,
-  //       rubuKey: _rubu,
-  //       memorizationKey: _memorization,
-  //       themeModeKey: mapThemeModeToString(_themeMode),
-  //     });
-
-  // factory User.fromJson(String source) {
-  //   final data = json.decode(source);
-  //   return User(
-  //     juz: data[juzKey],
-  //     rubu: data[rubuKey],
-  //     memorization: data[memorizationKey],
-  //     themeMode: mapStringtoThemeMode(data[themeModeKey]),
-  //   );
-  // }
 
   User copyWith({
     int? juz,
     int? rubu,
-    List<Juz>? memorization,
+    List<Juz>? juzs,
     String? themeMode,
   }) {
     return User(
       juz: juz ?? this.juz,
       rubu: rubu ?? this.rubu,
-      memorization: memorization ?? this.memorization,
+      juzs: juzs ?? this.juzs,
       themeMode: themeMode ?? this.themeMode,
     );
   }

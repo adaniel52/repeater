@@ -13,20 +13,19 @@ class JuzAdapter extends TypeAdapter<Juz> {
   @override
   Juz read(BinaryReader reader) {
     final numOfFields = reader.readByte();
+    // ignore: unused_local_variable
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Juz().._fluency = fields[1] as String?;
+    return Juz();
   }
 
   @override
   void write(BinaryWriter writer, Juz obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj._rubus)
       ..writeByte(1)
-      ..write(obj._fluency);
+      ..writeByte(0)
+      ..write(obj._rubus);
   }
 
   @override

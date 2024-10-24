@@ -19,7 +19,7 @@ class UserAdapter extends TypeAdapter<User> {
     return User()
       .._juz = fields[0] as int?
       .._rubu = fields[1] as int?
-      .._memorization = (fields[2] as List?)?.cast<Juz>()
+      .._juzs = (fields[2] as List).cast<Juz>()
       .._themeMode = fields[3] as String?;
   }
 
@@ -32,7 +32,7 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(1)
       ..write(obj._rubu)
       ..writeByte(2)
-      ..write(obj._memorization)
+      ..write(obj._juzs)
       ..writeByte(3)
       ..write(obj._themeMode);
   }
