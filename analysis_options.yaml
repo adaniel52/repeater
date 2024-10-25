@@ -2,4 +2,43 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
+    # Avoid using print statements in production code
+    avoid_print: true
+
+    # Enforce consistent use of const
     prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+
+    # Use final for variables that are not reassigned
+    prefer_final_locals: true
+
+    # Avoid assigning to fields that are not final
+    prefer_final_fields: true
+
+    # Enforce naming conventions
+    camel_case_types: true
+    non_constant_identifier_names: false
+    library_prefixes: true
+
+    # Encourage the use of collection methods for readability
+    # use_collection_literals: true
+    prefer_collection_literals: true
+
+    # Flutter-specific practices
+    always_use_package_imports: true
+    avoid_redundant_argument_values: true
+    avoid_returning_this: true
+    avoid_slow_async_io: true
+
+    # Dart best practices
+    avoid_renaming_method_parameters: true
+    avoid_single_cascade_in_expression_statements: true
+    control_flow_in_finally: true
+    annotate_overrides: true
+    omit_local_variable_types: true
+    unnecessary_this: true
+    unnecessary_new: true
+
+    # Documentation and readability
+    # public_member_api_docs: true
+    sort_pub_dependencies: true

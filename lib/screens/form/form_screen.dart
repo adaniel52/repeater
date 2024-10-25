@@ -137,7 +137,7 @@ class _FormScreenState extends State<FormScreen> {
             _formKey.currentState!.validate();
           },
           validator: (value) {
-            int? juz = int.tryParse(value!);
+            final int? juz = int.tryParse(value!);
             if (juz == null || juz < 1 || juz > 30) {
               return 'Invalid input';
             } else {
