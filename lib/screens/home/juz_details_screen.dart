@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:repeater/models/rubu.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
@@ -18,16 +19,23 @@ class JuzDetailsScreen extends StatefulWidget {
 }
 
 class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
+  List<Rubu> rubus = [];
+  @override
+  void initState() {
+    super.initState();
+    final user = Provider.of<UserPreferences>(context, listen: false).getUser();
+    final originalRubus = user!.juzs[widget.number - 1].rubus;
+    rubus = originalRubus.map((e) => e.copyWith()).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserPreferences>(context).getUser();
-    final rubus = user!.juzs[widget.number - 1].rubus;
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Juz Details'),
+            Text('Juz ${widget.number} Details'),
           ],
         ),
       ),
@@ -51,18 +59,23 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
               return SwitchListTile(
                 title: Text('Rubu $rubuNumber'),
                 value: e.isMemorized,
-                onChanged: (value) async {
-                  await Provider.of<UserPreferences>(context, listen: false)
-                      .updateRubu(widget.number, rubuNumber,
-                          e.copyWith(isMemorized: value));
-                  // e.isMemorized = value;
+                onChanged: (value) {
+                  setState(() {
+                    e.isMemorized = value;
+                  });
                 },
               );
             }),
             LargeGap(),
             CustomButton(
               child: Text('Confirm Changes'),
-              onPressed: () {
+              onPressed: () async {
+                await Provider.of<UserPreferences>(context, listen: false)
+                    .updateRubus(
+                  widget.number,
+                  rubus,
+                );
+                if (!context.mounted) return;
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => MainNavigation()),
                   (_) => false,
