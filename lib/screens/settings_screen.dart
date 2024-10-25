@@ -98,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             currentColor,
             pickersEnabled: {ColorPickerType.accent: false},
             enableShadesSelection: false,
-            dialogTitle: Text('Choose a color'),
+            heading: Text('Choose a color'),
           );
           setState(() {
             currentColor = color;
