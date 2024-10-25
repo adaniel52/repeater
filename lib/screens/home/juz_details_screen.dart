@@ -39,51 +39,50 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
           ],
         ),
       ),
-      body: Padding(
+      body: ListView(
         padding: Styles.screenPadding,
-        child: Column(
-          children: [
-            // CustomButton(
-            //   child: Text('Toggle Memorized'),
-            //   onPressed: () {
-            //     setState(() {
-            //       for (var e in firstJuz.rubus) {
-            //         e.isMemorized = !e.isMemorized;
-            //       }
-            //     });
-            //   },
-            // ),
-            // Text(firstJuz.isMemorized.toString()),
-            ...rubus.map((e) {
-              final rubuNumber = rubus.indexOf(e) + 1;
-              return SwitchListTile(
-                title: Text('Rubu $rubuNumber'),
-                value: e.isMemorized,
-                onChanged: (value) {
-                  setState(() {
-                    e.isMemorized = value;
-                  });
-                },
-              );
-            }),
-            LargeGap(),
-            CustomButton(
-              child: Text('Confirm Changes'),
-              onPressed: () async {
-                await Provider.of<UserPreferences>(context, listen: false)
-                    .updateRubus(
-                  widget.number,
-                  rubus,
-                );
-                if (!context.mounted) return;
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => MainNavigation()),
-                  (_) => false,
-                );
+        children: [
+          // CustomButton(
+          //   child: Text('Toggle Memorized'),
+          //   onPressed: () {
+          //     setState(() {
+          //       for (var e in firstJuz.rubus) {
+          //         e.isMemorized = !e.isMemorized;
+          //       }
+          //     });
+          //   },
+          // ),
+          // Text(firstJuz.isMemorized.toString()),
+          ...rubus.map((e) {
+            final rubuNumber = rubus.indexOf(e) + 1;
+            return SwitchListTile(
+              contentPadding: Styles.noPadding,
+              title: Text('Rubu $rubuNumber'),
+              value: e.isMemorized,
+              onChanged: (value) {
+                setState(() {
+                  e.isMemorized = value;
+                });
               },
-            )
-          ],
-        ),
+            );
+          }),
+          LargeGap(),
+          CustomButton(
+            child: Text('Confirm Changes'),
+            onPressed: () async {
+              await Provider.of<UserPreferences>(context, listen: false)
+                  .updateRubus(
+                widget.number,
+                rubus,
+              );
+              if (!context.mounted) return;
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => MainNavigation()),
+                (_) => false,
+              );
+            },
+          )
+        ],
       ),
     );
   }

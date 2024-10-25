@@ -41,23 +41,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: ListView(
-        padding: Styles.screenPadding,
-        children: [
-          Text(
-            'Preferences',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          MediumGap(),
-          _setThemeTile(userPrefs),
-          LargeGap(),
-          Text(
-            'Danger Zone',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          MediumGap(),
-          _resetDataTile(),
-        ],
+      body: Scrollbar(
+        child: ListView(
+          padding: Styles.screenPadding,
+          children: [
+            Text(
+              'Preferences',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            MediumGap(),
+            _setThemeTile(userPrefs),
+            LargeGap(),
+            Text(
+              'Danger Zone',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            MediumGap(),
+            _resetDataTile(),
+          ],
+        ),
       ),
     );
   }

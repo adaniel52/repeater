@@ -119,16 +119,6 @@ class _FormScreenState extends State<FormScreen> {
             hasKhatam = value;
           });
         },
-        // trailing:
-        // ChoiceChips(
-        //   options: ['Yes', 'No'],
-        //   selected: hasKhatam ? 'Yes' : 'No',
-        //   onSelected: (value) {
-        //     setState(() {
-        //       hasKhatam = value == 'Yes' ? true : false;
-        //     });
-        //   },
-        // ),
       );
 
   List<Widget> _memorizationInfoForm() => [

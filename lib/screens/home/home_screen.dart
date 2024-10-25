@@ -6,6 +6,7 @@ import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/gap.dart';
+import 'package:repeater/widgets/rubus_progress_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,17 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: (user == null)
           ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              padding: Styles.screenPadding,
-              children: [
-                ..._tasksSection(),
-                if (user.juz != null) ...[
+          : Scrollbar(
+              child: ListView(
+                padding: Styles.screenPadding,
+                children: [
+                  ..._tasksSection(),
+                  if (user.juz != null) ...[
+                    LargeGap(),
+                    ..._memorizationSection(user),
+                  ],
                   LargeGap(),
-                  ..._memorizationSection(user),
+                  ..._overallProgressSection(crossAxisCount, user),
                 ],
-                LargeGap(),
-                ..._overallProgressSection(crossAxisCount, user),
-              ],
+              ),
             ),
     );
   }
@@ -154,32 +157,37 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: user.juzs.length,
           itemBuilder: (context, index) {
             final juz = user.juzs[index];
-            return Card.filled(
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text('Juz ${index + 1}'),
-                    trailing: IconButton(
-                      icon: Icon(Icons.more_vert),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                JuzDetailsScreen(number: index + 1),
+            return ClipRRect(
+              borderRadius: Styles.mediumBorderRadius,
+              child: Card.filled(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: Styles.mediumPadding,
+                          child: CircleAvatar(
+                            child: Text('${index + 1}'),
                           ),
-                        );
-                      },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.more_vert),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    JuzDetailsScreen(number: index + 1),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ),
-                  Expanded(child: SizedBox()),
-                  Padding(
-                    padding: Styles.mediumPadding,
-                    child: LinearProgressIndicator(
-                      borderRadius: Styles.smallBorderRadius,
-                      value: juz.rubus.where((e) => e.isMemorized).length / 8,
-                    ),
-                  ),
-                ],
+                    Expanded(child: SizedBox()),
+                    RubusProgressIndicator(rubus: juz.rubus),
+                  ],
+                ),
               ),
             );
           },

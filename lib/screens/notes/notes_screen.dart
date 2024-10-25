@@ -49,23 +49,25 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       body: (_notes.isEmpty)
           ? Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              padding: Styles.screenPadding,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                mainAxisSpacing: Styles.largeSpacing,
-                crossAxisSpacing: Styles.largeSpacing,
-                childAspectRatio: childWidth / (childHeight + 40),
+          : Scrollbar(
+              child: GridView.builder(
+                padding: Styles.screenPadding,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisSpacing: Styles.largeSpacing,
+                  crossAxisSpacing: Styles.largeSpacing,
+                  childAspectRatio: childWidth / (childHeight + 40),
+                ),
+                itemCount: _notes.length,
+                itemBuilder: (context, index) {
+                  final e = _notes[index];
+                  return NoteCard(
+                    imageUrl: e['imageUrl']!,
+                    title: e['title']!,
+                    contentUrl: e['contentUrl']!,
+                  );
+                },
               ),
-              itemCount: _notes.length,
-              itemBuilder: (context, index) {
-                final e = _notes[index];
-                return NoteCard(
-                  imageUrl: e['imageUrl']!,
-                  title: e['title']!,
-                  contentUrl: e['contentUrl']!,
-                );
-              },
             ),
     );
   }
