@@ -41,7 +41,8 @@ class _FormScreenState extends State<FormScreen> {
 
   void _scrollToTextField() {
     final context = _textFieldKey.currentContext!;
-    Scrollable.ensureVisible(context, duration: Duration(milliseconds: 500));
+    Scrollable.ensureVisible(context,
+        duration: const Duration(milliseconds: 500));
   }
 
   void _handleSubmit() async {
@@ -69,7 +70,7 @@ class _FormScreenState extends State<FormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Form'),
+        title: const Text('Form'),
       ),
       body: Scrollbar(
         interactive: true,
@@ -84,19 +85,19 @@ class _FormScreenState extends State<FormScreen> {
                   child: Column(
                     children: [
                       _khatamForm(),
-                      LargeGap(),
-                      Divider(),
+                      const LargeGap(),
+                      const Divider(),
                       if (!hasKhatam) ...[
                         LargeGap(key: _textFieldKey),
                         ..._memorizationInfoForm(),
-                        LargeGap(),
-                        Divider(),
+                        const LargeGap(),
+                        const Divider(),
                       ],
-                      LargeGap(),
+                      const LargeGap(),
                       ..._memorizationForm(),
-                      LargeGap(),
-                      Divider(),
-                      LargeGap(),
+                      const LargeGap(),
+                      const Divider(),
+                      const LargeGap(),
                       _submitButton(),
                     ],
                   ),
@@ -111,7 +112,7 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _khatamForm() => SwitchListTile(
         contentPadding: Styles.noPadding,
-        title: Text('Khatam'),
+        title: const Text('Khatam'),
         value: hasKhatam,
         onChanged: (value) {
           setState(() {
@@ -121,11 +122,11 @@ class _FormScreenState extends State<FormScreen> {
       );
 
   List<Widget> _memorizationInfoForm() => [
-        Text('Fill in your current memorization info.'),
-        MediumGap(),
+        const Text('Fill in your current memorization info.'),
+        const MediumGap(),
         TextFormField(
           controller: _juzController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Juz*',
             hintText: '1 - 30',
             border: OutlineInputBorder(
@@ -144,10 +145,10 @@ class _FormScreenState extends State<FormScreen> {
             }
           },
         ),
-        MediumGap(),
+        const MediumGap(),
         TextFormField(
           controller: _rubuController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Rubu*',
             hintText: '1 - 8',
             border: OutlineInputBorder(
@@ -169,8 +170,8 @@ class _FormScreenState extends State<FormScreen> {
       ];
 
   List<Widget> _memorizationForm() => [
-        Text('Which juz did you still remember?'),
-        MediumGap(),
+        const Text('Which juz did you still remember?'),
+        const MediumGap(),
         ...memorization.map((juz) {
           return SwitchListTile(
             contentPadding: Styles.noPadding,
@@ -189,7 +190,7 @@ class _FormScreenState extends State<FormScreen> {
         width: double.infinity,
         child: FilledButton(
           onPressed: _handleSubmit,
-          child: Text('Submit'),
+          child: const Text('Submit'),
         ),
       );
 }

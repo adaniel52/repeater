@@ -38,10 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   ..._tasksSection(),
                   if (user.juz != null) ...[
-                    LargeGap(),
+                    const LargeGap(),
                     ..._memorizationSection(user),
                   ],
-                  LargeGap(),
+                  const LargeGap(),
                   ..._overallProgressSection(crossAxisCount, user),
                 ],
               ),
@@ -76,21 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
         //     ),
         //   ),
         // ),
-        Text('You got no task.'),
-        MediumGap(),
+        const Text('You got no task.'),
+        const MediumGap(),
         Row(
           children: [
             Expanded(
               child: FilledButton(
                 onPressed: () {},
-                child: Text('Memorize New Juz'),
+                child: const Text('Memorize New Juz'),
               ),
             ),
-            SmallGap(),
+            const SmallGap(),
             Expanded(
               child: FilledButton.tonal(
                 onPressed: () {},
-                child: Text('Review Memorized Juz'),
+                child: const Text('Review Memorized Juz'),
               ),
             ),
           ],
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'Memorization',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
-        MediumGap(),
+        const MediumGap(),
         Row(
           children: [
             Expanded(
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SmallGap(),
+            const SmallGap(),
             Expanded(
               child: Card.filled(
                 child: ListTile(
@@ -133,12 +133,12 @@ class _HomeScreenState extends State<HomeScreen> {
           'Overall Progress',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
-        MediumGap(),
+        const MediumGap(),
         Text(
           'Sort by',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
-        MediumGap(),
+        const MediumGap(),
         GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
             childAspectRatio: 1.4,
           ),
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: user.juzs.length,
           itemBuilder: (context, index) {
             final juz = user.juzs[index];
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.more_vert),
+                          icon: const Icon(Icons.more_vert),
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    Expanded(child: SizedBox()),
+                    const Expanded(child: SizedBox()),
                     RubusProgressIndicator(rubus: juz.rubus),
                   ],
                 ),

@@ -1,4 +1,3 @@
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
@@ -17,6 +16,17 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late String currentTheme;
   late Color currentColor;
+  final List<Color> colorSchemeOptions = [
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.teal,
+    Colors.green,
+    Colors.yellow,
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.pink,
+  ];
 
   @override
   void initState() {
@@ -28,13 +38,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _resetData() async {
-    await UserPreferences().resetUser();
-    if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const IntroScreen(),
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirmation'),
+        content: const Text('Are you sure you want to reset the app data?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await UserPreferences().resetUser();
+              if (!context.mounted) return;
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const IntroScreen(),
+                ),
+                (_) => false,
+              );
+            },
+            child: const Text(
+              'Yes',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
       ),
-      (_) => false,
     );
   }
 
@@ -43,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final userPrefs = Provider.of<UserPreferences>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: Scrollbar(
         child: ListView(
@@ -53,15 +86,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               'Appearance',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            MediumGap(),
+            const MediumGap(),
             _setThemeTile(userPrefs),
             _setColorSchemeTile(userPrefs),
-            LargeGap(),
+            const LargeGap(),
             Text(
               'Danger Zone',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            MediumGap(),
+            const MediumGap(),
             _resetDataTile(),
           ],
         ),
@@ -71,8 +104,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _setThemeTile(UserPreferences userPrefs) => ListTile(
         contentPadding: Styles.noPadding,
-        leading: Icon(Icons.dark_mode),
-        title: Text('Theme'),
+        leading: const Icon(Icons.dark_mode),
+        title: const Text('Theme'),
         trailing: ChoiceChips(
           options: ['System', 'Light', 'Dark'],
           selected: currentTheme,
@@ -85,23 +118,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       );
 
-  Widget _setColorSchemeTile(UserPreferences userPrefs) => ListTile(
-        contentPadding: Styles.noPadding,
-        leading: Icon(Icons.color_lens),
-        title: Text('Color Scheme'),
-        trailing: ColorIndicator(
-          color: currentColor,
+  Widget _setColorSchemeTile(UserPreferences userPrefs) => PopupMenuButton(
+        tooltip: '',
+        child: ListTile(
+          contentPadding: Styles.noPadding,
+          leading: const Icon(Icons.color_lens),
+          title: const Text('Color Scheme'),
+          trailing: CircleAvatar(backgroundColor: currentColor),
         ),
-        onTap: () async {
-          final color = await showColorPickerDialog(
-            context,
-            currentColor,
-            pickersEnabled: {ColorPickerType.accent: false},
-            enableShadesSelection: false,
-            heading: Text('Choose a color'),
-          );
+        itemBuilder: (context) {
+          return colorSchemeOptions.map(
+            (e) {
+              return PopupMenuItem(
+                value: e,
+                child: CircleAvatar(backgroundColor: e),
+              );
+            },
+          ).toList();
+        },
+        onSelected: (value) async {
           setState(() {
-            currentColor = color;
+            currentColor = value;
           });
           await userPrefs.updateUser(colorScheme: currentColor.value);
         },
@@ -109,8 +146,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _resetDataTile() => ListTile(
         contentPadding: Styles.noPadding,
-        leading: Icon(Icons.delete),
-        title: Text('Reset Data'),
+        leading: const Icon(Icons.delete),
+        title: const Text('Reset Data'),
         onTap: _resetData,
       );
 }

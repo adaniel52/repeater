@@ -45,7 +45,7 @@ class IntroScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text('Get Started!'),
+                    child: const Text('Get Started!'),
                   ),
                 ),
               ],

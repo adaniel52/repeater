@@ -42,7 +42,7 @@ class NoteCard extends StatelessWidget {
                     child: child,
                   ),
                 ),
-                SmallGap(),
+                const SmallGap(),
                 Text(
                   title,
                   style: Theme.of(context).textTheme.headlineMedium,

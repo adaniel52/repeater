@@ -45,10 +45,10 @@ class _NotesScreenState extends State<NotesScreen> {
     double childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notes'),
+        title: const Text('Notes'),
       ),
       body: (_notes.isEmpty)
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Scrollbar(
               child: GridView.builder(
                 padding: Styles.screenPadding,

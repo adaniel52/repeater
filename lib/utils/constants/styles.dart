@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Styles {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       headlineLarge: headlineLarge,
       headlineMedium: headlineMedium,
       headlineSmall: headlineSmall,
@@ -13,7 +13,7 @@ class Styles {
     filledButtonTheme: FilledButtonThemeData(
       style: primaryButtonStyle,
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       titleTextStyle: headlineLarge,
     ),
     cardTheme: cardTheme,
@@ -21,7 +21,7 @@ class Styles {
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       headlineLarge: headlineLargeDark,
       headlineMedium: headlineMediumDark,
       headlineSmall: headlineSmallDark,
@@ -31,7 +31,7 @@ class Styles {
     filledButtonTheme: FilledButtonThemeData(
       style: primaryButtonStyleDark,
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       titleTextStyle: headlineLargeDark,
     ),
     cardTheme: cardTheme,
@@ -105,13 +105,13 @@ class Styles {
   );
 
   static ButtonStyle primaryButtonStyle = FilledButton.styleFrom(
-    padding: EdgeInsets.symmetric(vertical: 14.0),
-    shape: RoundedRectangleBorder(borderRadius: mediumBorderRadius),
+    padding: const EdgeInsets.symmetric(vertical: 14.0),
+    shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
   );
 
   static ButtonStyle primaryButtonStyleDark = ElevatedButton.styleFrom(
-    padding: EdgeInsets.symmetric(vertical: 14.0),
-    shape: RoundedRectangleBorder(borderRadius: mediumBorderRadius),
+    padding: const EdgeInsets.symmetric(vertical: 14.0),
+    shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
   );
 
   static const CardTheme cardTheme = CardTheme(margin: EdgeInsets.all(0));

@@ -79,11 +79,11 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                     const Divider(),
                     const MediumGap(),
                     (htmlContent == '')
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : Html(
                             data: htmlContent,
                             extensions: [
-                              VideoHtmlExtension(),
+                              const VideoHtmlExtension(),
                             ],
                           ),
                   ],

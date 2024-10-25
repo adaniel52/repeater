@@ -65,9 +65,9 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
               },
             );
           }),
-          LargeGap(),
+          const LargeGap(),
           FilledButton(
-            child: Text('Confirm Changes'),
+            child: const Text('Confirm Changes'),
             onPressed: () async {
               await Provider.of<UserPreferences>(context, listen: false)
                   .updateRubus(
@@ -76,7 +76,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
               );
               if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => MainNavigation()),
+                MaterialPageRoute(builder: (context) => const MainNavigation()),
                 (_) => false,
               );
             },

@@ -26,14 +26,14 @@ class _InitState extends State<Init> {
       if (user != null) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => MainNavigation(),
+            builder: (context) => const MainNavigation(),
           ),
           (_) => false,
         );
       } else {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => IntroScreen(),
+            builder: (context) => const IntroScreen(),
           ),
           (_) => false,
         );
@@ -43,9 +43,9 @@ class _InitState extends State<Init> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: const CircularProgressIndicator(),
+        child: CircularProgressIndicator(),
       ),
     );
   }

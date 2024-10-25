@@ -62,17 +62,17 @@ class _MainNavigationState extends State<MainNavigation> {
               backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
               labelType: NavigationRailLabelType.all,
               destinations: [
-                NavigationRailDestination(
+                const NavigationRailDestination(
                   icon: Icon(Icons.home_outlined),
                   selectedIcon: Icon(Icons.home),
                   label: Text('Home'),
                 ),
-                NavigationRailDestination(
+                const NavigationRailDestination(
                   icon: Icon(Icons.note_outlined),
                   selectedIcon: Icon(Icons.note),
                   label: Text('Notes'),
                 ),
-                NavigationRailDestination(
+                const NavigationRailDestination(
                   icon: Icon(Icons.settings_outlined),
                   selectedIcon: Icon(Icons.settings),
                   label: Text('Settings'),

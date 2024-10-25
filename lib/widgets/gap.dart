@@ -5,7 +5,7 @@ class SmallGap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       width: 4,
       height: 4,
     );
@@ -17,7 +17,7 @@ class MediumGap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       width: 12,
       height: 12,
     );
@@ -29,7 +29,7 @@ class LargeGap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       width: 20,
       height: 20,
     );
