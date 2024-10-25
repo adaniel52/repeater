@@ -3,7 +3,6 @@ import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/main_navigation.dart';
 
@@ -186,8 +185,11 @@ class _FormScreenState extends State<FormScreen> {
         }),
       ];
 
-  Widget _submitButton() => CustomButton(
-        onPressed: _handleSubmit,
-        child: Text('Submit'),
+  Widget _submitButton() => SizedBox(
+        width: double.infinity,
+        child: FilledButton(
+          onPressed: _handleSubmit,
+          child: Text('Submit'),
+        ),
       );
 }

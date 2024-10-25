@@ -4,7 +4,6 @@ import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/rubus_progress_indicator.dart';
 
@@ -82,20 +81,15 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           children: [
             Expanded(
-              child: CustomButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => JuzDetailsScreen(number: 1),
-                    ),
-                  );
-                },
+              child: FilledButton(
+                onPressed: () {},
                 child: Text('Memorize New Juz'),
               ),
             ),
             SmallGap(),
             Expanded(
-              child: CustomButton(
+              child: FilledButton.tonal(
+                onPressed: () {},
                 child: Text('Review Memorized Juz'),
               ),
             ),

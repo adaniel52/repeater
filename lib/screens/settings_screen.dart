@@ -1,3 +1,4 @@
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/screens/intro_screen.dart';
@@ -14,13 +15,14 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late String selectedTheme;
+  late String currentTheme;
+  Color currentColor = Colors.teal;
 
   @override
   void initState() {
     super.initState();
     final userPrefs = Provider.of<UserPreferences>(context, listen: false);
-    selectedTheme = userPrefs.getUser()!.themeMode;
+    currentTheme = userPrefs.getUser()!.themeMode;
   }
 
   void _resetData() async {
@@ -46,11 +48,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding: Styles.screenPadding,
           children: [
             Text(
-              'Preferences',
+              'Appearance',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             MediumGap(),
             _setThemeTile(userPrefs),
+            _setColorSchemeTile(),
             LargeGap(),
             Text(
               'Danger Zone',
@@ -70,13 +73,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text('Theme'),
         trailing: ChoiceChips(
           options: ['System', 'Light', 'Dark'],
-          selected: selectedTheme,
+          selected: currentTheme,
           onSelected: (value) {
             setState(() {
-              selectedTheme = value;
+              currentTheme = value;
             });
             userPrefs.updateUser(themeMode: value);
           },
+        ),
+      );
+
+  Widget _setColorSchemeTile() => ListTile(
+        contentPadding: Styles.noPadding,
+        leading: Icon(Icons.color_lens),
+        title: Text('Color Scheme'),
+        trailing: ColorIndicator(
+          color: currentColor,
         ),
       );
 

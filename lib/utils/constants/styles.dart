@@ -37,11 +37,6 @@ class Styles {
       titleTextStyle: headlineLargeDark,
     ),
     cardTheme: cardTheme,
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: Styles.mediumBorderRadius,
-      ),
-    ),
   );
 
   static const Color textPrimaryColor = Color(0xFF212121);
@@ -112,13 +107,13 @@ class Styles {
   );
 
   static ButtonStyle primaryButtonStyle = FilledButton.styleFrom(
-    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    padding: EdgeInsets.symmetric(vertical: 14.0),
+    shape: RoundedRectangleBorder(borderRadius: mediumBorderRadius),
   );
 
   static ButtonStyle primaryButtonStyleDark = ElevatedButton.styleFrom(
-    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    padding: EdgeInsets.symmetric(vertical: 14.0),
+    shape: RoundedRectangleBorder(borderRadius: mediumBorderRadius),
   );
 
   static const CardTheme cardTheme = CardTheme(margin: EdgeInsets.all(0));

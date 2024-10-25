@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/screens/form/form_screen.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/gap.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -36,15 +35,18 @@ class IntroScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const LargeGap(),
-                CustomButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const FormScreen(),
-                      ),
-                    );
-                  },
-                  child: Text('Get Started!'),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const FormScreen(),
+                        ),
+                      );
+                    },
+                    child: Text('Get Started!'),
+                  ),
                 ),
               ],
             ),

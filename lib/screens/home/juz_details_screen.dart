@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:repeater/models/rubu.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/custom_button.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/main_navigation.dart';
 
@@ -67,7 +66,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
             );
           }),
           LargeGap(),
-          CustomButton(
+          FilledButton(
             child: Text('Confirm Changes'),
             onPressed: () async {
               await Provider.of<UserPreferences>(context, listen: false)

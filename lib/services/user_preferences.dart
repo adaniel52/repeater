@@ -42,8 +42,7 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> resetUser() async {
-    User defaultUser = User();
-    await createUser(defaultUser);
+    await _userBox.delete('user');
     notifyListeners();
   }
 
