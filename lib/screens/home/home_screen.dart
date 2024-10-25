@@ -25,11 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body:
-          // (user == null)
-          //     ? const Center(child: CircularProgressIndicator())
-          //     :
-          Scrollbar(
+      body: Scrollbar(
         child: ListView(
           padding: Styles.screenPadding,
           children: [
