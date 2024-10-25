@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:repeater/models/rubu.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_button.dart';
@@ -54,8 +53,8 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
                 value: e.isMemorized,
                 onChanged: (value) async {
                   await Provider.of<UserPreferences>(context, listen: false)
-                      .updateRubu(
-                          widget.number, rubuNumber, Rubu(isMemorized: value));
+                      .updateRubu(widget.number, rubuNumber,
+                          e.copyWith(isMemorized: value));
                   // e.isMemorized = value;
                 },
               );

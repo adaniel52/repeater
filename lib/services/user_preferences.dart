@@ -58,4 +58,16 @@ class UserPreferences extends ChangeNotifier {
 
     await updateUser(juzs: updatedJuzs);
   }
+
+  // Future<void> updateRubus(int juzNumber, List<Rubu> rubus) async {
+  //   User? user = getUser();
+
+  //   Juz updatedJuz = user!.juzs[juzNumber - 1].copyWith(
+  //     rubus: rubus,
+  //   );
+
+  //   List<Juz> updatedJuzs = List.from(user.juzs)..[juzNumber - 1] = updatedJuz;
+
+  //   await updateUser(juzs: updatedJuzs);
+  // }
 }

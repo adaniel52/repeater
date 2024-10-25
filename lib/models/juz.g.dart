@@ -17,7 +17,9 @@ class JuzAdapter extends TypeAdapter<Juz> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Juz();
+    return Juz(
+      rubus: (fields[0] as List).cast<Rubu>(), //modified by hand
+    );
   }
 
   @override
