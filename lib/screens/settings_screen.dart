@@ -16,13 +16,15 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   late String currentTheme;
-  Color currentColor = Colors.teal;
+  late Color currentColor;
 
   @override
   void initState() {
     super.initState();
-    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
-    currentTheme = userPrefs.getUser()!.themeMode;
+    final user =
+        Provider.of<UserPreferences>(context, listen: false).getUser()!;
+    currentTheme = user.themeMode;
+    currentColor = Color(user.colorScheme);
   }
 
   void _resetData() async {
@@ -53,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             MediumGap(),
             _setThemeTile(userPrefs),
-            _setColorSchemeTile(),
+            _setColorSchemeTile(userPrefs),
             LargeGap(),
             Text(
               'Danger Zone',
@@ -74,22 +76,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
         trailing: ChoiceChips(
           options: ['System', 'Light', 'Dark'],
           selected: currentTheme,
-          onSelected: (value) {
+          onSelected: (value) async {
             setState(() {
               currentTheme = value;
             });
-            userPrefs.updateUser(themeMode: value);
+            await userPrefs.updateUser(themeMode: value);
           },
         ),
       );
 
-  Widget _setColorSchemeTile() => ListTile(
+  Widget _setColorSchemeTile(UserPreferences userPrefs) => ListTile(
         contentPadding: Styles.noPadding,
         leading: Icon(Icons.color_lens),
         title: Text('Color Scheme'),
         trailing: ColorIndicator(
           color: currentColor,
         ),
+        onTap: () async {
+          final color = await showColorPickerDialog(
+            context,
+            currentColor,
+            pickersEnabled: {ColorPickerType.accent: false},
+            enableShadesSelection: false,
+            dialogTitle: Text('Choose a color'),
+          );
+          setState(() {
+            currentColor = color;
+          });
+          await userPrefs.updateUser(colorScheme: currentColor.value);
+        },
       );
 
   Widget _resetDataTile() => ListTile(

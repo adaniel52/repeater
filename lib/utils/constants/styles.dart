@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class Styles {
   static ThemeData lightTheme = ThemeData(
-    colorSchemeSeed: Colors.teal,
     brightness: Brightness.light,
     textTheme: TextTheme(
       headlineLarge: headlineLarge,
@@ -21,7 +20,6 @@ class Styles {
   );
 
   static ThemeData darkTheme = ThemeData(
-    colorSchemeSeed: Colors.teal,
     brightness: Brightness.dark,
     textTheme: TextTheme(
       headlineLarge: headlineLargeDark,

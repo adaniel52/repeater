@@ -36,9 +36,19 @@ class MainApp extends StatelessWidget {
     final user = Provider.of<UserPreferences>(context).getUser();
     return MaterialApp(
       title: 'Repeater',
-      theme: Styles.lightTheme,
-      darkTheme: Styles.darkTheme,
-      themeMode: user == null
+      theme: Styles.lightTheme.copyWith(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(user == null ? Colors.teal.value : user.colorScheme),
+          brightness: Brightness.light,
+        ),
+      ),
+      darkTheme: Styles.darkTheme.copyWith(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(user == null ? Colors.teal.value : user.colorScheme),
+          brightness: Brightness.dark,
+        ),
+      ),
+      themeMode: (user == null)
           ? ThemeMode.system
           : mapStringtoThemeMode(user.themeMode),
       home: const Init(),

@@ -30,12 +30,14 @@ class UserPreferences extends ChangeNotifier {
     int? rubu,
     List<Juz>? juzs,
     String? themeMode,
+    int? colorScheme,
   }) async {
     final user = getUser()!.copyWith(
       juz: juz,
       rubu: rubu,
       juzs: juzs,
       themeMode: themeMode,
+      colorScheme: colorScheme,
     );
     await createUser(user);
     notifyListeners();

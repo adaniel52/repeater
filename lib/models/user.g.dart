@@ -20,13 +20,14 @@ class UserAdapter extends TypeAdapter<User> {
       .._juz = fields[0] as int?
       .._rubu = fields[1] as int?
       .._juzs = (fields[2] as List).cast<Juz>()
-      .._themeMode = fields[3] as String?;
+      .._themeMode = fields[3] as String?
+      .._colorScheme = fields[4] as int?;
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj._juz)
       ..writeByte(1)
@@ -34,7 +35,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(2)
       ..write(obj._juzs)
       ..writeByte(3)
-      ..write(obj._themeMode);
+      ..write(obj._themeMode)
+      ..writeByte(4)
+      ..write(obj._colorScheme);
   }
 
   @override
