@@ -39,7 +39,6 @@ class MainApp extends StatelessWidget {
       theme: Styles.lightTheme.copyWith(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Color(user == null ? Colors.teal.value : user.colorScheme),
-          brightness: Brightness.light,
         ),
       ),
       darkTheme: Styles.darkTheme.copyWith(

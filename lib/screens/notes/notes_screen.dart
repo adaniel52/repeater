@@ -25,7 +25,7 @@ class _NotesScreenState extends State<NotesScreen> {
       Uri.parse('https://adaniel52.github.io/repeater/api/notes.json'),
     );
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      final data = json.decode(response.body);
       if (mounted) {
         setState(() {
           _notes = data['data'];
@@ -36,13 +36,13 @@ class _NotesScreenState extends State<NotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.sizeOf(context).width;
-    int crossAxisCount = (width / 300).floor();
-    double childWidth = (width -
+    final width = MediaQuery.sizeOf(context).width;
+    final crossAxisCount = (width / 300).floor();
+    final childWidth = (width -
             2 * Styles.screenSpacing -
             Styles.largeSpacing * (crossAxisCount - 1)) /
         crossAxisCount;
-    double childHeight = childWidth * 9 / 16;
+    final childHeight = childWidth * 9 / 16;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes'),

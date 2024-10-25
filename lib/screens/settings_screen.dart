@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         leading: const Icon(Icons.dark_mode),
         title: const Text('Theme'),
         trailing: ChoiceChips(
-          options: ['System', 'Light', 'Dark'],
+          options: const ['System', 'Light', 'Dark'],
           selected: currentTheme,
           onSelected: (value) async {
             setState(() {

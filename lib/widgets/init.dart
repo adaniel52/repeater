@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/widgets/main_navigation.dart';
@@ -21,7 +20,7 @@ class _InitState extends State<Init> {
 
   void _checkIfRegistered() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final User? user =
+      final user =
           Provider.of<UserPreferences>(context, listen: false).getUser();
       if (user != null) {
         Navigator.of(context).pushAndRemoveUntil(

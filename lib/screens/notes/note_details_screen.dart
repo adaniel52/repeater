@@ -33,7 +33,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   Future<void> _fetchContent() async {
     final response = await http.get(Uri.parse(widget.contentUrl));
     if (response.statusCode == 200) {
-      var data = response.body;
+      final data = response.body;
       setState(() {
         htmlContent = data;
       });
@@ -82,8 +82,8 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                         ? const CircularProgressIndicator()
                         : Html(
                             data: htmlContent,
-                            extensions: [
-                              const VideoHtmlExtension(),
+                            extensions: const [
+                              VideoHtmlExtension(),
                             ],
                           ),
                   ],

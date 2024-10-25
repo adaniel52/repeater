@@ -22,7 +22,7 @@ class ScheduleService {
   }
 
   List<int> getTodaySchedule() {
-    int day = getCurrentDay();
+    final day = getCurrentDay();
     return newJuzMemorizationSchedule[day - 1];
   }
 }
