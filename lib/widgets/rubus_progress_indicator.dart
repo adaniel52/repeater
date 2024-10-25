@@ -11,11 +11,11 @@ class RubusProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: rubus.map((e) {
+      children: rubus.map((rubu) {
         return Expanded(
           child: Container(
             height: 4,
-            color: e.isMemorized
+            color: rubu.isMemorized
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.inversePrimary,
           ),

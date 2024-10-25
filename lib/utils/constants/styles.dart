@@ -11,7 +11,7 @@ class Styles {
       bodySmall: bodySmall,
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: primaryButtonStyle,
+      style: buttonStyle,
     ),
     appBarTheme: const AppBarTheme(
       titleTextStyle: headlineLarge,
@@ -29,7 +29,7 @@ class Styles {
       bodySmall: bodySmallDark,
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: primaryButtonStyleDark,
+      style: buttonStyleDark,
     ),
     appBarTheme: const AppBarTheme(
       titleTextStyle: headlineLargeDark,
@@ -59,58 +59,58 @@ class Styles {
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));
 
   static const TextStyle headlineLarge = TextStyle(
-    fontSize: 28.0,
+    fontSize: 28,
     fontWeight: FontWeight.bold,
     color: textPrimaryColor,
   );
   static const TextStyle headlineMedium = TextStyle(
-    fontSize: 24.0,
+    fontSize: 24,
     fontWeight: FontWeight.w600,
     color: textPrimaryColor,
   );
   static const TextStyle headlineSmall = TextStyle(
-    fontSize: 20.0,
+    fontSize: 20,
     fontWeight: FontWeight.w600,
     color: textSecondaryColor,
   );
   static const TextStyle bodyMedium = TextStyle(
-    fontSize: 16.0,
+    fontSize: 16,
   );
   static const TextStyle bodySmall = TextStyle(
-    fontSize: 12.0,
+    fontSize: 12,
     color: textSecondaryColor,
   );
 
   static const TextStyle headlineLargeDark = TextStyle(
-    fontSize: 28.0,
+    fontSize: 28,
     fontWeight: FontWeight.bold,
     color: textPrimaryDarkColor,
   );
   static const TextStyle headlineMediumDark = TextStyle(
-    fontSize: 24.0,
+    fontSize: 24,
     fontWeight: FontWeight.w600,
     color: textPrimaryDarkColor,
   );
   static const TextStyle headlineSmallDark = TextStyle(
-    fontSize: 20.0,
+    fontSize: 20,
     fontWeight: FontWeight.w600,
     color: textSecondaryDarkColor,
   );
   static const TextStyle bodyMediumDark = TextStyle(
-    fontSize: 16.0,
+    fontSize: 16,
   );
   static const TextStyle bodySmallDark = TextStyle(
-    fontSize: 12.0,
+    fontSize: 12,
     color: textSecondaryDarkColor,
   );
 
-  static ButtonStyle primaryButtonStyle = FilledButton.styleFrom(
-    padding: const EdgeInsets.symmetric(vertical: 14.0),
+  static ButtonStyle buttonStyle = FilledButton.styleFrom(
+    padding: const EdgeInsets.symmetric(vertical: 14),
     shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
   );
 
-  static ButtonStyle primaryButtonStyleDark = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.symmetric(vertical: 14.0),
+  static ButtonStyle buttonStyleDark = ElevatedButton.styleFrom(
+    padding: const EdgeInsets.symmetric(vertical: 14),
     shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
   );
 

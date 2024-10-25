@@ -22,8 +22,8 @@ class Juz {
 
   List<Rubu> get rubus => _rubus;
   bool get isMemorized {
-    for (var e in _rubus) {
-      if (!e.isMemorized) {
+    for (var rubu in _rubus) {
+      if (!rubu.isMemorized) {
         return false;
       }
     }
@@ -31,8 +31,8 @@ class Juz {
   }
 
   set isMemorized(bool value) {
-    for (var e in _rubus) {
-      e.isMemorized = value;
+    for (var rubu in _rubus) {
+      rubu.isMemorized = value;
     }
   }
 }

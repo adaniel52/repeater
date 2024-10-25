@@ -56,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const IntroScreen(),
+                  builder: (_) => const IntroScreen(),
                 ),
                 (_) => false,
               );
@@ -126,12 +126,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: const Text('Color Scheme'),
           trailing: CircleAvatar(backgroundColor: currentColor),
         ),
-        itemBuilder: (context) {
+        itemBuilder: (_) {
           return colorSchemeOptions.map(
-            (e) {
+            (color) {
               return PopupMenuItem(
-                value: e,
-                child: CircleAvatar(backgroundColor: e),
+                value: color,
+                child: CircleAvatar(backgroundColor: color),
               );
             },
           ).toList();

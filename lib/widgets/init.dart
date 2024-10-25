@@ -15,28 +15,20 @@ class _InitState extends State<Init> {
   @override
   void initState() {
     super.initState();
-    _checkIfRegistered();
+    _checkUser();
   }
 
-  void _checkIfRegistered() {
+  void _checkUser() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final user =
           Provider.of<UserPreferences>(context, listen: false).getUser();
-      if (user != null) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const MainNavigation(),
-          ),
-          (_) => false,
-        );
-      } else {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const IntroScreen(),
-          ),
-          (_) => false,
-        );
-      }
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) =>
+              (user == null) ? const IntroScreen() : const MainNavigation(),
+        ),
+        (_) => false,
+      );
     });
   }
 

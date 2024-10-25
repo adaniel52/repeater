@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
-class ChoiceChips extends StatefulWidget {
+class ChoiceChips extends StatelessWidget {
   final List<String> options;
   final String selected;
   final void Function(String) onSelected;
@@ -13,20 +13,15 @@ class ChoiceChips extends StatefulWidget {
   });
 
   @override
-  State<ChoiceChips> createState() => _ChoiceChipsState();
-}
-
-class _ChoiceChipsState extends State<ChoiceChips> {
-  @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: Styles.smallSpacing,
-      children: widget.options.map((e) {
+      children: options.map((option) {
         return ChoiceChip(
-          label: Text(e),
-          selected: widget.selected == e,
+          label: Text(option),
+          selected: selected == option,
           onSelected: (_) {
-            widget.onSelected(e);
+            onSelected(option);
           },
         );
       }).toList(),

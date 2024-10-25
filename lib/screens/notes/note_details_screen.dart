@@ -60,7 +60,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>
+                            builder: (_) =>
                                 NotePhotoView(imageUrl: widget.imageUrl),
                           ),
                         );

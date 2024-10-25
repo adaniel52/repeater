@@ -19,33 +19,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final crossAxisCount = (width / 175).floor();
-    final userPrefs = Provider.of<UserPreferences>(context);
-    final user = userPrefs.getUser();
-
-    // List<int> schedule =
-    //     ScheduleService(DateTime.now().subtract(Duration(days: 1)))
-    //         .getTodaySchedule();
+    final user = Provider.of<UserPreferences>(context).getUser()!;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: (user == null)
-          ? const Center(child: CircularProgressIndicator())
-          : Scrollbar(
-              child: ListView(
-                padding: Styles.screenPadding,
-                children: [
-                  ..._tasksSection(),
-                  if (user.juz != null) ...[
-                    const LargeGap(),
-                    ..._memorizationSection(user),
-                  ],
-                  const LargeGap(),
-                  ..._overallProgressSection(crossAxisCount, user),
-                ],
-              ),
-            ),
+      body:
+          // (user == null)
+          //     ? const Center(child: CircularProgressIndicator())
+          //     :
+          Scrollbar(
+        child: ListView(
+          padding: Styles.screenPadding,
+          children: [
+            ..._tasksSection(),
+            if (user.juz != null) ...[
+              const LargeGap(),
+              ..._memorizationSection(user),
+            ],
+            const LargeGap(),
+            ..._overallProgressSection(crossAxisCount, user),
+          ],
+        ),
+      ),
     );
   }
 
@@ -170,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) =>
+                                builder: (_) =>
                                     JuzDetailsScreen(number: index + 1),
                               ),
                             );

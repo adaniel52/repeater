@@ -22,9 +22,10 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    final user = Provider.of<UserPreferences>(context, listen: false).getUser();
-    final originalRubus = user!.juzs[widget.number - 1].rubus;
-    rubus = originalRubus.map((e) => e.copyWith()).toList();
+    final user =
+        Provider.of<UserPreferences>(context, listen: false).getUser()!;
+    final originalRubus = user.juzs[widget.number - 1].rubus;
+    rubus = originalRubus.map((rubu) => rubu.copyWith()).toList();
   }
 
   @override
@@ -41,26 +42,15 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
       body: ListView(
         padding: Styles.screenPadding,
         children: [
-          // CustomButton(
-          //   child: Text('Toggle Memorized'),
-          //   onPressed: () {
-          //     setState(() {
-          //       for (var e in firstJuz.rubus) {
-          //         e.isMemorized = !e.isMemorized;
-          //       }
-          //     });
-          //   },
-          // ),
-          // Text(firstJuz.isMemorized.toString()),
-          ...rubus.map((e) {
-            final rubuNumber = rubus.indexOf(e) + 1;
+          ...rubus.map((rubu) {
+            final rubuNumber = rubus.indexOf(rubu) + 1;
             return SwitchListTile(
               contentPadding: Styles.noPadding,
               title: Text('Rubu $rubuNumber'),
-              value: e.isMemorized,
+              value: rubu.isMemorized,
               onChanged: (value) {
                 setState(() {
-                  e.isMemorized = value;
+                  rubu.isMemorized = value;
                 });
               },
             );
@@ -76,7 +66,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
               );
               if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const MainNavigation()),
+                MaterialPageRoute(builder: (_) => const MainNavigation()),
                 (_) => false,
               );
             },

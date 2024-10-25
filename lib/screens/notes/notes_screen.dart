@@ -59,12 +59,12 @@ class _NotesScreenState extends State<NotesScreen> {
                   childAspectRatio: childWidth / (childHeight + 40),
                 ),
                 itemCount: _notes.length,
-                itemBuilder: (context, index) {
-                  final e = _notes[index];
+                itemBuilder: (_, index) {
+                  final note = _notes[index];
                   return NoteCard(
-                    imageUrl: e['imageUrl']!,
-                    title: e['title']!,
-                    contentUrl: e['contentUrl']!,
+                    imageUrl: note['imageUrl']!,
+                    title: note['title']!,
+                    contentUrl: note['contentUrl']!,
                   );
                 },
               ),

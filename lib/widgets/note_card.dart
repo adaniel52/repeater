@@ -20,7 +20,7 @@ class NoteCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => NoteDetailsScreen(
+            builder: (_) => NoteDetailsScreen(
               imageUrl: imageUrl,
               title: title,
               contentUrl: contentUrl,

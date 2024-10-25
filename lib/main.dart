@@ -6,7 +6,7 @@ import 'package:repeater/models/rubu.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/utils/theme_mode.dart';
+import 'package:repeater/utils/map_theme_mode.dart';
 import 'package:repeater/widgets/init.dart';
 
 void main() async {
@@ -21,7 +21,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => UserPreferences()),
+        ChangeNotifierProvider(create: (_) => UserPreferences()),
       ],
       child: const MainApp(),
     ),

@@ -49,9 +49,9 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> updateRubu(int juzNumber, int rubuNumber, Rubu rubu) async {
-    final user = getUser();
+    final user = getUser()!;
 
-    final updatedJuz = user!.juzs[juzNumber - 1].copyWith(
+    final updatedJuz = user.juzs[juzNumber - 1].copyWith(
       rubus: List.from(user.juzs[juzNumber - 1].rubus)..[rubuNumber - 1] = rubu,
     );
 
@@ -61,9 +61,9 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> updateRubus(int juzNumber, List<Rubu> rubus) async {
-    final user = getUser();
+    final user = getUser()!;
 
-    final updatedJuz = user!.juzs[juzNumber - 1].copyWith(
+    final updatedJuz = user.juzs[juzNumber - 1].copyWith(
       rubus: rubus,
     );
 

@@ -12,6 +12,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int index = 0;
+
   static const _screens = [
     HomeScreen(),
     NotesScreen(),
