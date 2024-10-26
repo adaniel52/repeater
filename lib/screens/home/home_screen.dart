@@ -5,6 +5,7 @@ import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
+import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/rubus_progress_indicator.dart';
 
@@ -54,19 +55,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: Scrollbar(
-        child: ListView(
-          padding: Styles.screenPadding,
-          children: [
-            ..._tasksSection(),
-            if (user.juz != null) ...[
-              const LargeGap(),
-              ..._memorizationSection(user),
-            ],
+      body: CustomListView(
+        children: [
+          ..._tasksSection(),
+          if (user.juz != null) ...[
             const LargeGap(),
-            ..._overallProgressSection(crossAxisCount, user),
+            ..._memorizationSection(user),
           ],
-        ),
+          const LargeGap(),
+          ..._overallProgressSection(crossAxisCount, user),
+        ],
       ),
     );
   }

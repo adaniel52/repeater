@@ -4,6 +4,7 @@ import 'package:repeater/screens/form/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/choice_chips.dart';
+import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -78,26 +79,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: Scrollbar(
-        child: ListView(
-          padding: Styles.screenPadding,
-          children: [
-            Text(
-              'Appearance',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const MediumGap(),
-            _setThemeTile(userPrefs),
-            _setColorSchemeTile(userPrefs),
-            const LargeGap(),
-            Text(
-              'Danger Zone',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const MediumGap(),
-            _resetDataTile(),
-          ],
-        ),
+      body: CustomListView(
+        children: [
+          Text(
+            'Appearance',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const MediumGap(),
+          _setThemeTile(userPrefs),
+          _setColorSchemeTile(userPrefs),
+          const LargeGap(),
+          Text(
+            'Danger Zone',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const MediumGap(),
+          _resetDataTile(),
+        ],
       ),
     );
   }

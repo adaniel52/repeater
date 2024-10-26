@@ -12,13 +12,21 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
+  late ScrollController _scrollController;
   bool isConnected = true;
   List _notes = [];
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _fetchData();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   Future<void> _fetchData() async {
@@ -67,7 +75,9 @@ class _NotesScreenState extends State<NotesScreen> {
                     ),
             )
           : Scrollbar(
+              controller: _scrollController,
               child: GridView.builder(
+                controller: _scrollController,
                 padding: Styles.screenPadding,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
