@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
@@ -15,6 +16,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Juz> filteredJuzs = [];
+  Map<String, bool> filters = {
+    'Fully Memorized': false,
+    'Partially Memorized': false,
+    'Not Memorized': false,
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    final user =
+        Provider.of<UserPreferences>(context, listen: false).getUser()!;
+    filteredJuzs = user.juzs;
+  }
+
+  void filterJuzs(List<Juz> allJuzs) {
+    setState(() {
+      filteredJuzs = allJuzs.where((juz) {
+        if (filters['Fully Memorized']! && !juz.isFullyMemorized) return false;
+        if (filters['Partially Memorized']! && !juz.isPartiallyMemorized) {
+          return false;
+        }
+        if (filters['Not Memorized']! && !juz.isNotMemorized) return false;
+        return true;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -48,28 +77,27 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const MediumGap(),
-        // Card.filled(
-        //   child: ListTile(
-        //     title: Text('Sabaq'),
-        //     subtitle: Text(
-        //       'Maqra ${schedule.toString()}',
-        //     ),
-        //     trailing: Row(
-        //       mainAxisSize: MainAxisSize.min,
-        //       children: [
-        //         IconButton.filledTonal(
-        //           onPressed: () {},
-        //           icon: const Icon(Icons.check),
-        //         ),
-        //         IconButton.filledTonal(
-        //           onPressed: () {},
-        //           icon: const Icon(Icons.close),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        const Text('You got no task.'),
+        Card.filled(
+          child: ListTile(
+            title: const Text('Manzil - Review Memorized Juz'),
+            subtitle: const Text('Juz 1'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton.filledTonal(
+                  onPressed: () {},
+                  icon: const Icon(Icons.check),
+                ),
+                IconButton.filledTonal(
+                  onPressed: () {},
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // const Text('You got no task.'),
         const MediumGap(),
         Row(
           children: [
@@ -127,9 +155,27 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const MediumGap(),
-        Text(
-          'Sort by',
-          style: Theme.of(context).textTheme.bodyMedium,
+        ListTile(
+          contentPadding: Styles.noPadding,
+          title: Text(
+            'Sort by',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          trailing: Wrap(
+            spacing: Styles.smallSpacing,
+            children: filters.keys.map((key) {
+              return FilterChip(
+                label: Text(key),
+                selected: filters[key]!,
+                onSelected: (value) {
+                  setState(() {
+                    filters[key] = value;
+                  });
+                  filterJuzs(user.juzs);
+                },
+              );
+            }).toList(),
+          ),
         ),
         const MediumGap(),
         GridView.builder(
@@ -141,9 +187,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: user.juzs.length,
+          itemCount: filteredJuzs.length,
           itemBuilder: (context, index) {
-            final juz = user.juzs[index];
+            final juz = filteredJuzs[index];
             return ClipRRect(
               borderRadius: Styles.mediumBorderRadius,
               child: Card.filled(

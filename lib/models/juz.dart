@@ -21,16 +21,11 @@ class Juz {
   }
 
   List<Rubu> get rubus => _rubus;
-  bool get isMemorized {
-    for (var rubu in _rubus) {
-      if (!rubu.isMemorized) {
-        return false;
-      }
-    }
-    return true;
-  }
+  bool get isFullyMemorized => rubus.every((rubu) => rubu.isMemorized);
+  bool get isPartiallyMemorized => rubus.any((rubu) => rubu.isMemorized);
+  bool get isNotMemorized => rubus.every((rubu) => !rubu.isMemorized);
 
-  set isMemorized(bool value) {
+  set isFullyMemorized(bool value) {
     for (var rubu in _rubus) {
       rubu.isMemorized = value;
     }

@@ -12,6 +12,7 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
+  bool isConnected = true;
   List _notes = [];
 
   @override
@@ -21,16 +22,22 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   Future<void> _fetchData() async {
-    final response = await http.get(
-      Uri.parse('https://adaniel52.github.io/repeater/api/notes.json'),
-    );
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (mounted) {
-        setState(() {
-          _notes = data['data'];
-        });
+    try {
+      final response = await http.get(
+        Uri.parse('https://adaniel52.github.io/repeater/api/notes.json'),
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (mounted) {
+          setState(() {
+            _notes = data['data'];
+          });
+        }
       }
+    } catch (_) {
+      setState(() {
+        isConnected = false;
+      });
     }
   }
 
@@ -48,7 +55,17 @@ class _NotesScreenState extends State<NotesScreen> {
         title: const Text('Notes'),
       ),
       body: (_notes.isEmpty)
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: isConnected
+                  ? const CircularProgressIndicator()
+                  : const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.wifi_off),
+                        Text('No internet connection!'),
+                      ],
+                    ),
+            )
           : Scrollbar(
               child: GridView.builder(
                 padding: Styles.screenPadding,

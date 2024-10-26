@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Styles {
-  static ThemeData lightTheme = ThemeData(
+  static final lightTheme = ThemeData(
+    brightness: Brightness.light,
     textTheme: const TextTheme(
       headlineLarge: headlineLarge,
       headlineMedium: headlineMedium,
@@ -9,42 +10,36 @@ class Styles {
       bodyMedium: bodyMedium,
       bodySmall: bodySmall,
     ),
-    filledButtonTheme: FilledButtonThemeData(
-      style: buttonStyle,
-    ),
-    appBarTheme: const AppBarTheme(
-      titleTextStyle: TextStyle(
-        color: Colors.black,
-        fontSize: 28,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    cardTheme: cardTheme,
-  );
-
-  static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    textTheme: const TextTheme(
-      headlineLarge: headlineLarge,
-      headlineMedium: headlineMedium,
-      headlineSmall: headlineSmall,
-      bodyMedium: bodyMedium,
-      bodySmall: bodySmall,
-    ),
-    filledButtonTheme: FilledButtonThemeData(
-      style: buttonStyle,
-    ),
+    filledButtonTheme: filledButtonTheme,
     appBarTheme: const AppBarTheme(
       titleTextStyle: headlineLarge,
     ),
     cardTheme: cardTheme,
+    scrollbarTheme: scrollbarTheme,
   );
 
-  // static const Color textPrimaryColor = Color(0xFF212121);
-  // static const Color textSecondaryColor = Color(0xFF757575);
+  static final darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    textTheme: const TextTheme(
+      headlineLarge: headlineLargeDark,
+      headlineMedium: headlineMediumDark,
+      headlineSmall: headlineSmallDark,
+      bodyMedium: bodyMediumDark,
+      bodySmall: bodySmallDark,
+    ),
+    filledButtonTheme: filledButtonTheme,
+    appBarTheme: const AppBarTheme(
+      titleTextStyle: headlineLargeDark,
+    ),
+    cardTheme: cardTheme,
+    scrollbarTheme: scrollbarTheme,
+  );
 
-  // static const Color textPrimaryDarkColor = Color(0xFFE0E0E0);
-  // static const Color textSecondaryDarkColor = Color(0xFFBDBDBD);
+  static const textPrimaryColor = Color(0xFF212121);
+  static const textSecondaryColor = Color(0xFF757575);
+
+  static const textPrimaryDarkColor = Color(0xFFE0E0E0);
+  static const textSecondaryDarkColor = Color(0xFFBDBDBD);
 
   static const noPadding = EdgeInsets.all(0);
   static const screenPadding = EdgeInsets.all(screenSpacing);
@@ -61,61 +56,62 @@ class Styles {
   static const mediumBorderRadius = BorderRadius.all(Radius.circular(12));
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));
 
-  static const TextStyle headlineLarge = TextStyle(
+  static const headlineLarge = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.bold,
-    // color: textPrimaryColor,
+    color: textPrimaryColor,
   );
-  static const TextStyle headlineMedium = TextStyle(
+  static const headlineMedium = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
-    // color: textPrimaryColor,
+    color: textPrimaryColor,
   );
-  static const TextStyle headlineSmall = TextStyle(
+  static const headlineSmall = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    // color: textSecondaryColor,
+    color: textSecondaryColor,
   );
-  static const TextStyle bodyMedium = TextStyle(
+  static const bodyMedium = TextStyle(
     fontSize: 16,
   );
-  static const TextStyle bodySmall = TextStyle(
+  static const bodySmall = TextStyle(
     fontSize: 12,
-    // color: textSecondaryColor,
+    color: textSecondaryColor,
   );
 
-  // static const TextStyle headlineLargeDark = TextStyle(
-  //   fontSize: 28,
-  //   fontWeight: FontWeight.bold,
-  //   // color: textPrimaryDarkColor,
-  // );
-  // static const TextStyle headlineMediumDark = TextStyle(
-  //   fontSize: 24,
-  //   fontWeight: FontWeight.w600,
-  //   // color: textPrimaryDarkColor,
-  // );
-  // static const TextStyle headlineSmallDark = TextStyle(
-  //   fontSize: 20,
-  //   fontWeight: FontWeight.w600,
-  //   // color: textSecondaryDarkColor,
-  // );
-  // static const TextStyle bodyMediumDark = TextStyle(
-  //   fontSize: 16,
-  // );
-  // static const TextStyle bodySmallDark = TextStyle(
-  //   fontSize: 12,
-  //   // color: textSecondaryDarkColor,
-  // );
-
-  static ButtonStyle buttonStyle = FilledButton.styleFrom(
-    padding: const EdgeInsets.symmetric(vertical: 14),
-    shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
+  static const headlineLargeDark = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
+    color: textPrimaryDarkColor,
+  );
+  static const headlineMediumDark = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w600,
+    color: textPrimaryDarkColor,
+  );
+  static const headlineSmallDark = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: textSecondaryDarkColor,
+  );
+  static const bodyMediumDark = TextStyle(
+    fontSize: 16,
+  );
+  static const bodySmallDark = TextStyle(
+    fontSize: 12,
+    color: textSecondaryDarkColor,
   );
 
-  // static ButtonStyle buttonStyleDark = ElevatedButton.styleFrom(
-  //   padding: const EdgeInsets.symmetric(vertical: 14),
-  //   shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
-  // );
+  static final filledButtonTheme = FilledButtonThemeData(
+    style: FilledButton.styleFrom(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
+    ),
+  );
 
-  static const CardTheme cardTheme = CardTheme(margin: EdgeInsets.all(0));
+  static const cardTheme = CardTheme(margin: EdgeInsets.all(0));
+
+  static const scrollbarTheme = ScrollbarThemeData(
+    interactive: true,
+  );
 }

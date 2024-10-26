@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:repeater/screens/intro_screen.dart';
+import 'package:repeater/screens/form/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/widgets/main_navigation.dart';
 

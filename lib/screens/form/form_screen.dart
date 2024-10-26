@@ -73,7 +73,6 @@ class _FormScreenState extends State<FormScreen> {
         title: const Text('Form'),
       ),
       body: Scrollbar(
-        interactive: true,
         child: SingleChildScrollView(
           child: Center(
             child: SizedBox(
@@ -176,10 +175,10 @@ class _FormScreenState extends State<FormScreen> {
           return SwitchListTile(
             contentPadding: Styles.noPadding,
             title: Text('Juz ${memorization.indexOf(juz) + 1}'),
-            value: juz.isMemorized,
+            value: juz.isFullyMemorized,
             onChanged: (value) {
               setState(() {
-                juz.isMemorized = value;
+                juz.isFullyMemorized = value;
               });
             },
           );

@@ -1,4 +1,4 @@
-// class ScheduleService {
+class ScheduleService {
 //   DateTime startDate;
 
 //   ScheduleService(this.startDate);
@@ -25,4 +25,4 @@
 //     final day = getCurrentDay();
 //     return newJuzMemorizationSchedule[day - 1];
 //   }
-// }
+}

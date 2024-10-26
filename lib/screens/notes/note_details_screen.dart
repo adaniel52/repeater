@@ -22,6 +22,7 @@ class NoteDetailsScreen extends StatefulWidget {
 }
 
 class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
+  bool isConnected = true;
   String htmlContent = '';
 
   @override
@@ -31,68 +32,82 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   }
 
   Future<void> _fetchContent() async {
-    final response = await http.get(Uri.parse(widget.contentUrl));
-    if (response.statusCode == 200) {
-      final data = response.body;
+    try {
+      final response = await http.get(Uri.parse(widget.contentUrl));
+      if (response.statusCode == 200) {
+        final data = response.body;
+        setState(() {
+          htmlContent = data;
+        });
+      }
+    } catch (_) {
       setState(() {
-        htmlContent = data;
+        isConnected = false;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final horizontalPadding = (width - 600) / 2;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Scrollbar(
-        interactive: true,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: Styles.screenPadding,
-            child: Center(
-              child: SizedBox(
-                width: 600,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                NotePhotoView(imageUrl: widget.imageUrl),
-                          ),
-                        );
-                      },
-                      child: Hero(
-                        tag: widget.imageUrl,
-                        child: ClipRRect(
-                          borderRadius: Styles.mediumBorderRadius,
-                          child: Image(
-                            image: NetworkImage(widget.imageUrl),
-                          ),
+      body: isConnected
+          ? Scrollbar(
+              child: ListView(
+                padding: EdgeInsets.symmetric(
+                  vertical: Styles.screenSpacing,
+                  horizontal: (horizontalPadding < Styles.screenSpacing)
+                      ? Styles.screenSpacing
+                      : horizontalPadding,
+                ),
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              NotePhotoView(imageUrl: widget.imageUrl),
+                        ),
+                      );
+                    },
+                    child: Hero(
+                      tag: widget.imageUrl,
+                      child: ClipRRect(
+                        borderRadius: Styles.mediumBorderRadius,
+                        child: Image(
+                          image: NetworkImage(widget.imageUrl),
                         ),
                       ),
                     ),
-                    const MediumGap(),
-                    const Divider(),
-                    const MediumGap(),
-                    (htmlContent == '')
-                        ? const CircularProgressIndicator()
-                        : Html(
-                            data: htmlContent,
-                            extensions: const [
-                              VideoHtmlExtension(),
-                            ],
-                          ),
-                  ],
-                ),
+                  ),
+                  const MediumGap(),
+                  const Divider(),
+                  const MediumGap(),
+                  (htmlContent == '')
+                      ? const LinearProgressIndicator()
+                      : Html(
+                          data: htmlContent,
+                          extensions: const [
+                            VideoHtmlExtension(),
+                          ],
+                        ),
+                ],
+              ),
+            )
+          : const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.wifi_off),
+                  Text('No internet connection!'),
+                ],
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
