@@ -35,11 +35,13 @@ class Styles {
     scrollbarTheme: scrollbarTheme,
   );
 
-  static const textPrimaryColor = Color(0xFF212121);
-  static const textSecondaryColor = Color(0xFF757575);
+  static const double smallBreakpoint = 480;
+  static const double largeBreakpoint = 768;
 
-  static const textPrimaryDarkColor = Color(0xFFE0E0E0);
-  static const textSecondaryDarkColor = Color(0xFFBDBDBD);
+  static const double screenSpacing = 16;
+  static const double smallSpacing = 4;
+  static const double mediumSpacing = 8;
+  static const double largeSpacing = 12;
 
   static const noPadding = EdgeInsets.all(0);
   static const screenPadding = EdgeInsets.all(screenSpacing);
@@ -47,14 +49,14 @@ class Styles {
   static const mediumPadding = EdgeInsets.all(mediumSpacing);
   static const largePadding = EdgeInsets.all(largeSpacing);
 
-  static const double screenSpacing = 16;
-  static const double smallSpacing = 4;
-  static const double mediumSpacing = 8;
-  static const double largeSpacing = 12;
-
   static const largeBorderRadius = BorderRadius.all(Radius.circular(16));
   static const mediumBorderRadius = BorderRadius.all(Radius.circular(12));
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));
+
+  static const textPrimaryColor = Color(0xFF212121);
+  static const textSecondaryColor = Color(0xFF757575);
+  static const textPrimaryDarkColor = Color(0xFFE0E0E0);
+  static const textSecondaryDarkColor = Color(0xFFBDBDBD);
 
   static const headlineLarge = TextStyle(
     fontSize: 28,

@@ -57,7 +57,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
       ),
       body: isConnected
           ? CustomListView(
-              width: 600,
+              width: Styles.largeBreakpoint,
               children: [
                 GestureDetector(
                   onTap: () {

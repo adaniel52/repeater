@@ -42,7 +42,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
         ),
       ),
       body: CustomListView(
-        width: 600,
+        width: Styles.largeBreakpoint,
         children: [
           ...rubus.map((rubu) {
             final rubuNumber = rubus.indexOf(rubu) + 1;

@@ -53,7 +53,8 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final crossAxisCount = (width / 300).floor();
+    final getCrossAxisCount = (width / 300).floor();
+    final crossAxisCount = (getCrossAxisCount < 1) ? 1 : getCrossAxisCount;
     final childWidth = (width -
             2 * Styles.screenSpacing -
             Styles.largeSpacing * (crossAxisCount - 1)) /

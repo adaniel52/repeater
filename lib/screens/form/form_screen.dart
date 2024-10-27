@@ -78,7 +78,7 @@ class _FormScreenState extends State<FormScreen> {
           controller: _scrollController,
           child: Center(
             child: SizedBox(
-              width: 400,
+              width: Styles.smallBreakpoint,
               child: Padding(
                 padding: Styles.screenPadding,
                 child: Form(

@@ -9,7 +9,7 @@ class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final horizontalPadding = (width - 400) / 2;
+    final horizontalPadding = (width - Styles.smallBreakpoint) / 2;
 
     return Scaffold(
       body: Center(

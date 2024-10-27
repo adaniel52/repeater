@@ -48,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final crossAxisCount = (width / 175).floor();
+    final getCrossAxisCount = (width / 175).floor();
+    final crossAxisCount = (getCrossAxisCount < 1) ? 1 : getCrossAxisCount;
     final user = Provider.of<UserPreferences>(context).getUser()!;
 
     return Scaffold(
