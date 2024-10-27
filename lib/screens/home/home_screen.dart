@@ -153,27 +153,36 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const MediumGap(),
-        ListTile(
-          contentPadding: Styles.noPadding,
-          title: Text(
-            'Sort by',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          trailing: Wrap(
-            spacing: Styles.smallSpacing,
-            children: filters.keys.map((key) {
-              return FilterChip(
-                label: Text(key),
-                selected: filters[key]!,
-                onSelected: (value) {
-                  setState(() {
-                    filters[key] = value;
-                  });
-                  filterJuzs(user.juzs);
-                },
-              );
-            }).toList(),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Filters',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Flexible(
+              child: Wrap(
+                spacing: Styles.smallSpacing,
+                runSpacing: Styles.smallSpacing,
+                alignment: WrapAlignment.end,
+                children: filters.keys.map((key) {
+                  return ChoiceChip(
+                    label: Text(key),
+                    selected: filters[key]!,
+                    onSelected: (value) {
+                      filters.forEach((anotherKey, _) {
+                        filters[anotherKey] = false;
+                      });
+                      setState(() {
+                        filters[key] = value;
+                      });
+                      filterJuzs(user.juzs);
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
         ),
         const MediumGap(),
         GridView.builder(
@@ -188,6 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: filteredJuzs.length,
           itemBuilder: (context, index) {
             final juz = filteredJuzs[index];
+            final juzNumber = user.juzs.indexOf(juz) + 1;
             return ClipRRect(
               borderRadius: Styles.mediumBorderRadius,
               child: Card.filled(
@@ -199,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: Styles.mediumPadding,
                           child: CircleAvatar(
-                            child: Text('${index + 1}'),
+                            child: Text('$juzNumber'),
                           ),
                         ),
                         IconButton(
@@ -208,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) =>
-                                    JuzDetailsScreen(number: index + 1),
+                                    JuzDetailsScreen(number: juzNumber),
                               ),
                             );
                           },

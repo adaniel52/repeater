@@ -42,6 +42,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
         });
       }
     } catch (_) {
+      if (!mounted) return;
       setState(() {
         isConnected = false;
       });

@@ -37,13 +37,13 @@ class _NotesScreenState extends State<NotesScreen> {
       );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        if (mounted) {
-          setState(() {
-            _notes = data['data'];
-          });
-        }
+        if (!mounted) return;
+        setState(() {
+          _notes = data['data'];
+        });
       }
     } catch (_) {
+      if (!mounted) return;
       setState(() {
         isConnected = false;
       });

@@ -22,7 +22,8 @@ class Juz {
 
   List<Rubu> get rubus => _rubus;
   bool get isFullyMemorized => rubus.every((rubu) => rubu.isMemorized);
-  bool get isPartiallyMemorized => rubus.any((rubu) => rubu.isMemorized);
+  bool get isPartiallyMemorized =>
+      rubus.any((rubu) => rubu.isMemorized) && !isFullyMemorized;
   bool get isNotMemorized => rubus.every((rubu) => !rubu.isMemorized);
 
   set isFullyMemorized(bool value) {
