@@ -8,12 +8,19 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final horizontalPadding = (width - 400) / 2;
+
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          width: 400,
+        child: SingleChildScrollView(
           child: Padding(
-            padding: Styles.screenPadding,
+            padding: EdgeInsets.symmetric(
+              vertical: Styles.screenSpacing,
+              horizontal: (horizontalPadding < Styles.screenSpacing)
+                  ? Styles.screenSpacing
+                  : horizontalPadding,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

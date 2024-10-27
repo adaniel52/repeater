@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
@@ -14,14 +15,17 @@ class NotePhotoView extends StatefulWidget {
 }
 
 class _NotePhotoViewState extends State<NotePhotoView> {
+  late PhotoViewController _photoViewController;
   @override
   void initState() {
     super.initState();
+    _photoViewController = PhotoViewController();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
 
   @override
   void dispose() {
+    _photoViewController.dispose();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [
@@ -48,10 +52,23 @@ class _NotePhotoViewState extends State<NotePhotoView> {
         ),
       ),
       backgroundColor: Colors.black,
-      body: PhotoView(
-        enablePanAlways: true,
-        heroAttributes: PhotoViewHeroAttributes(tag: widget.imageUrl),
-        imageProvider: NetworkImage(widget.imageUrl),
+      body: Listener(
+        // desktop zoom workaround - https://github.com/bluefireteam/photo_view/issues/481#issuecomment-2081412984
+        onPointerSignal: (event) {
+          if (event is PointerScrollEvent) {
+            final delta = event.scrollDelta.dy;
+            final controller = _photoViewController;
+            final scale = controller.scale ?? 1.0;
+            final newScale = scale - delta / 1000;
+            controller.scale = newScale.clamp(0, double.infinity);
+          }
+        },
+        child: PhotoView(
+          controller: _photoViewController,
+          enablePanAlways: true,
+          heroAttributes: PhotoViewHeroAttributes(tag: widget.imageUrl),
+          imageProvider: NetworkImage(widget.imageUrl),
+        ),
       ),
     );
   }

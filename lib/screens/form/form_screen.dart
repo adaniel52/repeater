@@ -73,7 +73,9 @@ class _FormScreenState extends State<FormScreen> {
         title: const Text('Form'),
       ),
       body: Scrollbar(
+        controller: _scrollController,
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Center(
             child: SizedBox(
               width: 400,

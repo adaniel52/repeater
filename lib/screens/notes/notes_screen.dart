@@ -32,7 +32,8 @@ class _NotesScreenState extends State<NotesScreen> {
   Future<void> _fetchData() async {
     try {
       final response = await http.get(
-        Uri.parse('https://adaniel52.github.io/repeater/api/notes.json'),
+        Uri.parse(
+            'https://adaniel52.github.io/repeater/api/notes/metadata.json'),
       );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -83,7 +84,7 @@ class _NotesScreenState extends State<NotesScreen> {
                   crossAxisCount: crossAxisCount,
                   mainAxisSpacing: Styles.largeSpacing,
                   crossAxisSpacing: Styles.largeSpacing,
-                  childAspectRatio: childWidth / (childHeight + 40),
+                  childAspectRatio: childWidth / (childHeight + 50),
                 ),
                 itemCount: _notes.length,
                 itemBuilder: (_, index) {

@@ -26,21 +26,20 @@ class _CustomListViewState extends State<CustomListView> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final horizontalPadding =
-        (widget.width == null) ? 0.0 : (width - widget.width!) / 2;
+    final horizontalPadding = (widget.width == null)
+        ? Styles.screenSpacing
+        : (width - widget.width!) / 2;
 
     return Scrollbar(
       controller: _scrollController,
       child: ListView(
         controller: _scrollController,
-        padding: (widget.width == null)
-            ? Styles.screenPadding
-            : EdgeInsets.symmetric(
-                vertical: Styles.screenSpacing,
-                horizontal: (horizontalPadding < Styles.screenSpacing)
-                    ? Styles.screenSpacing
-                    : horizontalPadding,
-              ),
+        padding: EdgeInsets.symmetric(
+          vertical: Styles.screenSpacing,
+          horizontal: (horizontalPadding < Styles.screenSpacing)
+              ? Styles.screenSpacing
+              : horizontalPadding,
+        ),
         children: widget.children,
       ),
     );

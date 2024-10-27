@@ -28,39 +28,38 @@ class NoteCard extends StatelessWidget {
           ),
         );
       },
-      child: const Image(
-        image: NetworkImage(
-            'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg'),
-        // loadingBuilder: (context, child, loadingProgress) {
-        //   if (loadingProgress == null) {
-        //     return Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         Hero(
-        //           tag: imageUrl,
-        //           child: ClipRRect(
-        //             borderRadius: Styles.mediumBorderRadius,
-        //             child: child,
-        //           ),
-        //         ),
-        //         const SmallGap(),
-        //         Text(
-        //           title,
-        //           style: Theme.of(context).textTheme.headlineMedium,
-        //         ),
-        //       ],
-        //     );
-        //   } else {
-        //     return Center(
-        //       child: CircularProgressIndicator(
-        //         value: loadingProgress.expectedTotalBytes != null
-        //             ? loadingProgress.cumulativeBytesLoaded /
-        //                 (loadingProgress.expectedTotalBytes ?? 1)
-        //             : null,
-        //       ),
-        //     );
-        //   }
-        // },
+      child: Image(
+        image: NetworkImage(imageUrl),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Hero(
+                  tag: imageUrl,
+                  child: ClipRRect(
+                    borderRadius: Styles.mediumBorderRadius,
+                    child: child,
+                  ),
+                ),
+                const SmallGap(),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ],
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        (loadingProgress.expectedTotalBytes ?? 1)
+                    : null,
+              ),
+            );
+          }
+        },
       ),
     );
   }
