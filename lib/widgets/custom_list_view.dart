@@ -7,7 +7,7 @@ class CustomListView extends StatefulWidget {
   const CustomListView({
     super.key,
     required this.children,
-    this.width,
+    this.width, // = Styles.largeBreakpoint,
   });
 
   @override
