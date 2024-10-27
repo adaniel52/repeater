@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {},
                   icon: const Icon(Icons.check),
                 ),
+                const SmallGap(),
                 IconButton.filledTonal(
                   onPressed: () {},
                   icon: const Icon(Icons.close),
@@ -160,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               'Filters',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
+            const MediumGap(),
             Flexible(
               child: Wrap(
                 spacing: Styles.smallSpacing,
