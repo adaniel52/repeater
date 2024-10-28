@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Styles {
   static final lightTheme = ThemeData(
-    brightness: Brightness.light,
+    // web status bar color flickering workaround
+    primaryColor: Colors.black,
     textTheme: const TextTheme(
       headlineLarge: headlineLarge,
       headlineMedium: headlineMedium,

@@ -34,16 +34,19 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserPreferences>(context).getUser();
+    final colorScheme =
+        Color(user == null ? Colors.teal.value : user.colorScheme);
+
     return MaterialApp(
       title: 'Repeater',
       theme: Styles.lightTheme.copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(user == null ? Colors.teal.value : user.colorScheme),
+          seedColor: colorScheme,
         ),
       ),
       darkTheme: Styles.darkTheme.copyWith(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(user == null ? Colors.teal.value : user.colorScheme),
+          seedColor: colorScheme,
           brightness: Brightness.dark,
         ),
       ),
