@@ -44,6 +44,8 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
       body: CustomListView(
         width: Styles.largeBreakpoint,
         children: [
+          const Text('Which rubu did you still remembered?'),
+          const MediumGap(),
           ...rubus.map((rubu) {
             final rubuNumber = rubus.indexOf(rubu) + 1;
             return SwitchListTile(
