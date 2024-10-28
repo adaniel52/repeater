@@ -17,7 +17,7 @@ class JuzAdapter extends TypeAdapter<Juz> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Juz(
-      rubus: (fields[0] as List).cast<Rubu>(), // modified by hand
+      rubus: (fields[0] as List).cast<Rubu>(), // hand made
     );
   }
 

@@ -188,53 +188,58 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         const MediumGap(),
-        GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            mainAxisSpacing: Styles.smallSpacing,
-            crossAxisSpacing: Styles.smallSpacing,
-            childAspectRatio: 1.4,
-          ),
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: filteredJuzs.length,
-          itemBuilder: (context, index) {
-            final juz = filteredJuzs[index];
-            final juzNumber = user.juzs.indexOf(juz) + 1;
-            return ClipRRect(
-              borderRadius: Styles.mediumBorderRadius,
-              child: Card.filled(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: Styles.mediumPadding,
-                          child: CircleAvatar(
-                            child: Text('$juzNumber'),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.more_vert),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    JuzDetailsScreen(number: juzNumber),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const Expanded(child: SizedBox()),
-                    RubusProgressIndicator(rubus: juz.rubus),
-                  ],
+        (filteredJuzs.isEmpty)
+            ? const Text(
+                'No results.',
+                textAlign: TextAlign.center,
+              )
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisSpacing: Styles.smallSpacing,
+                  crossAxisSpacing: Styles.smallSpacing,
+                  childAspectRatio: 1.4,
                 ),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: filteredJuzs.length,
+                itemBuilder: (context, index) {
+                  final juz = filteredJuzs[index];
+                  final juzNumber = user.juzs.indexOf(juz) + 1;
+                  return ClipRRect(
+                    borderRadius: Styles.mediumBorderRadius,
+                    child: Card.filled(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: Styles.mediumPadding,
+                                child: CircleAvatar(
+                                  child: Text('$juzNumber'),
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.more_vert),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          JuzDetailsScreen(number: juzNumber),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          const Expanded(child: SizedBox()),
+                          RubusProgressIndicator(rubus: juz.rubus),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ];
 }

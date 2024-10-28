@@ -1,46 +1,42 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'schedule_entry.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserAdapter extends TypeAdapter<User> {
+class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
   @override
-  final int typeId = 0;
+  final int typeId = 3;
 
   @override
-  User read(BinaryReader reader) {
+  ScheduleEntry read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return User()
-      .._juz = fields[0] as int?
-      .._rubu = fields[1] as int?
-      .._juzs = (fields[2] as List).cast<Juz>()
-      .._schedules = (fields[3] as List?)?.cast<ScheduleEntry>()
-      .._themeMode = fields[4] as String?
-      .._colorScheme = fields[5] as int?;
+    // made by hand bruh
+    return ScheduleEntry(
+      startDate: fields[0] as DateTime,
+      reviewType: fields[1] as String,
+      reviewList: (fields[2] as Map).cast<Juz, List<Rubu>>(),
+      isCompleted: fields[3] as bool,
+    );
   }
 
   @override
-  void write(BinaryWriter writer, User obj) {
+  void write(BinaryWriter writer, ScheduleEntry obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj._juz)
-      ..writeByte(1)
-      ..write(obj._rubu)
-      ..writeByte(2)
-      ..write(obj._juzs)
-      ..writeByte(3)
-      ..write(obj._schedules)
       ..writeByte(4)
-      ..write(obj._themeMode)
-      ..writeByte(5)
-      ..write(obj._colorScheme);
+      ..writeByte(0)
+      ..write(obj._startDate)
+      ..writeByte(1)
+      ..write(obj._reviewType)
+      ..writeByte(2)
+      ..write(obj._reviewList)
+      ..writeByte(3)
+      ..write(obj._isCompleted);
   }
 
   @override
@@ -49,7 +45,7 @@ class UserAdapter extends TypeAdapter<User> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserAdapter &&
+      other is ScheduleEntryAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

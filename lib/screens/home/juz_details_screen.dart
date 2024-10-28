@@ -37,7 +37,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Juz ${widget.number} Details'),
+            Text('Juz ${widget.number}'),
           ],
         ),
       ),

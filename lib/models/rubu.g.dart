@@ -16,15 +16,19 @@ class RubuAdapter extends TypeAdapter<Rubu> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Rubu().._isMemorized = fields[0] as bool?;
+    return Rubu()
+      .._isMemorized = fields[0] as bool?
+      .._isReviewed = fields[1] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, Rubu obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj._isMemorized);
+      ..write(obj._isMemorized)
+      ..writeByte(1)
+      ..write(obj._isReviewed);
   }
 
   @override
