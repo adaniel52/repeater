@@ -26,7 +26,9 @@ class IntroScreen extends StatelessWidget {
           ),
           Text(
             'An app to assist hafiz in scheduling timetables.',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: const Color(0xFF757575),
+                ),
             textAlign: TextAlign.center,
           ),
           const LargeGap(),

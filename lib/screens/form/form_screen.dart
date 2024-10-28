@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:repeater/models/juz.dart';
+import 'package:repeater/models/user.dart';
+import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/centered_scrollable_column.dart';
 import 'package:repeater/widgets/gap.dart';
+import 'package:repeater/widgets/main_navigation.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -12,11 +16,12 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   late PageController _pageController;
-  int index = 0;
-  bool hasKhatam = false;
-  final _memorizationInfoFormKey = GlobalKey<FormState>();
   late TextEditingController _juzController;
   late TextEditingController _rubuController;
+  final _memorizationInfoFormKey = GlobalKey<FormState>();
+  int index = 0;
+  bool hasKhatam = false;
+  List<Juz> juzs = List.generate(30, (_) => Juz());
 
   @override
   void initState() {
@@ -34,11 +39,29 @@ class _FormScreenState extends State<FormScreen> {
     super.dispose();
   }
 
+  void _handleSubmit() async {
+    await UserPreferences().createUser(
+      User(
+        juz: int.tryParse(_juzController.text),
+        rubu: int.tryParse(_rubuController.text),
+        juzs: juzs,
+      ),
+    );
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) => const MainNavigation(),
+      ),
+      (_) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screens = [
       _khatamForm(),
-      [const Text('yesh')]
+      _memorizedJuzsForm(),
+      [const Text('Confirm?')],
     ];
 
     return Scaffold(
@@ -57,6 +80,7 @@ class _FormScreenState extends State<FormScreen> {
         itemBuilder: (context, index) {
           final currentScreen = screens[index];
           return CenteredScrollableColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: currentScreen,
           );
         },
@@ -65,22 +89,24 @@ class _FormScreenState extends State<FormScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FilledButton.tonalIcon(
-              onPressed: (index == 0)
-                  ? null
-                  : () {
+            (index == 0)
+                ? const SizedBox()
+                : FilledButton.tonalIcon(
+                    onPressed: () {
                       _pageController.previousPage(
                         duration: Durations.medium1,
                         curve: Curves.ease,
                       );
                     },
-              label: const Text('Previous'),
-              icon: Icon(Icons.adaptive.arrow_back),
-            ),
+                    label: const Text('Previous'),
+                    icon: Icon(Icons.adaptive.arrow_back),
+                  ),
             (index + 1 == screens.length)
-                ? FilledButton(
-                    onPressed: () {},
-                    child: const Text('Submit'),
+                ? FilledButton.icon(
+                    onPressed: _handleSubmit,
+                    label: const Text('Submit'),
+                    icon: const Icon(Icons.check),
+                    iconAlignment: IconAlignment.end,
                   )
                 : FilledButton.icon(
                     onPressed: () {
@@ -106,15 +132,12 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   List<Widget> _khatamForm() => [
-        Text(
-          'General Info',
-          style: Theme.of(context).textTheme.headlineMedium,
-          textAlign: TextAlign.start,
-        ),
-        const LargeGap(),
         SwitchListTile(
           contentPadding: Styles.noPadding,
-          title: const Text('Khatam'),
+          title: Text(
+            'Khatam',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           subtitle: const Text('Have you finished memorizing the Quran?'),
           value: hasKhatam,
           onChanged: (value) {
@@ -125,10 +148,15 @@ class _FormScreenState extends State<FormScreen> {
         ),
         if (!hasKhatam) ...[
           const SmallGap(),
-          const ListTile(
+          const Divider(),
+          const SmallGap(),
+          ListTile(
             contentPadding: Styles.noPadding,
-            title: Text('Memorization Info'),
-            subtitle: Text('Fill in your current memorization info.'),
+            title: Text(
+              'Memorization Info',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            subtitle: const Text('Fill in your current memorization info.'),
           ),
           const SmallGap(),
           Form(
@@ -182,5 +210,26 @@ class _FormScreenState extends State<FormScreen> {
             ),
           ),
         ],
+      ];
+
+  List<Widget> _memorizedJuzsForm() => [
+        Text(
+          'Memorized Juzs',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        const Text('Which juz did you still remember?'),
+        const MediumGap(),
+        ...juzs.map((juz) {
+          return SwitchListTile(
+            contentPadding: Styles.noPadding,
+            title: Text('Juz ${juzs.indexOf(juz) + 1}'),
+            value: juz.isFullyMemorized,
+            onChanged: (value) {
+              setState(() {
+                juz.isFullyMemorized = value;
+              });
+            },
+          );
+        }),
       ];
 }

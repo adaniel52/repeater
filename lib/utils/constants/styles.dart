@@ -12,8 +12,8 @@ class Styles {
       bodySmall: bodySmall,
     ),
     filledButtonTheme: filledButtonTheme,
-    appBarTheme: const AppBarTheme(
-      titleTextStyle: headlineLarge,
+    appBarTheme: AppBarTheme(
+      titleTextStyle: headlineLarge.copyWith(color: Colors.black),
     ),
     cardTheme: cardTheme,
     scrollbarTheme: scrollbarTheme,
@@ -54,55 +54,55 @@ class Styles {
   static const mediumBorderRadius = BorderRadius.all(Radius.circular(12));
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));
 
-  static const textPrimaryColor = Color(0xFF212121);
-  static const textSecondaryColor = Color(0xFF757575);
-  static const textPrimaryDarkColor = Color(0xFFE0E0E0);
-  static const textSecondaryDarkColor = Color(0xFFBDBDBD);
+  // static const textPrimaryColor = Color(0xFF212121);
+  // static const textSecondaryColor = Color(0xFF757575);
+  // static const textPrimaryDarkColor = Color(0xFFE0E0E0);
+  // static const textSecondaryDarkColor = Color(0xFFBDBDBD);
 
   static const headlineLarge = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.bold,
-    color: textPrimaryColor,
+    // color: textPrimaryColor,
   );
   static const headlineMedium = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
-    color: textPrimaryColor,
+    // color: textPrimaryColor,
   );
   static const headlineSmall = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: textSecondaryColor,
+    // color: textSecondaryColor,
   );
   static const bodyMedium = TextStyle(
     fontSize: 16,
   );
   static const bodySmall = TextStyle(
     fontSize: 12,
-    color: textSecondaryColor,
+    // color: textSecondaryColor,
   );
 
   static const headlineLargeDark = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.bold,
-    color: textPrimaryDarkColor,
+    // color: textPrimaryDarkColor,
   );
   static const headlineMediumDark = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
-    color: textPrimaryDarkColor,
+    // color: textPrimaryDarkColor,
   );
   static const headlineSmallDark = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: textSecondaryDarkColor,
+    // color: textSecondaryDarkColor,
   );
   static const bodyMediumDark = TextStyle(
     fontSize: 16,
   );
   static const bodySmallDark = TextStyle(
     fontSize: 12,
-    color: textSecondaryDarkColor,
+    // color: textSecondaryDarkColor,
   );
 
   static final filledButtonTheme = FilledButtonThemeData(
