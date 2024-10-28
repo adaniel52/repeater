@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
 class CenteredScrollableColumn extends StatelessWidget {
+  final CrossAxisAlignment crossAxisAlignment;
   final List<Widget> children;
   const CenteredScrollableColumn({
     super.key,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
     required this.children,
   });
 
@@ -23,7 +25,8 @@ class CenteredScrollableColumn extends StatelessWidget {
                 : horizontalPadding,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: crossAxisAlignment,
             children: children,
           ),
         ),

@@ -107,7 +107,7 @@ class Styles {
 
   static final filledButtonTheme = FilledButtonThemeData(
     style: FilledButton.styleFrom(
-      padding: const EdgeInsets.symmetric(vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 28),
       shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
     ),
   );

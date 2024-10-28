@@ -16,7 +16,7 @@ class IntroScreen extends StatelessWidget {
             borderRadius: Styles.largeBorderRadius,
             child: Image(
               image: AssetImage('assets/icon/icon.png'),
-              height: 200,
+              width: 200,
             ),
           ),
           const LargeGap(),
@@ -26,8 +26,8 @@ class IntroScreen extends StatelessWidget {
           ),
           Text(
             'An app to assist hafiz in scheduling timetables.',
-            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall,
+            textAlign: TextAlign.center,
           ),
           const LargeGap(),
           SizedBox(
