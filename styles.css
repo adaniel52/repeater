@@ -26,7 +26,7 @@ h1 {
 }
 
 #app-version {
-	font-size: 14px;
+    font-size: 14px;
     margin-top: 0;
     margin-bottom: 20px;
 }
@@ -61,4 +61,8 @@ h1 {
 
 #ios-btn {
     background-color: white;
+}
+
+#web-btn {
+    background-color: cyan;
 }
