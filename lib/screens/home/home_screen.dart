@@ -78,15 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const MediumGap(),
         ...user.schedules!.map((scheduleEntry) {
+          final index = user.schedules!.indexOf(scheduleEntry);
+          final juz = scheduleEntry.reviewList!.keys.first;
+          final juzNumber = user.juzs.indexOf(juz) + 1;
           return Padding(
-            padding: EdgeInsets.only(
-                top: user.schedules!.indexOf(scheduleEntry) == 0
-                    ? 0
-                    : Styles.smallSpacing),
+            padding: EdgeInsets.only(top: index == 0 ? 0 : Styles.smallSpacing),
             child: Card.filled(
               child: ListTile(
                 title: const Text('Manzil - Review Memorized Juz'),
-                subtitle: const Text('Juz 1'),
+                subtitle: Text('Juz $juzNumber'),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -4,36 +4,36 @@ class Styles {
   static final lightTheme = ThemeData(
     // web status bar color flickering workaround
     primaryColor: Colors.black,
-    textTheme: const TextTheme(
-      headlineLarge: headlineLarge,
-      headlineMedium: headlineMedium,
-      headlineSmall: headlineSmall,
-      bodyMedium: bodyMedium,
-      bodySmall: bodySmall,
-    ),
+    // textTheme: const TextTheme(
+    //   headlineLarge: headlineLarge,
+    //   headlineMedium: headlineMedium,
+    //   headlineSmall: headlineSmall,
+    //   bodyMedium: bodyMedium,
+    //   bodySmall: bodySmall,
+    // ),
     filledButtonTheme: filledButtonTheme,
-    appBarTheme: AppBarTheme(
-      centerTitle: true,
-      titleTextStyle: headlineLarge.copyWith(color: Colors.black),
-    ),
+    // appBarTheme: AppBarTheme(
+    //   centerTitle: true,
+    //   titleTextStyle: headlineLarge.copyWith(color: Colors.black),
+    // ),
     cardTheme: cardTheme,
     scrollbarTheme: scrollbarTheme,
   );
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
-    textTheme: const TextTheme(
-      headlineLarge: headlineLarge,
-      headlineMedium: headlineMedium,
-      headlineSmall: headlineSmall,
-      bodyMedium: bodyMedium,
-      bodySmall: bodySmall,
-    ),
+    // textTheme: const TextTheme(
+    //   headlineLarge: headlineLarge,
+    //   headlineMedium: headlineMedium,
+    //   headlineSmall: headlineSmall,
+    //   bodyMedium: bodyMedium,
+    //   bodySmall: bodySmall,
+    // ),
     filledButtonTheme: filledButtonTheme,
-    appBarTheme: AppBarTheme(
-      centerTitle: true,
-      titleTextStyle: headlineLarge.copyWith(color: Colors.white),
-    ),
+    // appBarTheme: AppBarTheme(
+    //   centerTitle: true,
+    //   titleTextStyle: headlineLarge.copyWith(color: Colors.white),
+    // ),
     cardTheme: cardTheme,
     scrollbarTheme: scrollbarTheme,
   );

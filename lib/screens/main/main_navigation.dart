@@ -47,7 +47,6 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
         );
       }
-      debugPrint(schedules.toString());
       await userPrefs.updateUser(schedules: schedules);
     }
 
