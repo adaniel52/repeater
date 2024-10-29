@@ -74,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userPrefs = Provider.of<UserPreferences>(context);
+    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),

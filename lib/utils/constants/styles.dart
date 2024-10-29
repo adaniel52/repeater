@@ -22,15 +22,15 @@ class Styles {
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     textTheme: const TextTheme(
-      headlineLarge: headlineLargeDark,
-      headlineMedium: headlineMediumDark,
-      headlineSmall: headlineSmallDark,
-      bodyMedium: bodyMediumDark,
-      bodySmall: bodySmallDark,
+      headlineLarge: headlineLarge,
+      headlineMedium: headlineMedium,
+      headlineSmall: headlineSmall,
+      bodyMedium: bodyMedium,
+      bodySmall: bodySmall,
     ),
     filledButtonTheme: filledButtonTheme,
-    appBarTheme: const AppBarTheme(
-      titleTextStyle: headlineLargeDark,
+    appBarTheme: AppBarTheme(
+      titleTextStyle: headlineLarge.copyWith(color: Colors.white),
     ),
     cardTheme: cardTheme,
     scrollbarTheme: scrollbarTheme,
@@ -80,29 +80,6 @@ class Styles {
   static const bodySmall = TextStyle(
     fontSize: 12,
     // color: textSecondaryColor,
-  );
-
-  static const headlineLargeDark = TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.bold,
-    // color: textPrimaryDarkColor,
-  );
-  static const headlineMediumDark = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-    // color: textPrimaryDarkColor,
-  );
-  static const headlineSmallDark = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    // color: textSecondaryDarkColor,
-  );
-  static const bodyMediumDark = TextStyle(
-    fontSize: 16,
-  );
-  static const bodySmallDark = TextStyle(
-    fontSize: 12,
-    // color: textSecondaryDarkColor,
   );
 
   static final filledButtonTheme = FilledButtonThemeData(

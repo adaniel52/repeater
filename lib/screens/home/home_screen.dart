@@ -50,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final width = MediaQuery.sizeOf(context).width;
     final getCrossAxisCount = (width / 175).floor();
     final crossAxisCount = (getCrossAxisCount < 1) ? 1 : getCrossAxisCount;
-    final user = Provider.of<UserPreferences>(context).getUser()!;
+    final user =
+        Provider.of<UserPreferences>(context, listen: false).getUser()!;
 
     return Scaffold(
       appBar: AppBar(

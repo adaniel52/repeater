@@ -23,13 +23,19 @@ class _MainNavigationState extends State<MainNavigation> {
   ];
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    _setLastLoginTime();
+    _logIn();
   }
 
-  void _setLastLoginTime() async {
-    await Provider.of<UserPreferences>(context).updateUser(
+  void _logIn() async {
+    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+    final user = userPrefs.getUser()!;
+
+    if (user.lastLoginTime != DateTime.now()) {
+      // final memorizedJuzs = user.juzs.where((juz) => juz.isFullyMemorized);
+    }
+    await userPrefs.updateUser(
       lastLoginTime: DateTime.now(),
     );
   }

@@ -17,6 +17,7 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: Styles.mediumBorderRadius,
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(

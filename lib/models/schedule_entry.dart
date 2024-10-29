@@ -19,14 +19,14 @@ class ScheduleEntry {
   final bool? _isCompleted;
 
   ScheduleEntry({
-    required DateTime startDate,
+    DateTime? startDate,
     required String reviewType,
     required Map<Juz, List<Rubu>> reviewList,
     bool? isCompleted,
-  })  : _isCompleted = isCompleted,
+  })  : _startDate = startDate ?? DateTime.now(),
         _reviewType = reviewType,
         _reviewList = reviewList,
-        _startDate = startDate;
+        _isCompleted = isCompleted;
 
   DateTime get startDate => _startDate;
   String get reviewType => _reviewType;

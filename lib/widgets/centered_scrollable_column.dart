@@ -48,7 +48,6 @@ class _CenteredScrollableColumnState extends State<CenteredScrollableColumn> {
                   : horizontalPadding,
             ),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: widget.crossAxisAlignment,
               children: widget.children,
             ),
