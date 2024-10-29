@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/rubu.dart';
+import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 
 class UserPreferences extends ChangeNotifier {
@@ -29,6 +30,8 @@ class UserPreferences extends ChangeNotifier {
     int? juz,
     int? rubu,
     List<Juz>? juzs,
+    DateTime? lastLoginTime,
+    List<ScheduleEntry>? schedules,
     String? themeMode,
     int? colorScheme,
   }) async {
@@ -36,6 +39,8 @@ class UserPreferences extends ChangeNotifier {
       juz: juz,
       rubu: rubu,
       juzs: juzs,
+      lastLoginTime: lastLoginTime,
+      schedules: schedules,
       themeMode: themeMode,
       colorScheme: colorScheme,
     );
