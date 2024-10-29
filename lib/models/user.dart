@@ -17,24 +17,29 @@ class User {
   List<Juz> _juzs;
 
   @HiveField(3)
-  List<ScheduleEntry>? _schedules;
+  final DateTime _lastLoginTime;
 
   @HiveField(4)
-  String? _themeMode;
+  List<ScheduleEntry>? _schedules;
 
   @HiveField(5)
+  String? _themeMode;
+
+  @HiveField(6)
   int? _colorScheme;
 
   User({
     int? juz,
     int? rubu,
     List<Juz>? juzs,
+    DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
     String? themeMode,
     int? colorScheme,
   })  : _juz = juz,
         _rubu = rubu,
         _juzs = juzs ?? List.generate(30, (_) => Juz()),
+        _lastLoginTime = lastLoginTime ?? DateTime.now(),
         _schedules = schedules,
         _themeMode = themeMode,
         _colorScheme = colorScheme;
@@ -42,6 +47,7 @@ class User {
   int? get juz => _juz;
   int? get rubu => _rubu;
   List<Juz> get juzs => _juzs;
+  DateTime get lastLoginTime => _lastLoginTime;
   List<ScheduleEntry>? get schedules => _schedules;
   String get themeMode => _themeMode ?? 'System';
   int get colorScheme => _colorScheme ?? Colors.teal.value;
@@ -50,6 +56,7 @@ class User {
     int? juz,
     int? rubu,
     List<Juz>? juzs,
+    DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
     String? themeMode,
     int? colorScheme,
@@ -58,6 +65,7 @@ class User {
       juz: juz ?? this.juz,
       rubu: rubu ?? this.rubu,
       juzs: juzs ?? this.juzs,
+      lastLoginTime: lastLoginTime ?? this.lastLoginTime,
       schedules: schedules ?? this.schedules,
       themeMode: themeMode ?? this.themeMode,
       colorScheme: colorScheme ?? this.colorScheme,

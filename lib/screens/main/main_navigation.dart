@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:repeater/screens/home/home_screen.dart';
 import 'package:repeater/screens/notes/notes_screen.dart';
 import 'package:repeater/screens/settings_screen.dart';
+import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -19,6 +21,18 @@ class _MainNavigationState extends State<MainNavigation> {
     NotesScreen(),
     SettingsScreen(),
   ];
+
+  @override
+  void initState() async {
+    super.initState();
+    _setLastLoginTime();
+  }
+
+  void _setLastLoginTime() async {
+    await Provider.of<UserPreferences>(context).updateUser(
+      lastLoginTime: DateTime.now(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

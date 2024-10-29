@@ -5,7 +5,7 @@ import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/centered_scrollable_column.dart';
 import 'package:repeater/widgets/gap.dart';
-import 'package:repeater/widgets/main_navigation.dart';
+import 'package:repeater/screens/main/main_navigation.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
