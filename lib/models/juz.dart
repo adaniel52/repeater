@@ -6,7 +6,7 @@ part 'juz.g.dart';
 @HiveType(typeId: 1)
 class Juz {
   @HiveField(0)
-  final List<Rubu> _rubus;
+  List<Rubu> _rubus;
 
   Juz({
     List<Rubu>? rubus,

@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/rubu.dart';
+import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
@@ -16,6 +17,7 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(JuzAdapter());
   Hive.registerAdapter(RubuAdapter());
+  Hive.registerAdapter(ScheduleEntryAdapter());
   await UserPreferences().init();
 
   runApp(

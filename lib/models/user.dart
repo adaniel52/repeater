@@ -17,7 +17,7 @@ class User {
   List<Juz> _juzs;
 
   @HiveField(3)
-  final DateTime _lastLoginTime;
+  DateTime _lastLoginTime;
 
   @HiveField(4)
   List<ScheduleEntry>? _schedules;

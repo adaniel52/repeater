@@ -16,12 +16,12 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ScheduleEntry(
-      startDate: fields[0] as DateTime,
-      reviewType: fields[1] as String,
-      reviewList: (fields[2] as Map).cast<Juz, List<Rubu>>(),
-      isCompleted: fields[3] as bool,
-    );
+    return ScheduleEntry()
+      .._startDate = fields[0] as DateTime
+      .._reviewType = fields[1] as String
+      .._reviewList = (fields[2] as Map).map((dynamic k, dynamic v) =>
+          MapEntry(k as Juz, (v as List?)?.cast<Rubu>()))
+      .._isCompleted = fields[3] as bool?;
   }
 
   @override

@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: CustomListView(
         children: [
-          ..._tasksSection(),
+          ..._tasksSection(user),
           if (user.juz != null) ...[
             const LargeGap(),
             ..._memorizationSection(user),
@@ -71,32 +71,40 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<Widget> _tasksSection() => [
+  List<Widget> _tasksSection(User user) => [
         Text(
           'Tasks',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const MediumGap(),
-        Card.filled(
-          child: ListTile(
-            title: const Text('Manzil - Review Memorized Juz'),
-            subtitle: const Text('Juz 1'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton.filledTonal(
-                  onPressed: () {},
-                  icon: const Icon(Icons.check),
+        ...user.schedules!.map((scheduleEntry) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: user.schedules!.indexOf(scheduleEntry) == 0
+                    ? 0
+                    : Styles.smallSpacing),
+            child: Card.filled(
+              child: ListTile(
+                title: const Text('Manzil - Review Memorized Juz'),
+                subtitle: const Text('Juz 1'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton.filledTonal(
+                      onPressed: () {},
+                      icon: const Icon(Icons.check),
+                    ),
+                    const SmallGap(),
+                    IconButton.filledTonal(
+                      onPressed: () {},
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
                 ),
-                const SmallGap(),
-                IconButton.filledTonal(
-                  onPressed: () {},
-                  icon: const Icon(Icons.close),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        }),
 
         // const Text('You got no task.'),
         const MediumGap(),

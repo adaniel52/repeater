@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/screens/home/home_screen.dart';
 import 'package:repeater/screens/notes/notes_screen.dart';
 import 'package:repeater/screens/settings_screen.dart';
@@ -32,14 +33,27 @@ class _MainNavigationState extends State<MainNavigation> {
     final userPrefs = Provider.of<UserPreferences>(context, listen: false);
     final user = userPrefs.getUser()!;
 
-    if (user.lastLoginTime != DateTime.now()) {
-      // final memorizedJuzs = user.juzs.where((juz) => juz.isFullyMemorized);
+    if (user.lastLoginTime.day != DateTime.now().day) {
+      final memorizedJuzs =
+          user.juzs.where((juz) => juz.isFullyMemorized).toList();
+      final schedules = <ScheduleEntry>[];
+      for (var juz in memorizedJuzs) {
+        final index = memorizedJuzs.indexOf(juz);
+        schedules.add(
+          ScheduleEntry(
+            startDate: DateTime.now().add(Duration(days: index)),
+            reviewType: 'Manzil',
+            reviewList: {juz: null},
+          ),
+        );
+      }
+      debugPrint(schedules.toString());
+      await userPrefs.updateUser(schedules: schedules);
     }
-    debugPrint(userPrefs.getUser()!.lastLoginTime.day.toString());
+
     await userPrefs.updateUser(
       lastLoginTime: DateTime.now(),
     );
-    debugPrint(userPrefs.getUser()!.lastLoginTime.day.toString());
   }
 
   @override

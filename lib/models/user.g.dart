@@ -16,12 +16,11 @@ class UserAdapter extends TypeAdapter<User> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return User(
-      lastLoginTime: fields[3] as DateTime,
-    )
+    return User()
       .._juz = fields[0] as int?
       .._rubu = fields[1] as int?
       .._juzs = (fields[2] as List).cast<Juz>()
+      .._lastLoginTime = fields[3] as DateTime
       .._schedules = (fields[4] as List?)?.cast<ScheduleEntry>()
       .._themeMode = fields[5] as String?
       .._colorScheme = fields[6] as int?;
