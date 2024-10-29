@@ -35,9 +35,11 @@ class _MainNavigationState extends State<MainNavigation> {
     if (user.lastLoginTime != DateTime.now()) {
       // final memorizedJuzs = user.juzs.where((juz) => juz.isFullyMemorized);
     }
+    debugPrint(userPrefs.getUser()!.lastLoginTime.day.toString());
     await userPrefs.updateUser(
       lastLoginTime: DateTime.now(),
     );
+    debugPrint(userPrefs.getUser()!.lastLoginTime.day.toString());
   }
 
   @override

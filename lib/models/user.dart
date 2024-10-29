@@ -39,7 +39,10 @@ class User {
   })  : _juz = juz,
         _rubu = rubu,
         _juzs = juzs ?? List.generate(30, (_) => Juz()),
-        _lastLoginTime = lastLoginTime ?? DateTime.now(),
+        _lastLoginTime = lastLoginTime ??
+            DateTime.now().subtract(
+              const Duration(days: 1),
+            ),
         _schedules = schedules,
         _themeMode = themeMode,
         _colorScheme = colorScheme;
