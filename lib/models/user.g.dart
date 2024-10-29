@@ -16,19 +16,21 @@ class UserAdapter extends TypeAdapter<User> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return User()
+    return User(
+      lastLoginTime: fields[3] as DateTime,
+    )
       .._juz = fields[0] as int?
       .._rubu = fields[1] as int?
       .._juzs = (fields[2] as List).cast<Juz>()
-      .._schedules = (fields[3] as List?)?.cast<ScheduleEntry>()
-      .._themeMode = fields[4] as String?
-      .._colorScheme = fields[5] as int?;
+      .._schedules = (fields[4] as List?)?.cast<ScheduleEntry>()
+      .._themeMode = fields[5] as String?
+      .._colorScheme = fields[6] as int?;
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj._juz)
       ..writeByte(1)
@@ -36,10 +38,12 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(2)
       ..write(obj._juzs)
       ..writeByte(3)
-      ..write(obj._schedules)
+      ..write(obj._lastLoginTime)
       ..writeByte(4)
-      ..write(obj._themeMode)
+      ..write(obj._schedules)
       ..writeByte(5)
+      ..write(obj._themeMode)
+      ..writeByte(6)
       ..write(obj._colorScheme);
   }
 

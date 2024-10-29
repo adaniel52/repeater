@@ -16,7 +16,6 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    // made by hand bruh
     return ScheduleEntry(
       startDate: fields[0] as DateTime,
       reviewType: fields[1] as String,

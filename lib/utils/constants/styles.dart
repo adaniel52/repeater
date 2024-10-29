@@ -13,6 +13,7 @@ class Styles {
     ),
     filledButtonTheme: filledButtonTheme,
     appBarTheme: AppBarTheme(
+      centerTitle: true,
       titleTextStyle: headlineLarge.copyWith(color: Colors.black),
     ),
     cardTheme: cardTheme,
@@ -30,6 +31,7 @@ class Styles {
     ),
     filledButtonTheme: filledButtonTheme,
     appBarTheme: AppBarTheme(
+      centerTitle: true,
       titleTextStyle: headlineLarge.copyWith(color: Colors.white),
     ),
     cardTheme: cardTheme,
