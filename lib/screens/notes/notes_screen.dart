@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/widgets/note_card.dart';
+import 'package:repeater/screens/notes/note_card.dart';
 import 'package:http/http.dart' as http;
 
 class NotesScreen extends StatefulWidget {

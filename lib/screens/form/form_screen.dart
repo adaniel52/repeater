@@ -136,7 +136,7 @@ class _FormScreenState extends State<FormScreen> {
           contentPadding: Styles.noPadding,
           title: Text(
             'Khatam',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           subtitle: const Text('Have you finished memorizing the Quran?'),
           value: hasKhatam,
@@ -154,7 +154,7 @@ class _FormScreenState extends State<FormScreen> {
             contentPadding: Styles.noPadding,
             title: Text(
               'Memorization Info',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             subtitle: const Text('Fill in your current memorization info.'),
           ),
@@ -215,7 +215,7 @@ class _FormScreenState extends State<FormScreen> {
   List<Widget> _memorizedJuzsForm() => [
         Text(
           'Memorized Juzs',
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         const Text('Which juz did you still remember?'),
         const MediumGap(),

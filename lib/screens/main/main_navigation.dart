@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/screens/home/home_screen.dart';
 import 'package:repeater/screens/notes/notes_screen.dart';
-import 'package:repeater/screens/settings_screen.dart';
+import 'package:repeater/screens/settings/settings_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
@@ -39,11 +39,12 @@ class _MainNavigationState extends State<MainNavigation> {
       final schedules = <ScheduleEntry>[];
       for (var juz in memorizedJuzs) {
         final index = memorizedJuzs.indexOf(juz);
+        final juzNumber = user.juzs.indexOf(juz) + 1;
         schedules.add(
           ScheduleEntry(
             startDate: DateTime.now().add(Duration(days: index)),
             reviewType: 'Manzil',
-            juz: juz,
+            juzNumber: juzNumber,
           ),
         );
       }

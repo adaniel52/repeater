@@ -1,6 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:repeater/models/juz.dart';
-import 'package:repeater/models/rubu.dart';
 
 part 'schedule_entry.g.dart';
 
@@ -13,10 +11,10 @@ class ScheduleEntry {
   String? _reviewType;
 
   @HiveField(2)
-  Juz? _juz;
+  int? _juzNumber;
 
   @HiveField(3)
-  List<Rubu> _rubus;
+  List<int> _rubus;
 
   @HiveField(4)
   bool? _isCompleted;
@@ -24,18 +22,18 @@ class ScheduleEntry {
   ScheduleEntry({
     DateTime? startDate,
     String? reviewType,
-    Juz? juz,
-    List<Rubu>? rubus,
+    int? juzNumber,
+    List<int>? rubus,
     bool? isCompleted,
   })  : _startDate = startDate ?? DateTime.now(),
         _reviewType = reviewType,
-        _juz = juz,
-        _rubus = rubus ?? juz!.rubus,
+        _juzNumber = juzNumber,
+        _rubus = rubus ?? List.generate(8, (index) => index + 1),
         _isCompleted = isCompleted;
 
   DateTime get startDate => _startDate;
   String? get reviewType => _reviewType;
-  Juz get juz => _juz!;
-  List<Rubu> get rubus => _rubus;
+  int get juzNumber => _juzNumber!;
+  List<int> get rubus => _rubus;
   bool? get isCompleted => _isCompleted;
 }

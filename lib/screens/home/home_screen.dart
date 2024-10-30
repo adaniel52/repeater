@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/models/juz.dart';
+import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
-import 'package:repeater/widgets/rubus_progress_indicator.dart';
+import 'package:repeater/widgets/section_title.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,12 +19,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Juz> filteredJuzs = [];
-  List<Juz> juzs = [];
   Map<String, bool> filters = {
     'Fully Memorized': false,
     'Partially Memorized': false,
     'Not Memorized': false,
   };
+
+  List<ScheduleEntry> todaySchedules = [];
 
   @override
   void initState() {
@@ -31,7 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
     filteredJuzs = user.juzs;
-    juzs = user.juzs;
+
+    final schedules = <ScheduleEntry>[];
+    for (final scheduleEntry in user.schedules) {
+      if (scheduleEntry.startDate.day == DateTime.now().day) {
+        schedules.add(scheduleEntry);
+      }
+    }
+    setState(() {
+      todaySchedules = schedules;
+    });
   }
 
   void filterJuzs(List<Juz> allJuzs) {
@@ -68,137 +79,92 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           const LargeGap(),
           ..._overallProgressSection(crossAxisCount, user),
+          const LargeGap(),
         ],
       ),
     );
   }
 
   List<Widget> _tasksSection(User user) => [
-        Text(
-          'Tasks',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const MediumGap(),
-        if (user.schedules.isEmpty)
-          const Text('You got no task.')
+        const SectionTitle('Tasks'),
+        if (todaySchedules.isEmpty)
+          const ListTile(title: Text('You got no task.'))
         else
-          ...user.schedules.map((scheduleEntry) {
-            final index = user.schedules.indexOf(scheduleEntry);
-            final juz = scheduleEntry.juz;
-            final juzNumber = user.juzs.indexOf(juz) + 1;
-            return Padding(
-              padding:
-                  EdgeInsets.only(top: index == 0 ? 0 : Styles.smallSpacing),
-              child: Card.filled(
-                child: ListTile(
-                  title: const Text('Manzil - Review Memorized Juz'),
-                  subtitle: Text('Juz $juzNumber'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton.filledTonal(
-                        onPressed: () {},
-                        icon: const Icon(Icons.check),
-                      ),
-                      const SmallGap(),
-                      IconButton.filledTonal(
-                        onPressed: () {},
-                        icon: const Icon(Icons.close),
-                      ),
-                    ],
+          ...todaySchedules.map((scheduleEntry) {
+            final juzNumber = scheduleEntry.juzNumber;
+            // final juz = user.juzs[juzNumber - 1];
+            return ListTile(
+              title: const Text('Manzil - Review Memorized Juz'),
+              subtitle: Text('Juz $juzNumber'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton.filledTonal(
+                    onPressed: () {},
+                    icon: const Icon(Icons.check),
                   ),
-                ),
+                  const SmallGap(),
+                  IconButton.filledTonal(
+                    onPressed: () {},
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
               ),
             );
           }),
-        const MediumGap(),
-        Row(
-          children: [
-            Expanded(
-              child: FilledButton(
+        ListTile(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FilledButton(
                 onPressed: () {},
                 child: const Text('Memorize New Juz'),
               ),
-            ),
-            const SmallGap(),
-            Expanded(
-              child: FilledButton.tonal(
+              OutlinedButton(
                 onPressed: () {},
                 child: const Text('Review Memorized Juz'),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ];
 
   List<Widget> _memorizationSection(User user) => [
-        Text(
-          'Memorization',
-          style: Theme.of(context).textTheme.headlineMedium,
+        const SectionTitle('Memorization'),
+        ListTile(
+          leading: const Icon(Icons.book_outlined),
+          title: const Text('Current Juz'),
+          trailing: Text(user.juz.toString()),
         ),
-        const MediumGap(),
-        Row(
-          children: [
-            Expanded(
-              child: Card.filled(
-                child: ListTile(
-                  leading: const Icon(Icons.book_outlined),
-                  title: const Text('Current Juz'),
-                  subtitle: Text(user.juz.toString()),
-                ),
-              ),
-            ),
-            const SmallGap(),
-            Expanded(
-              child: Card.filled(
-                child: ListTile(
-                  leading: const Icon(Icons.brightness_low_outlined),
-                  title: const Text('Current Rubu'),
-                  subtitle: Text(user.rubu.toString()),
-                ),
-              ),
-            ),
-          ],
+        ListTile(
+          leading: const Icon(Icons.brightness_low_outlined),
+          title: const Text('Current Rubu'),
+          trailing: Text(user.rubu.toString()),
         ),
       ];
 
   List<Widget> _overallProgressSection(int crossAxisCount, User user) => [
-        Text(
-          'Overall Progress',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const MediumGap(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Filters',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const MediumGap(),
-            Flexible(
-              child: Wrap(
-                spacing: Styles.smallSpacing,
-                runSpacing: Styles.smallSpacing,
-                alignment: WrapAlignment.end,
-                children: filters.keys.map((key) {
-                  return ChoiceChip(
-                    label: Text(key),
-                    selected: filters[key]!,
-                    onSelected: (value) {
-                      filters.forEach((anotherKey, _) {
-                        filters[anotherKey] = false;
-                      });
-                      setState(() {
-                        filters[key] = value;
-                      });
-                      filterJuzs(user.juzs);
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
+        const SectionTitle('Overall Progress'),
+        ListTile(
+          title: Wrap(
+            spacing: Styles.smallSpacing,
+            // runSpacing: Styles.smallSpacing,
+            children: filters.keys.map((key) {
+              return ChoiceChip(
+                label: Text(key),
+                selected: filters[key]!,
+                onSelected: (value) {
+                  filters.forEach((anotherKey, _) {
+                    filters[anotherKey] = false;
+                  });
+                  setState(() {
+                    filters[key] = value;
+                  });
+                  filterJuzs(user.juzs);
+                },
+              );
+            }).toList(),
+          ),
         ),
         const MediumGap(),
         (filteredJuzs.isEmpty)
@@ -207,11 +173,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
               )
             : GridView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Styles.screenSpacing,
+                ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
                   mainAxisSpacing: Styles.smallSpacing,
                   crossAxisSpacing: Styles.smallSpacing,
-                  childAspectRatio: 1.4,
+                  childAspectRatio: 2,
                 ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -220,35 +189,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   final juz = filteredJuzs[index];
                   final juzNumber = user.juzs.indexOf(juz) + 1;
                   return ClipRRect(
-                    borderRadius: Styles.mediumBorderRadius,
+                    // borderRadius: Styles.mediumBorderRadius,
                     child: Card.filled(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: Styles.mediumPadding,
-                                child: CircleAvatar(
-                                  child: Text('$juzNumber'),
-                                ),
+                      margin: Styles.noPadding,
+                      child: ListTile(
+                        contentPadding: Styles.noPadding,
+                        leading: CircleAvatar(
+                          child: Text('$juzNumber'),
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.more_vert),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    JuzDetailsScreen(number: juzNumber),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.more_vert),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          JuzDetailsScreen(number: juzNumber),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                          const Expanded(child: SizedBox()),
-                          RubusProgressIndicator(rubus: juz.rubus),
-                        ],
+                            );
+                          },
+                        ),
                       ),
                     ),
                   );

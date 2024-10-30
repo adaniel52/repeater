@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/screens/form/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
-import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/choice_chips.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
+import 'package:repeater/widgets/section_title.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -81,27 +81,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: CustomListView(
         children: [
-          Text(
-            'Appearance',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const MediumGap(),
+          const SectionTitle('Appearance'),
           _setThemeTile(userPrefs),
           _setColorSchemeTile(userPrefs),
-          const LargeGap(),
-          Text(
-            'Danger Zone',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
           const MediumGap(),
+          const SectionTitle('More'),
           _resetDataTile(),
+          // const AboutListTile(
+          //   icon: Icon(Icons.info),
+          // ),
         ],
       ),
     );
   }
 
   Widget _setThemeTile(UserPreferences userPrefs) => ListTile(
-        contentPadding: Styles.noPadding,
         leading: const Icon(Icons.dark_mode),
         title: const Text('Theme'),
         trailing: ChoiceChips(
@@ -119,7 +113,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _setColorSchemeTile(UserPreferences userPrefs) => PopupMenuButton(
         tooltip: '',
         child: ListTile(
-          contentPadding: Styles.noPadding,
           leading: const Icon(Icons.color_lens),
           title: const Text('Color Scheme'),
           trailing: CircleAvatar(backgroundColor: currentColor),
@@ -143,7 +136,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
 
   Widget _resetDataTile() => ListTile(
-        contentPadding: Styles.noPadding,
         leading: const Icon(Icons.delete),
         title: const Text('Reset Data'),
         onTap: _resetData,

@@ -19,8 +19,8 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
     return ScheduleEntry()
       .._startDate = fields[0] as DateTime
       .._reviewType = fields[1] as String?
-      .._juz = fields[2] as Juz
-      .._rubus = (fields[3] as List).cast<Rubu>()
+      .._juzNumber = fields[2] as int?
+      .._rubus = (fields[3] as List).cast<int>()
       .._isCompleted = fields[4] as bool?;
   }
 
@@ -33,7 +33,7 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
       ..writeByte(1)
       ..write(obj._reviewType)
       ..writeByte(2)
-      ..write(obj._juz)
+      ..write(obj._juzNumber)
       ..writeByte(3)
       ..write(obj._rubus)
       ..writeByte(4)

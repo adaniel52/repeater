@@ -11,13 +11,13 @@ class Styles {
     //   bodyMedium: bodyMedium,
     //   bodySmall: bodySmall,
     // ),
-    filledButtonTheme: filledButtonTheme,
+    // filledButtonTheme: filledButtonTheme,
     // appBarTheme: AppBarTheme(
     //   centerTitle: true,
     //   titleTextStyle: headlineLarge.copyWith(color: Colors.black),
     // ),
-    cardTheme: cardTheme,
-    scrollbarTheme: scrollbarTheme,
+    // cardTheme: cardTheme,
+    // scrollbarTheme: scrollbarTheme,
   );
 
   static final darkTheme = ThemeData(
@@ -29,13 +29,13 @@ class Styles {
     //   bodyMedium: bodyMedium,
     //   bodySmall: bodySmall,
     // ),
-    filledButtonTheme: filledButtonTheme,
+    // filledButtonTheme: filledButtonTheme,
     // appBarTheme: AppBarTheme(
     //   centerTitle: true,
     //   titleTextStyle: headlineLarge.copyWith(color: Colors.white),
     // ),
-    cardTheme: cardTheme,
-    scrollbarTheme: scrollbarTheme,
+    // cardTheme: cardTheme,
+    // scrollbarTheme: scrollbarTheme,
   );
 
   static const double smallBreakpoint = 480;
