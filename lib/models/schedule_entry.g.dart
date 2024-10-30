@@ -18,23 +18,25 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
     };
     return ScheduleEntry()
       .._startDate = fields[0] as DateTime
-      .._reviewType = fields[1] as String
-      .._reviewList = (fields[2] as Map).map((dynamic k, dynamic v) =>
-          MapEntry(k as Juz, (v as List?)?.cast<Rubu>()))
-      .._isCompleted = fields[3] as bool?;
+      .._reviewType = fields[1] as String?
+      .._juz = fields[2] as Juz
+      .._rubus = (fields[3] as List).cast<Rubu>()
+      .._isCompleted = fields[4] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, ScheduleEntry obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj._startDate)
       ..writeByte(1)
       ..write(obj._reviewType)
       ..writeByte(2)
-      ..write(obj._reviewList)
+      ..write(obj._juz)
       ..writeByte(3)
+      ..write(obj._rubus)
+      ..writeByte(4)
       ..write(obj._isCompleted);
   }
 

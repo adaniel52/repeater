@@ -43,7 +43,7 @@ class _MainNavigationState extends State<MainNavigation> {
           ScheduleEntry(
             startDate: DateTime.now().add(Duration(days: index)),
             reviewType: 'Manzil',
-            reviewList: {juz: null},
+            juz: juz,
           ),
         );
       }

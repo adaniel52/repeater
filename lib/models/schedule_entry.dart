@@ -13,23 +13,29 @@ class ScheduleEntry {
   String? _reviewType;
 
   @HiveField(2)
-  Map<Juz, List<Rubu>?>? _reviewList;
+  Juz? _juz;
 
   @HiveField(3)
+  List<Rubu> _rubus;
+
+  @HiveField(4)
   bool? _isCompleted;
 
   ScheduleEntry({
     DateTime? startDate,
     String? reviewType,
-    Map<Juz, List<Rubu>?>? reviewList,
+    Juz? juz,
+    List<Rubu>? rubus,
     bool? isCompleted,
   })  : _startDate = startDate ?? DateTime.now(),
         _reviewType = reviewType,
-        _reviewList = reviewList,
+        _juz = juz,
+        _rubus = rubus ?? juz!.rubus,
         _isCompleted = isCompleted;
 
   DateTime get startDate => _startDate;
   String? get reviewType => _reviewType;
-  Map<Juz, List<Rubu>?>? get reviewList => _reviewList;
+  Juz get juz => _juz!;
+  List<Rubu> get rubus => _rubus;
   bool? get isCompleted => _isCompleted;
 }

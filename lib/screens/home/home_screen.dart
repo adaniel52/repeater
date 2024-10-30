@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Juz> filteredJuzs = [];
+  List<Juz> juzs = [];
   Map<String, bool> filters = {
     'Fully Memorized': false,
     'Partially Memorized': false,
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
     filteredJuzs = user.juzs;
+    juzs = user.juzs;
   }
 
   void filterJuzs(List<Juz> allJuzs) {
@@ -77,36 +79,38 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const MediumGap(),
-        ...user.schedules!.map((scheduleEntry) {
-          final index = user.schedules!.indexOf(scheduleEntry);
-          final juz = scheduleEntry.reviewList!.keys.first;
-          final juzNumber = user.juzs.indexOf(juz) + 1;
-          return Padding(
-            padding: EdgeInsets.only(top: index == 0 ? 0 : Styles.smallSpacing),
-            child: Card.filled(
-              child: ListTile(
-                title: const Text('Manzil - Review Memorized Juz'),
-                subtitle: Text('Juz $juzNumber'),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton.filledTonal(
-                      onPressed: () {},
-                      icon: const Icon(Icons.check),
-                    ),
-                    const SmallGap(),
-                    IconButton.filledTonal(
-                      onPressed: () {},
-                      icon: const Icon(Icons.close),
-                    ),
-                  ],
+        if (user.schedules.isEmpty)
+          const Text('You got no task.')
+        else
+          ...user.schedules.map((scheduleEntry) {
+            final index = user.schedules.indexOf(scheduleEntry);
+            final juz = scheduleEntry.juz;
+            final juzNumber = user.juzs.indexOf(juz) + 1;
+            return Padding(
+              padding:
+                  EdgeInsets.only(top: index == 0 ? 0 : Styles.smallSpacing),
+              child: Card.filled(
+                child: ListTile(
+                  title: const Text('Manzil - Review Memorized Juz'),
+                  subtitle: Text('Juz $juzNumber'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton.filledTonal(
+                        onPressed: () {},
+                        icon: const Icon(Icons.check),
+                      ),
+                      const SmallGap(),
+                      IconButton.filledTonal(
+                        onPressed: () {},
+                        icon: const Icon(Icons.close),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
-
-        // const Text('You got no task.'),
+            );
+          }),
         const MediumGap(),
         Row(
           children: [
