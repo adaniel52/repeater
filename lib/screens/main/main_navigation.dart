@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/screens/home/home_screen.dart';
 import 'package:repeater/screens/notes/notes_screen.dart';
 import 'package:repeater/screens/settings/settings_screen.dart';
-import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -22,39 +19,6 @@ class _MainNavigationState extends State<MainNavigation> {
     NotesScreen(),
     SettingsScreen(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    _logIn();
-  }
-
-  void _logIn() async {
-    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
-    final user = userPrefs.getUser()!;
-
-    if (user.lastLoginTime.day != DateTime.now().day) {
-      final memorizedJuzs =
-          user.juzs.where((juz) => juz.isFullyMemorized).toList();
-      final schedules = <ScheduleEntry>[];
-      for (var juz in memorizedJuzs) {
-        final index = memorizedJuzs.indexOf(juz);
-        final juzNumber = user.juzs.indexOf(juz) + 1;
-        schedules.add(
-          ScheduleEntry(
-            startDate: DateTime.now().add(Duration(days: index)),
-            reviewType: 'Manzil',
-            juzNumber: juzNumber,
-          ),
-        );
-      }
-      await userPrefs.updateUser(schedules: schedules);
-    }
-
-    await userPrefs.updateUser(
-      lastLoginTime: DateTime.now(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

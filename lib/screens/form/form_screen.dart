@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
@@ -41,13 +42,15 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   void _handleSubmit() async {
-    await UserPreferences().createUser(
+    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+    await userPrefs.createUser(
       User(
         juz: int.tryParse(_juzController.text),
         rubu: int.tryParse(_rubuController.text),
         juzs: juzs,
       ),
     );
+    await userPrefs.logIn();
     if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(

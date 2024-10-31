@@ -4,6 +4,7 @@ import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
+import 'package:repeater/screens/home/rubus_progress_indicator.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
@@ -95,19 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return ListTile(
               title: const Text('Manzil - Review Memorized Juz'),
               subtitle: Text('Juz $juzNumber'),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton.filledTonal(
-                    onPressed: () {},
-                    icon: const Icon(Icons.check),
-                  ),
-                  IconButton.filledTonal(
-                    onPressed: () {},
-                    icon: const Icon(Icons.close),
-                  ),
-                ],
-              ),
+              trailing: const Icon(Icons.chevron_right),
             );
           }),
         ListTile(
@@ -163,53 +152,73 @@ class _HomeScreenState extends State<HomeScreen> {
             }).toList(),
           ),
         ),
-        const MediumGap(),
-        (filteredJuzs.isEmpty)
-            ? const ListTile(
-                title: Text('No results.'),
-              )
-            : GridView.builder(
-                padding: const EdgeInsets.only(
-                  left: Styles.screenSpacing,
-                  right: Styles.screenSpacing,
-                  bottom: Styles.screenSpacing,
-                ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  mainAxisSpacing: Styles.smallSpacing,
-                  crossAxisSpacing: Styles.smallSpacing,
-                  childAspectRatio: 2,
-                ),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: filteredJuzs.length,
-                itemBuilder: (context, index) {
-                  final juz = filteredJuzs[index];
-                  final juzNumber = user.juzs.indexOf(juz) + 1;
-                  return ClipRRect(
-                    // borderRadius: Styles.mediumBorderRadius,
-                    child: Card.filled(
-                      margin: Styles.noPadding,
-                      child: ListTile(
-                        contentPadding: Styles.noPadding,
-                        leading: CircleAvatar(
-                          child: Text('$juzNumber'),
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.more_vert),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    JuzDetailsScreen(number: juzNumber),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  );
-                },
+        if (filteredJuzs.isEmpty)
+          const ListTile(
+            title: Text('No results.'),
+          )
+        else
+          ...filteredJuzs.map((juz) {
+            final juzNumber = user.juzs.indexOf(juz) + 1;
+            return ListTile(
+              leading: CircleAvatar(
+                child: Text('$juzNumber'),
               ),
+              title: Text('Juz $juzNumber'),
+              subtitle: ClipRRect(
+                  borderRadius: Styles.smallBorderRadius,
+                  child: RubusProgressIndicator(rubus: juz.rubus)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => JuzDetailsScreen(number: juzNumber),
+                  ),
+                );
+              },
+            );
+          }),
+        // GridView.builder(
+        //     padding: const EdgeInsets.only(
+        //       left: Styles.screenSpacing,
+        //       right: Styles.screenSpacing,
+        //       bottom: Styles.screenSpacing,
+        //     ),
+        //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: crossAxisCount,
+        //       mainAxisSpacing: Styles.smallSpacing,
+        //       crossAxisSpacing: Styles.smallSpacing,
+        //       childAspectRatio: 2,
+        //     ),
+        //     shrinkWrap: true,
+        //     physics: const NeverScrollableScrollPhysics(),
+        //     itemCount: filteredJuzs.length,
+        //     itemBuilder: (context, index) {
+        //       final juz = filteredJuzs[index];
+        //       final juzNumber = user.juzs.indexOf(juz) + 1;
+        //       return ClipRRect(
+        //         // borderRadius: Styles.mediumBorderRadius,
+        //         child: Card.filled(
+        //           margin: Styles.noPadding,
+        //           child: ListTile(
+        //             contentPadding: Styles.noPadding,
+        //             leading: CircleAvatar(
+        //               child: Text('$juzNumber'),
+        //             ),
+        //             trailing: IconButton(
+        //               icon: const Icon(Icons.more_vert),
+        //               onPressed: () {
+        //                 Navigator.of(context).push(
+        //                   MaterialPageRoute(
+        //                     builder: (_) =>
+        //                         JuzDetailsScreen(number: juzNumber),
+        //                   ),
+        //                 );
+        //               },
+        //             ),
+        //           ),
+        //         ),
+        //       );
+        //     },
+        //   ),
       ];
 }

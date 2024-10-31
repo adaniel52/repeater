@@ -51,9 +51,13 @@ class User {
   int? get rubu => _rubu;
   List<Juz> get juzs => _juzs;
   DateTime get lastLoginTime => _lastLoginTime;
-  List<ScheduleEntry> get schedules => _schedules!;
+  List<ScheduleEntry> get schedules => _schedules ?? [];
   String get themeMode => _themeMode ?? 'System';
   int get colorScheme => _colorScheme ?? Colors.teal.value;
+
+  bool get hasManzilReviewType => schedules.any(
+        (scheduleEntry) => scheduleEntry.reviewType == 'Manzil',
+      );
 
   User copyWith({
     int? juz,

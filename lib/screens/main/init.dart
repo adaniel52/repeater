@@ -19,9 +19,11 @@ class _InitState extends State<Init> {
   }
 
   void _checkUser() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final user =
-          Provider.of<UserPreferences>(context, listen: false).getUser();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+      final user = userPrefs.getUser();
+      if (user != null) await userPrefs.logIn();
+      if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (_) =>

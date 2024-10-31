@@ -4,14 +4,14 @@ import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/rubu.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
+import 'package:repeater/services/schedule_service.dart';
 
 class UserPreferences extends ChangeNotifier {
   static final UserPreferences _instance = UserPreferences._internal();
-  late Box<User> _userBox;
-
   UserPreferences._internal();
-
   factory UserPreferences() => _instance;
+
+  late Box<User> _userBox;
 
   Future<void> init() async {
     // for reset purposes
@@ -77,5 +77,22 @@ class UserPreferences extends ChangeNotifier {
     final updatedJuzs = List<Juz>.from(user.juzs)..[juzNumber - 1] = updatedJuz;
 
     await updateUser(juzs: updatedJuzs);
+  }
+
+  Future<void> logIn() async {
+    final user = getUser()!;
+
+    if (user.lastLoginTime.day != DateTime.now().day) {
+      if (!user.hasManzilReviewType) {
+        final schedules = ScheduleService().scheduleManzil(user);
+        await updateUser(schedules: schedules);
+      }
+    }
+
+    await updateUser(
+      lastLoginTime: DateTime.now(),
+    );
+
+    debugPrint('login');
   }
 }

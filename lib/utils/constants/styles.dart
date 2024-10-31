@@ -7,6 +7,7 @@ class Styles {
     materialTapTargetSize: MaterialTapTargetSize.padded,
     textTheme: TextTheme(
       titleLarge: titleLarge,
+      titleMedium: titleMedium,
     ),
   );
 
@@ -15,6 +16,7 @@ class Styles {
     materialTapTargetSize: MaterialTapTargetSize.padded,
     textTheme: TextTheme(
       titleLarge: titleLarge,
+      titleMedium: titleMedium,
     ),
   );
 
@@ -40,6 +42,10 @@ class Styles {
 
   static TextStyle titleLarge = const TextStyle(
     fontSize: 22,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle titleMedium = const TextStyle(
+    fontSize: 16,
     fontWeight: FontWeight.bold,
   );
 }
