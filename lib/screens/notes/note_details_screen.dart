@@ -97,7 +97,10 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.wifi_off),
-                  Text('No internet connection!'),
+                  Text(
+                    'No internet connection!',
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),

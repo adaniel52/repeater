@@ -14,6 +14,8 @@ class UserPreferences extends ChangeNotifier {
   factory UserPreferences() => _instance;
 
   Future<void> init() async {
+    // for reset purposes
+    // Hive.deleteBoxFromDisk('userBox');
     _userBox = await Hive.openBox<User>('userBox');
   }
 

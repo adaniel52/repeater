@@ -4,6 +4,7 @@ class Styles {
   static final lightTheme = ThemeData(
     // web status bar color flickering workaround
     primaryColor: Colors.black,
+    materialTapTargetSize: MaterialTapTargetSize.padded,
     textTheme: TextTheme(
       titleLarge: titleLarge,
     ),
@@ -11,6 +12,7 @@ class Styles {
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
+    materialTapTargetSize: MaterialTapTargetSize.padded,
     textTheme: TextTheme(
       titleLarge: titleLarge,
     ),

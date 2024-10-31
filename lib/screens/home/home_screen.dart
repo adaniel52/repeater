@@ -102,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {},
                     icon: const Icon(Icons.check),
                   ),
-                  const SmallGap(),
                   IconButton.filledTonal(
                     onPressed: () {},
                     icon: const Icon(Icons.close),
@@ -147,7 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ListTile(
           title: Wrap(
             spacing: Styles.smallSpacing,
-            // runSpacing: Styles.smallSpacing,
             children: filters.keys.map((key) {
               return ChoiceChip(
                 label: Text(key),
