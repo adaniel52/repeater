@@ -52,11 +52,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
             return SwitchListTile(
               title: Text('Rubu $rubuNumber'),
               value: rubu.isMemorized,
-              onChanged: (value) {
-                setState(() {
-                  rubu.isMemorized = value;
-                });
-              },
+              onChanged: (value) => setState(() => rubu.isMemorized = value),
             );
           }),
           const LargeGap(),

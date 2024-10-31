@@ -27,11 +27,7 @@ class _MainNavigationState extends State<MainNavigation> {
       bottomNavigationBar: (width < Styles.largeBreakpoint)
           ? NavigationBar(
               selectedIndex: index,
-              onDestinationSelected: (value) {
-                setState(() {
-                  index = value;
-                });
-              },
+              onDestinationSelected: (value) => setState(() => index = value),
               destinations: const [
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined),
@@ -56,11 +52,7 @@ class _MainNavigationState extends State<MainNavigation> {
           if (width >= Styles.largeBreakpoint)
             NavigationRail(
               selectedIndex: index,
-              onDestinationSelected: (value) {
-                setState(() {
-                  index = value;
-                });
-              },
+              onDestinationSelected: (value) => setState(() => index = value),
               backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
               labelType: NavigationRailLabelType.all,
               destinations: const [

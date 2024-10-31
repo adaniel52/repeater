@@ -21,6 +21,7 @@ class _FormScreenState extends State<FormScreen> {
   late TextEditingController _juzController;
   late TextEditingController _rubuController;
   final _memorizationInfoFormKey = GlobalKey<FormState>();
+
   int index = 0;
   bool hasKhatam = false;
   List<Juz> juzs = List.generate(30, (_) => Juz());
@@ -39,6 +40,25 @@ class _FormScreenState extends State<FormScreen> {
     _juzController.dispose();
     _rubuController.dispose();
     super.dispose();
+  }
+
+  void _goToPreviousPage() {
+    _pageController.previousPage(
+      duration: Durations.medium1,
+      curve: Curves.ease,
+    );
+  }
+
+  void _goToNextPage() {
+    switch (index) {
+      case 0:
+        if (hasKhatam) break;
+        if (!_memorizationInfoFormKey.currentState!.validate()) return;
+    }
+    _pageController.nextPage(
+      duration: Durations.medium1,
+      curve: Curves.ease,
+    );
   }
 
   void _handleSubmit() async {
@@ -75,15 +95,9 @@ class _FormScreenState extends State<FormScreen> {
       body: PageView.builder(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (value) {
-          setState(() {
-            index = value;
-          });
-        },
+        onPageChanged: (value) => setState(() => index = value),
         itemCount: screens.length,
-        itemBuilder: (context, index) {
-          return screens[index];
-        },
+        itemBuilder: (context, index) => screens[index],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -92,12 +106,7 @@ class _FormScreenState extends State<FormScreen> {
             (index == 0)
                 ? const SizedBox()
                 : FilledButton.tonalIcon(
-                    onPressed: () {
-                      _pageController.previousPage(
-                        duration: Durations.medium1,
-                        curve: Curves.ease,
-                      );
-                    },
+                    onPressed: _goToPreviousPage,
                     label: const Text('Previous'),
                     icon: Icon(Icons.adaptive.arrow_back),
                   ),
@@ -109,18 +118,7 @@ class _FormScreenState extends State<FormScreen> {
                     iconAlignment: IconAlignment.end,
                   )
                 : FilledButton.icon(
-                    onPressed: () {
-                      switch (index) {
-                        case 0:
-                          if (hasKhatam) break;
-                          if (!_memorizationInfoFormKey.currentState!
-                              .validate()) return;
-                      }
-                      _pageController.nextPage(
-                        duration: Durations.medium1,
-                        curve: Curves.ease,
-                      );
-                    },
+                    onPressed: _goToNextPage,
                     label: const Text('Next'),
                     icon: Icon(Icons.adaptive.arrow_forward),
                     iconAlignment: IconAlignment.end,
@@ -139,11 +137,7 @@ class _FormScreenState extends State<FormScreen> {
           ),
           subtitle: const Text('Have you finished memorizing the Quran?'),
           value: hasKhatam,
-          onChanged: (value) {
-            setState(() {
-              hasKhatam = value;
-            });
-          },
+          onChanged: (value) => setState(() => hasKhatam = value),
         ),
         if (!hasKhatam) ...[
           const SmallGap(),
@@ -224,14 +218,12 @@ class _FormScreenState extends State<FormScreen> {
         ),
         const MediumGap(),
         ...juzs.map((juz) {
+          final juzNumber = juzs.indexOf(juz) + 1;
+
           return SwitchListTile(
-            title: Text('Juz ${juzs.indexOf(juz) + 1}'),
+            title: Text('Juz $juzNumber'),
             value: juz.isFullyMemorized,
-            onChanged: (value) {
-              setState(() {
-                juz.isFullyMemorized = value;
-              });
-            },
+            onChanged: (value) => setState(() => juz.isFullyMemorized = value),
           );
         }),
       ]);

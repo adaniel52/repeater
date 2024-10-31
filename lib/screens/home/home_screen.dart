@@ -25,12 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
     'Partially Memorized': false,
     'Not Memorized': false,
   };
-
   List<ScheduleEntry> todaySchedules = [];
+  List<ScheduleEntry> notTodaySchedules = [];
 
   @override
   void initState() {
     super.initState();
+    _getSchedules();
+  }
+
+  void _getSchedules() {
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
     filteredJuzs = user.juzs;
@@ -43,10 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     setState(() {
       todaySchedules = schedules;
+      notTodaySchedules = user.schedules.where((scheduleEntry) {
+        return !schedules.contains(scheduleEntry);
+      }).toList();
     });
   }
 
-  void filterJuzs(List<Juz> allJuzs) {
+  void _filterJuzs(List<Juz> allJuzs) {
     setState(() {
       filteredJuzs = allJuzs.where((juz) {
         if (filters['Fully Memorized']! && !juz.isFullyMemorized) return false;
@@ -61,9 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final getCrossAxisCount = (width / 175).floor();
-    final crossAxisCount = (getCrossAxisCount < 1) ? 1 : getCrossAxisCount;
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
 
@@ -79,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ..._memorizationSection(user),
           ],
           const LargeGap(),
-          ..._overallProgressSection(crossAxisCount, user),
+          ..._overallProgressSection(user),
         ],
       ),
     );
@@ -99,21 +103,21 @@ class _HomeScreenState extends State<HomeScreen> {
               trailing: const Icon(Icons.chevron_right),
             );
           }),
-        ListTile(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FilledButton(
-                onPressed: () {},
-                child: const Text('Memorize New Juz'),
-              ),
-              OutlinedButton(
-                onPressed: () {},
-                child: const Text('Review Memorized Juz'),
-              ),
-            ],
-          ),
-        ),
+        const SectionTitle('Upcoming Tasks'),
+        if (notTodaySchedules.isEmpty)
+          const ListTile(
+            title: Text('You got no upcoming tasks.'),
+          )
+        else
+          ...notTodaySchedules.map((scheduleEntry) {
+            final juzNumber = scheduleEntry.juzNumber;
+            // final juz = user.juzs[juzNumber - 1];
+            return ListTile(
+              title: const Text('Manzil - Review Memorized Juz'),
+              subtitle: Text('Juz $juzNumber'),
+              trailing: const Icon(Icons.chevron_right),
+            );
+          }),
       ];
 
   List<Widget> _memorizationSection(User user) => [
@@ -130,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ];
 
-  List<Widget> _overallProgressSection(int crossAxisCount, User user) => [
+  List<Widget> _overallProgressSection(User user) => [
         const SectionTitle('Overall Progress'),
         ListTile(
           title: Wrap(
@@ -140,13 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: Text(key),
                 selected: filters[key]!,
                 onSelected: (value) {
-                  filters.forEach((anotherKey, _) {
-                    filters[anotherKey] = false;
+                  filters.forEach((key, _) {
+                    filters[key] = false;
                   });
-                  setState(() {
-                    filters[key] = value;
-                  });
-                  filterJuzs(user.juzs);
+
+                  setState(() => filters[key] = value);
+                  _filterJuzs(user.juzs);
                 },
               );
             }).toList(),
@@ -165,8 +168,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               title: Text('Juz $juzNumber'),
               subtitle: ClipRRect(
-                  borderRadius: Styles.smallBorderRadius,
-                  child: RubusProgressIndicator(rubus: juz.rubus)),
+                borderRadius: Styles.smallBorderRadius,
+                child: RubusProgressIndicator(rubus: juz.rubus),
+              ),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
                 Navigator.of(context).push(
@@ -177,48 +181,5 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             );
           }),
-        // GridView.builder(
-        //     padding: const EdgeInsets.only(
-        //       left: Styles.screenSpacing,
-        //       right: Styles.screenSpacing,
-        //       bottom: Styles.screenSpacing,
-        //     ),
-        //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //       crossAxisCount: crossAxisCount,
-        //       mainAxisSpacing: Styles.smallSpacing,
-        //       crossAxisSpacing: Styles.smallSpacing,
-        //       childAspectRatio: 2,
-        //     ),
-        //     shrinkWrap: true,
-        //     physics: const NeverScrollableScrollPhysics(),
-        //     itemCount: filteredJuzs.length,
-        //     itemBuilder: (context, index) {
-        //       final juz = filteredJuzs[index];
-        //       final juzNumber = user.juzs.indexOf(juz) + 1;
-        //       return ClipRRect(
-        //         // borderRadius: Styles.mediumBorderRadius,
-        //         child: Card.filled(
-        //           margin: Styles.noPadding,
-        //           child: ListTile(
-        //             contentPadding: Styles.noPadding,
-        //             leading: CircleAvatar(
-        //               child: Text('$juzNumber'),
-        //             ),
-        //             trailing: IconButton(
-        //               icon: const Icon(Icons.more_vert),
-        //               onPressed: () {
-        //                 Navigator.of(context).push(
-        //                   MaterialPageRoute(
-        //                     builder: (_) =>
-        //                         JuzDetailsScreen(number: juzNumber),
-        //                   ),
-        //                 );
-        //               },
-        //             ),
-        //           ),
-        //         ),
-        //       );
-        //     },
-        //   ),
       ];
 }

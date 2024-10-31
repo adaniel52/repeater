@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/screens/notes/note_card.dart';
+import 'package:repeater/screens/notes/note_tile.dart';
 import 'package:http/http.dart' as http;
 
 class NotesScreen extends StatefulWidget {
@@ -13,6 +13,7 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   late ScrollController _scrollController;
+
   bool isConnected = true;
   List _notes = [];
 
@@ -38,15 +39,11 @@ class _NotesScreenState extends State<NotesScreen> {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (!mounted) return;
-        setState(() {
-          _notes = data['data'];
-        });
+        setState(() => _notes = data['data']);
       }
     } catch (_) {
       if (!mounted) return;
-      setState(() {
-        isConnected = false;
-      });
+      setState(() => isConnected = false);
     }
   }
 
@@ -60,6 +57,7 @@ class _NotesScreenState extends State<NotesScreen> {
             Styles.largeSpacing * (crossAxisCount - 1)) /
         crossAxisCount;
     final childHeight = childWidth * 9 / 16;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes'),

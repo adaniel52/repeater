@@ -37,15 +37,11 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
       final response = await http.get(Uri.parse(widget.contentUrl));
       if (response.statusCode == 200) {
         final data = response.body;
-        setState(() {
-          htmlContent = data;
-        });
+        setState(() => htmlContent = data);
       }
     } catch (_) {
       if (!mounted) return;
-      setState(() {
-        isConnected = false;
-      });
+      setState(() => isConnected = false);
     }
   }
 
@@ -86,9 +82,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
                     ? const LinearProgressIndicator()
                     : Html(
                         data: htmlContent,
-                        extensions: const [
-                          VideoHtmlExtension(),
-                        ],
+                        extensions: const [VideoHtmlExtension()],
                       ),
               ],
             )

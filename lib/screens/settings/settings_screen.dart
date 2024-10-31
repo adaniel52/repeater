@@ -16,6 +16,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late String currentTheme;
   late Color currentColor;
+
   final List<Color> colorSchemeOptions = [
     Colors.deepPurple,
     Colors.indigo,
@@ -31,6 +32,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    _getData();
+  }
+
+  void _getData() {
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
     currentTheme = user.themeMode;
@@ -74,6 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -110,9 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }).toList();
         },
         onSelected: (value) async {
-          setState(() {
-            currentTheme = value;
-          });
+          setState(() => currentTheme = value);
           await userPrefs.updateUser(themeMode: value);
         },
       );
@@ -135,9 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ).toList();
         },
         onSelected: (value) async {
-          setState(() {
-            currentColor = value;
-          });
+          setState(() => currentColor = value);
           await userPrefs.updateUser(colorScheme: currentColor.value);
         },
       );
