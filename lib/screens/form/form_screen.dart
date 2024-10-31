@@ -4,6 +4,7 @@ import 'package:repeater/models/user.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/centered_scrollable_column.dart';
+import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/screens/main/main_navigation.dart';
 
@@ -61,7 +62,7 @@ class _FormScreenState extends State<FormScreen> {
     final screens = [
       _khatamForm(),
       _memorizedJuzsForm(),
-      [const Text('Confirm?')],
+      const Center(child: Text('Confirm?')),
     ];
 
     return Scaffold(
@@ -78,10 +79,7 @@ class _FormScreenState extends State<FormScreen> {
         },
         itemCount: screens.length,
         itemBuilder: (context, index) {
-          final currentScreen = screens[index];
-          return CenteredScrollableColumn(
-            children: currentScreen,
-          );
+          return screens[index];
         },
       ),
       bottomNavigationBar: BottomAppBar(
@@ -130,7 +128,7 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  List<Widget> _khatamForm() => [
+  Widget _khatamForm() => CenteredScrollableColumn(children: [
         SwitchListTile(
           title: Text(
             'Khatam',
@@ -174,7 +172,7 @@ class _FormScreenState extends State<FormScreen> {
                     validator: (value) {
                       final juz = int.tryParse(value!);
                       if (juz == null || juz < 1 || juz > 30) {
-                        return 'Invalid input! Choose a number between 1 - 30.';
+                        return 'Invalid input!';
                       } else {
                         return null;
                       }
@@ -196,7 +194,7 @@ class _FormScreenState extends State<FormScreen> {
                     validator: (value) {
                       final rubu = int.tryParse(value!);
                       if (rubu == null || rubu < 1 || rubu > 8) {
-                        return 'Invalid input! Choose a number between 1 - 8.';
+                        return 'Invalid input!';
                       } else {
                         return null;
                       }
@@ -211,9 +209,9 @@ class _FormScreenState extends State<FormScreen> {
             ),
           ),
         ],
-      ];
+      ]);
 
-  List<Widget> _memorizedJuzsForm() => [
+  Widget _memorizedJuzsForm() => CustomListView(children: [
         ListTile(
           title: Text(
             'Memorized Juzs',
@@ -233,5 +231,5 @@ class _FormScreenState extends State<FormScreen> {
             },
           );
         }),
-      ];
+      ]);
 }
