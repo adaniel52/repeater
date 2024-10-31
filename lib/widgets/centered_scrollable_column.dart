@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
 class CenteredScrollableColumn extends StatefulWidget {
-  final CrossAxisAlignment crossAxisAlignment;
+  final bool needPadding;
   final List<Widget> children;
   const CenteredScrollableColumn({
     super.key,
-    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.needPadding = false,
     required this.children,
   });
 
@@ -41,16 +41,15 @@ class _CenteredScrollableColumnState extends State<CenteredScrollableColumn> {
         child: SingleChildScrollView(
           controller: _scrollController,
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: Styles.screenSpacing,
-              horizontal: (horizontalPadding < Styles.screenSpacing)
-                  ? Styles.screenSpacing
-                  : horizontalPadding,
-            ),
-            child: Column(
-              crossAxisAlignment: widget.crossAxisAlignment,
-              children: widget.children,
-            ),
+            padding: !widget.needPadding
+                ? Styles.noPadding
+                : EdgeInsets.symmetric(
+                    vertical: Styles.screenSpacing,
+                    horizontal: (horizontalPadding < Styles.screenSpacing)
+                        ? Styles.screenSpacing
+                        : horizontalPadding,
+                  ),
+            child: Column(children: widget.children),
           ),
         ),
       ),

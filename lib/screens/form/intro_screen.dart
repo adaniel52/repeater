@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeater/screens/form/form_screen.dart';
+import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/centered_scrollable_column.dart';
 import 'package:repeater/widgets/gap.dart';
 
@@ -10,6 +11,7 @@ class IntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CenteredScrollableColumn(
+        needPadding: true,
         children: [
           const ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(40)),
@@ -26,7 +28,7 @@ class IntroScreen extends StatelessWidget {
           Text(
             'An app to assist hafiz in scheduling timetables.',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: const Color(0xFF757575),
+                  color: Styles.greyText,
                 ),
             textAlign: TextAlign.center,
           ),

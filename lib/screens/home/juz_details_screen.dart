@@ -6,6 +6,7 @@ import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/screens/main/main_navigation.dart';
+import 'package:repeater/widgets/section_title.dart';
 
 class JuzDetailsScreen extends StatefulWidget {
   final int number;
@@ -44,12 +45,11 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
       body: CustomListView(
         width: Styles.largeBreakpoint,
         children: [
-          const Text('Which rubu did you still remembered?'),
+          const SectionTitle('Which rubu did you still remembered?'),
           const MediumGap(),
           ...rubus.map((rubu) {
             final rubuNumber = rubus.indexOf(rubu) + 1;
             return SwitchListTile(
-              contentPadding: Styles.noPadding,
               title: Text('Rubu $rubuNumber'),
               value: rubu.isMemorized,
               onChanged: (value) {
@@ -60,20 +60,22 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
             );
           }),
           const LargeGap(),
-          FilledButton(
-            child: const Text('Confirm Changes'),
-            onPressed: () async {
-              await Provider.of<UserPreferences>(context, listen: false)
-                  .updateRubus(
-                widget.number,
-                rubus,
-              );
-              if (!context.mounted) return;
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => const MainNavigation()),
-                (_) => false,
-              );
-            },
+          ListTile(
+            title: FilledButton(
+              child: const Text('Confirm Changes'),
+              onPressed: () async {
+                await Provider.of<UserPreferences>(context, listen: false)
+                    .updateRubus(
+                  widget.number,
+                  rubus,
+                );
+                if (!context.mounted) return;
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const MainNavigation()),
+                  (_) => false,
+                );
+              },
+            ),
           )
         ],
       ),

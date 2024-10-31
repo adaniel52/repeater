@@ -80,7 +80,6 @@ class _FormScreenState extends State<FormScreen> {
         itemBuilder: (context, index) {
           final currentScreen = screens[index];
           return CenteredScrollableColumn(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: currentScreen,
           );
         },
@@ -133,7 +132,6 @@ class _FormScreenState extends State<FormScreen> {
 
   List<Widget> _khatamForm() => [
         SwitchListTile(
-          contentPadding: Styles.noPadding,
           title: Text(
             'Khatam',
             style: Theme.of(context).textTheme.titleMedium,
@@ -148,10 +146,7 @@ class _FormScreenState extends State<FormScreen> {
         ),
         if (!hasKhatam) ...[
           const SmallGap(),
-          const Divider(),
-          const SmallGap(),
           ListTile(
-            contentPadding: Styles.noPadding,
             title: Text(
               'Memorization Info',
               style: Theme.of(context).textTheme.titleMedium,
@@ -159,69 +154,76 @@ class _FormScreenState extends State<FormScreen> {
             subtitle: const Text('Fill in your current memorization info.'),
           ),
           const SmallGap(),
-          Form(
-            key: _memorizationInfoFormKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _juzController,
-                  decoration: const InputDecoration(
-                    labelText: 'Juz*',
-                    helperText: 'Choose a number between 1 - 30.',
-                    border: OutlineInputBorder(
-                      borderRadius: Styles.mediumBorderRadius,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Styles.screenSpacing,
+            ),
+            child: Form(
+              key: _memorizationInfoFormKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _juzController,
+                    decoration: const InputDecoration(
+                      labelText: 'Juz*',
+                      helperText: 'Choose a number between 1 - 30.',
+                      border: OutlineInputBorder(
+                        borderRadius: Styles.mediumBorderRadius,
+                      ),
                     ),
+                    validator: (value) {
+                      final juz = int.tryParse(value!);
+                      if (juz == null || juz < 1 || juz > 30) {
+                        return 'Invalid input! Choose a number between 1 - 30.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChanged: (_) {
+                      _memorizationInfoFormKey.currentState!.validate();
+                    },
                   ),
-                  validator: (value) {
-                    final juz = int.tryParse(value!);
-                    if (juz == null || juz < 1 || juz > 30) {
-                      return 'Invalid input! Choose a number between 1 - 30.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChanged: (_) {
-                    _memorizationInfoFormKey.currentState!.validate();
-                  },
-                ),
-                const MediumGap(),
-                TextFormField(
-                  controller: _rubuController,
-                  decoration: const InputDecoration(
-                    labelText: 'Rubu*',
-                    helperText: 'Choose a number between 1 - 8.',
-                    border: OutlineInputBorder(
-                      borderRadius: Styles.mediumBorderRadius,
+                  const MediumGap(),
+                  TextFormField(
+                    controller: _rubuController,
+                    decoration: const InputDecoration(
+                      labelText: 'Rubu*',
+                      helperText: 'Choose a number between 1 - 8.',
+                      border: OutlineInputBorder(
+                        borderRadius: Styles.mediumBorderRadius,
+                      ),
                     ),
+                    validator: (value) {
+                      final rubu = int.tryParse(value!);
+                      if (rubu == null || rubu < 1 || rubu > 8) {
+                        return 'Invalid input! Choose a number between 1 - 8.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChanged: (_) {
+                      _memorizationInfoFormKey.currentState!.validate();
+                    },
                   ),
-                  validator: (value) {
-                    final rubu = int.tryParse(value!);
-                    if (rubu == null || rubu < 1 || rubu > 8) {
-                      return 'Invalid input! Choose a number between 1 - 8.';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChanged: (_) {
-                    _memorizationInfoFormKey.currentState!.validate();
-                  },
-                ),
-              ],
+                  const ScreenGap(),
+                ],
+              ),
             ),
           ),
         ],
       ];
 
   List<Widget> _memorizedJuzsForm() => [
-        Text(
-          'Memorized Juzs',
-          style: Theme.of(context).textTheme.titleMedium,
+        ListTile(
+          title: Text(
+            'Memorized Juzs',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          subtitle: const Text('Which juz did you still remember?'),
         ),
-        const Text('Which juz did you still remember?'),
         const MediumGap(),
         ...juzs.map((juz) {
           return SwitchListTile(
-            contentPadding: Styles.noPadding,
             title: Text('Juz ${juzs.indexOf(juz) + 1}'),
             value: juz.isFullyMemorized,
             onChanged: (value) {

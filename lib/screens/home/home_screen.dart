@@ -79,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           const LargeGap(),
           ..._overallProgressSection(crossAxisCount, user),
-          const LargeGap(),
         ],
       ),
     );
@@ -168,13 +167,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const MediumGap(),
         (filteredJuzs.isEmpty)
-            ? const Text(
-                'No results.',
-                textAlign: TextAlign.center,
+            ? const ListTile(
+                title: Text('No results.'),
               )
             : GridView.builder(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Styles.screenSpacing,
+                padding: const EdgeInsets.only(
+                  left: Styles.screenSpacing,
+                  right: Styles.screenSpacing,
+                  bottom: Styles.screenSpacing,
                 ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,

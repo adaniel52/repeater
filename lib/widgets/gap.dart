@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:repeater/utils/constants/styles.dart';
 
 class SmallGap extends StatelessWidget {
   const SmallGap({super.key});
@@ -6,8 +7,8 @@ class SmallGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 4,
-      height: 4,
+      width: Styles.smallSpacing,
+      height: Styles.smallSpacing,
     );
   }
 }
@@ -18,8 +19,8 @@ class MediumGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 12,
-      height: 12,
+      width: Styles.mediumSpacing,
+      height: Styles.mediumSpacing,
     );
   }
 }
@@ -30,8 +31,20 @@ class LargeGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 20,
-      height: 20,
+      width: Styles.largeSpacing,
+      height: Styles.largeSpacing,
+    );
+  }
+}
+
+class ScreenGap extends StatelessWidget {
+  const ScreenGap({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: Styles.screenSpacing,
+      height: Styles.screenSpacing,
     );
   }
 }

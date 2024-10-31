@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/screens/form/intro_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
-import 'package:repeater/widgets/choice_chips.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/section_title.dart';
@@ -95,19 +94,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _setThemeTile(UserPreferences userPrefs) => ListTile(
-        leading: const Icon(Icons.dark_mode),
-        title: const Text('Theme'),
-        trailing: ChoiceChips(
-          options: const ['System', 'Light', 'Dark'],
-          selected: currentTheme,
-          onSelected: (value) async {
-            setState(() {
-              currentTheme = value;
-            });
-            await userPrefs.updateUser(themeMode: value);
-          },
+  Widget _setThemeTile(UserPreferences userPrefs) => PopupMenuButton(
+        tooltip: '',
+        child: ListTile(
+          leading: const Icon(Icons.brightness_6),
+          title: const Text('Theme'),
+          trailing: Text(currentTheme),
         ),
+        itemBuilder: (_) {
+          return ['System', 'Light', 'Dark'].map((e) {
+            return PopupMenuItem(
+              value: e,
+              child: Text(e),
+            );
+          }).toList();
+        },
+        onSelected: (value) async {
+          setState(() {
+            currentTheme = value;
+          });
+          await userPrefs.updateUser(themeMode: value);
+        },
       );
 
   Widget _setColorSchemeTile(UserPreferences userPrefs) => PopupMenuButton(

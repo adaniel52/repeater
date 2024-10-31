@@ -4,38 +4,16 @@ class Styles {
   static final lightTheme = ThemeData(
     // web status bar color flickering workaround
     primaryColor: Colors.black,
-    // textTheme: const TextTheme(
-    //   headlineLarge: headlineLarge,
-    //   headlineMedium: headlineMedium,
-    //   headlineSmall: headlineSmall,
-    //   bodyMedium: bodyMedium,
-    //   bodySmall: bodySmall,
-    // ),
-    // filledButtonTheme: filledButtonTheme,
-    // appBarTheme: AppBarTheme(
-    //   centerTitle: true,
-    //   titleTextStyle: headlineLarge.copyWith(color: Colors.black),
-    // ),
-    // cardTheme: cardTheme,
-    // scrollbarTheme: scrollbarTheme,
+    textTheme: TextTheme(
+      titleLarge: titleLarge,
+    ),
   );
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
-    // textTheme: const TextTheme(
-    //   headlineLarge: headlineLarge,
-    //   headlineMedium: headlineMedium,
-    //   headlineSmall: headlineSmall,
-    //   bodyMedium: bodyMedium,
-    //   bodySmall: bodySmall,
-    // ),
-    // filledButtonTheme: filledButtonTheme,
-    // appBarTheme: AppBarTheme(
-    //   centerTitle: true,
-    //   titleTextStyle: headlineLarge.copyWith(color: Colors.white),
-    // ),
-    // cardTheme: cardTheme,
-    // scrollbarTheme: scrollbarTheme,
+    textTheme: TextTheme(
+      titleLarge: titleLarge,
+    ),
   );
 
   static const double smallBreakpoint = 480;
@@ -56,44 +34,10 @@ class Styles {
   static const mediumBorderRadius = BorderRadius.all(Radius.circular(12));
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));
 
-  // static const textPrimaryColor = Color(0xFF212121);
-  // static const textSecondaryColor = Color(0xFF757575);
-  // static const textPrimaryDarkColor = Color(0xFFE0E0E0);
-  // static const textSecondaryDarkColor = Color(0xFFBDBDBD);
+  static const greyText = Color(0xFF757575);
 
-  static const headlineLarge = TextStyle(
-    fontSize: 28,
+  static TextStyle titleLarge = const TextStyle(
+    fontSize: 22,
     fontWeight: FontWeight.bold,
-    // color: textPrimaryColor,
-  );
-  static const headlineMedium = TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-    // color: textPrimaryColor,
-  );
-  static const headlineSmall = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    // color: textSecondaryColor,
-  );
-  static const bodyMedium = TextStyle(
-    fontSize: 16,
-  );
-  static const bodySmall = TextStyle(
-    fontSize: 12,
-    // color: textSecondaryColor,
-  );
-
-  static final filledButtonTheme = FilledButtonThemeData(
-    style: FilledButton.styleFrom(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 28),
-      shape: const RoundedRectangleBorder(borderRadius: mediumBorderRadius),
-    ),
-  );
-
-  static const cardTheme = CardTheme(margin: EdgeInsets.all(0));
-
-  static const scrollbarTheme = ScrollbarThemeData(
-    interactive: true,
   );
 }
