@@ -20,8 +20,6 @@ class ScheduleService {
       final index = memorizedJuzs.indexOf(juz);
       final juzNumber = user.juzs.indexOf(juz) + 1;
       final startDate = now.add(Duration(days: index + 1));
-      print(now);
-      print(startDate);
 
       schedules.addAll(
         [

@@ -88,7 +88,8 @@ class UserPreferences extends ChangeNotifier {
   Future<void> logIn() async {
     final user = getUser()!;
     final now = DateTime.now();
-    final schedules = user.schedules;
+    final schedules = <ScheduleEntry>[];
+    schedules.addAll(user.schedules);
 
     if (user.lastLoginTime.day != now.day) {
       if (user.manzilSchedules.isEmpty ||
@@ -106,7 +107,5 @@ class UserPreferences extends ChangeNotifier {
       lastLoginTime: now,
       schedules: schedules,
     );
-
-    debugPrint('login');
   }
 }

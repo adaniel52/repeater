@@ -38,6 +38,7 @@ class Styles {
   static const mediumBorderRadius = BorderRadius.all(Radius.circular(12));
   static const smallBorderRadius = BorderRadius.all(Radius.circular(8));
 
+  static const themeColor = Color(0xFF269B78);
   static const greyText = Color(0xFF757575);
 
   static TextStyle titleLarge = const TextStyle(

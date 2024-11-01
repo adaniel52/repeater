@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:repeater/main.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
+import 'package:repeater/utils/constants/styles.dart';
 
 const remindersChannelName = 'Reminders';
 
@@ -32,13 +33,16 @@ class NotificationService {
     }
 
     AwesomeNotifications().initialize(
-      null,
+      'resource://drawable/ic_launcher_foreground',
       [
         NotificationChannel(
           channelKey: remindersChannelName,
           channelName: remindersChannelName,
           channelDescription: 'Notification channel for reminders',
-        )
+          importance: NotificationImportance.Max,
+          defaultColor: Styles.themeColor,
+          channelShowBadge: true,
+        ),
       ],
       debug: true,
     );
@@ -55,7 +59,6 @@ class NotificationService {
   int getNextNotificationId() {
     final newId = (_notificationIdBox.get(_notificationIdKey)! + 1) % 64;
     _notificationIdBox.put(_notificationIdKey, newId);
-    debugPrint('new noti id: $newId');
     return newId;
   }
 
@@ -82,8 +85,6 @@ class NotificationService {
         minute: startDate.minute,
       ),
     );
-
-    debugPrint('created noti');
   }
 
   Future<void> clearAll() async {
