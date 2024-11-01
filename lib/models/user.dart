@@ -47,18 +47,6 @@ class User {
         _themeMode = themeMode,
         _colorScheme = colorScheme;
 
-  int? get juz => _juz;
-  int? get rubu => _rubu;
-  List<Juz> get juzs => _juzs;
-  DateTime get lastLoginTime => _lastLoginTime;
-  List<ScheduleEntry> get schedules => _schedules ?? [];
-  String get themeMode => _themeMode ?? 'System';
-  int get colorScheme => _colorScheme ?? Colors.teal.value;
-
-  bool get hasManzilReviewType => schedules.any(
-        (scheduleEntry) => scheduleEntry.reviewType == 'Manzil',
-      );
-
   User copyWith({
     int? juz,
     int? rubu,
@@ -77,5 +65,26 @@ class User {
       themeMode: themeMode ?? this.themeMode,
       colorScheme: colorScheme ?? this.colorScheme,
     );
+  }
+
+  int? get juz => _juz;
+  int? get rubu => _rubu;
+  List<Juz> get juzs => _juzs;
+  DateTime get lastLoginTime => _lastLoginTime;
+  List<ScheduleEntry> get schedules => _schedules ?? [];
+  String get themeMode => _themeMode ?? 'System';
+  int get colorScheme => _colorScheme ?? Colors.teal.value;
+
+  List<ScheduleEntry> get manzilSchedules => schedules
+      .where(
+        (scheduleEntry) => scheduleEntry.reviewType == 'Manzil',
+      )
+      .toList();
+
+  DateTime getLatestStartDate(List<ScheduleEntry> schedules) {
+    final latestStartDate = schedules
+        .map((scheduleEntry) => scheduleEntry.startDate)
+        .reduce((a, b) => a.isAfter(b) ? a : b);
+    return latestStartDate;
   }
 }

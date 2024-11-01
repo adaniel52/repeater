@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'Not Memorized': false,
   };
   List<ScheduleEntry> todaySchedules = [];
-  List<ScheduleEntry> notTodaySchedules = [];
+  List<ScheduleEntry> upcomingSchedules = [];
 
   @override
   void initState() {
@@ -38,18 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
     filteredJuzs = user.juzs;
+    final now = DateTime.now();
 
-    final schedules = <ScheduleEntry>[];
+    final tempTodaySchedules = <ScheduleEntry>[];
+    final tempUpcomingSchedules = <ScheduleEntry>[];
     for (final scheduleEntry in user.schedules) {
-      if (scheduleEntry.startDate.day == DateTime.now().day) {
-        schedules.add(scheduleEntry);
+      if (scheduleEntry.startDate.day == now.day) {
+        tempTodaySchedules.add(scheduleEntry);
+      } else if (scheduleEntry.startDate.isAfter(now)) {
+        tempUpcomingSchedules.add(scheduleEntry);
       }
     }
     setState(() {
-      todaySchedules = schedules;
-      notTodaySchedules = user.schedules.where((scheduleEntry) {
-        return !schedules.contains(scheduleEntry);
-      }).toList();
+      todaySchedules = tempTodaySchedules;
+      upcomingSchedules = tempUpcomingSchedules;
     });
   }
 
@@ -98,18 +100,18 @@ class _HomeScreenState extends State<HomeScreen> {
             final juzNumber = scheduleEntry.juzNumber;
             // final juz = user.juzs[juzNumber - 1];
             return ListTile(
-              title: const Text('Manzil - Review Memorized Juz'),
-              subtitle: Text('Juz $juzNumber'),
+              title: Text('Manzil - Juz $juzNumber'),
+              subtitle: Text('${scheduleEntry.startDate.toLocal()}'),
               trailing: const Icon(Icons.chevron_right),
             );
           }),
         const SectionTitle('Upcoming Tasks'),
-        if (notTodaySchedules.isEmpty)
+        if (upcomingSchedules.isEmpty)
           const ListTile(
             title: Text('You got no upcoming tasks.'),
           )
         else
-          ...notTodaySchedules.map((scheduleEntry) {
+          ...upcomingSchedules.map((scheduleEntry) {
             final juzNumber = scheduleEntry.juzNumber;
             // final juz = user.juzs[juzNumber - 1];
             return ListTile(

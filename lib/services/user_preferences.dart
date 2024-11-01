@@ -81,16 +81,19 @@ class UserPreferences extends ChangeNotifier {
 
   Future<void> logIn() async {
     final user = getUser()!;
+    final now = DateTime.now();
+    final schedules = <ScheduleEntry>[];
 
-    if (user.lastLoginTime.day != DateTime.now().day) {
-      if (!user.hasManzilReviewType) {
-        final schedules = ScheduleService().scheduleManzil(user);
-        await updateUser(schedules: schedules);
+    if (user.lastLoginTime.day != now.day) {
+      if (user.manzilSchedules.isEmpty ||
+          user.getLatestStartDate(user.manzilSchedules).isBefore(now)) {
+        schedules.addAll(ScheduleService().scheduleManzil(user));
       }
     }
 
     await updateUser(
-      lastLoginTime: DateTime.now(),
+      lastLoginTime: now,
+      schedules: schedules,
     );
 
     debugPrint('login');
