@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/rubu.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
+import 'package:repeater/services/notification_service.dart';
 import 'package:repeater/services/schedule_service.dart';
 
 class UserPreferences extends ChangeNotifier {
@@ -11,10 +12,10 @@ class UserPreferences extends ChangeNotifier {
   UserPreferences._internal();
   factory UserPreferences() => _instance;
 
-  late Box<User> _userBox;
+  static const _userKey = 'user';
+  static late Box<User> _userBox;
 
   Future<void> init() async {
-    await Hive.initFlutter();
     Hive.registerAdapter(UserAdapter());
     Hive.registerAdapter(JuzAdapter());
     Hive.registerAdapter(RubuAdapter());
@@ -25,12 +26,12 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> createUser(User user) async {
-    await _userBox.put('user', user);
+    await _userBox.put(_userKey, user);
     notifyListeners();
   }
 
   User? getUser() {
-    return _userBox.get('user');
+    return _userBox.get(_userKey);
   }
 
   Future<void> updateUser({
@@ -56,7 +57,7 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> resetUser() async {
-    await _userBox.delete('user');
+    await _userBox.delete(_userKey);
     notifyListeners();
   }
 
@@ -87,13 +88,18 @@ class UserPreferences extends ChangeNotifier {
   Future<void> logIn() async {
     final user = getUser()!;
     final now = DateTime.now();
-    final schedules = <ScheduleEntry>[];
+    final schedules = user.schedules;
 
     if (user.lastLoginTime.day != now.day) {
       if (user.manzilSchedules.isEmpty ||
           user.getLatestStartDate(user.manzilSchedules).isBefore(now)) {
         schedules.addAll(ScheduleService().scheduleManzil(user));
       }
+    }
+
+    await NotificationService().clearAll();
+    for (var scheduleEntry in schedules) {
+      NotificationService().scheduleNotification(scheduleEntry);
     }
 
     await updateUser(

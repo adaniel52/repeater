@@ -98,10 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
         else
           ...todaySchedules.map((scheduleEntry) {
             final juzNumber = scheduleEntry.juzNumber;
+            final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
+            final text = 'Manzil | Juz $juzNumber - Rubu $rubuNumbers';
+            final time =
+                TimeOfDay.fromDateTime(scheduleEntry.startDate).format(context);
             // final juz = user.juzs[juzNumber - 1];
             return ListTile(
-              title: Text('Manzil - Juz $juzNumber'),
-              subtitle: Text('${scheduleEntry.startDate.toLocal()}'),
+              title: Text(text),
+              subtitle: Text(time),
               trailing: const Icon(Icons.chevron_right),
             );
           }),
@@ -113,10 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
         else
           ...upcomingSchedules.map((scheduleEntry) {
             final juzNumber = scheduleEntry.juzNumber;
+            final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
+            final text = 'Manzil | Juz $juzNumber - Rubu $rubuNumbers';
+            final date = scheduleEntry.startDate.toString();
             // final juz = user.juzs[juzNumber - 1];
             return ListTile(
-              title: const Text('Manzil - Review Memorized Juz'),
-              subtitle: Text('Juz $juzNumber'),
+              title: Text(text),
+              subtitle: Text(date),
               trailing: const Icon(Icons.chevron_right),
             );
           }),

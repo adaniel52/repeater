@@ -14,7 +14,7 @@ class ScheduleEntry {
   int? _juzNumber;
 
   @HiveField(3)
-  List<int> _rubus;
+  List<int> _rubuNumbers;
 
   @HiveField(4)
   bool? _isCompleted;
@@ -23,17 +23,17 @@ class ScheduleEntry {
     DateTime? startDate,
     String? reviewType,
     int? juzNumber,
-    List<int>? rubus,
+    List<int>? rubuNumbers,
     bool? isCompleted,
   })  : _startDate = startDate ?? DateTime.now(),
         _reviewType = reviewType,
         _juzNumber = juzNumber,
-        _rubus = rubus ?? List.generate(8, (index) => index + 1),
+        _rubuNumbers = rubuNumbers ?? List.generate(8, (index) => index + 1),
         _isCompleted = isCompleted;
 
   DateTime get startDate => _startDate;
   String? get reviewType => _reviewType;
   int get juzNumber => _juzNumber!;
-  List<int> get rubus => _rubus;
+  List<int> get rubuNumbers => _rubuNumbers;
   bool? get isCompleted => _isCompleted;
 }
