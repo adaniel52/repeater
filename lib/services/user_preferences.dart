@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/rubu.dart';
 import 'package:repeater/models/schedule_entry.dart';
@@ -14,6 +14,11 @@ class UserPreferences extends ChangeNotifier {
   late Box<User> _userBox;
 
   Future<void> init() async {
+    await Hive.initFlutter();
+    Hive.registerAdapter(UserAdapter());
+    Hive.registerAdapter(JuzAdapter());
+    Hive.registerAdapter(RubuAdapter());
+    Hive.registerAdapter(ScheduleEntryAdapter());
     // for reset purposes
     // Hive.deleteBoxFromDisk('userBox');
     _userBox = await Hive.openBox<User>('userBox');

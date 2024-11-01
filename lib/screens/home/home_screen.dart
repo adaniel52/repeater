@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> _tasksSection(User user) => [
-        const SectionTitle('Tasks'),
+        const SectionTitle('Schedules'),
         if (todaySchedules.isEmpty)
           const ListTile(title: Text('You got no task.'))
         else
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               trailing: const Icon(Icons.chevron_right),
             );
           }),
-        const SectionTitle('Upcoming Tasks'),
+        const SectionTitle('Upcoming Schedules'),
         if (upcomingSchedules.isEmpty)
           const ListTile(
             title: Text('You got no upcoming tasks.'),

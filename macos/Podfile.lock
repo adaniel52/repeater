@@ -1,4 +1,8 @@
 PODS:
+  - awesome_notifications (0.0.1):
+    - FlutterMacOS
+  - awesome_notifications_core (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - package_info_plus (0.0.1):
     - FlutterMacOS
@@ -12,6 +16,8 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - awesome_notifications (from `Flutter/ephemeral/.symlinks/plugins/awesome_notifications/macos`)
+  - awesome_notifications_core (from `Flutter/ephemeral/.symlinks/plugins/awesome_notifications_core/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
@@ -19,6 +25,10 @@ DEPENDENCIES:
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
 
 EXTERNAL SOURCES:
+  awesome_notifications:
+    :path: Flutter/ephemeral/.symlinks/plugins/awesome_notifications/macos
+  awesome_notifications_core:
+    :path: Flutter/ephemeral/.symlinks/plugins/awesome_notifications_core/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   package_info_plus:
@@ -31,6 +41,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos
 
 SPEC CHECKSUMS:
+  awesome_notifications: 428f5c15a700b117418aed09e29c21c5806fcf69
+  awesome_notifications_core: 43438f2e1b0e1dd9da81aaeb1b4af5ec0447af1a
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   package_info_plus: f5790acc797bf17c3e959e9d6cf162cc68ff7523
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46

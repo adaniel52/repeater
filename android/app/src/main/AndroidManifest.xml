@@ -42,5 +42,11 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+
+    <!-- for notes section -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- for awesome notifications -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>
