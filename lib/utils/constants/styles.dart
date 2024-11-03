@@ -5,19 +5,19 @@ class Styles {
     // web status bar color flickering workaround
     primaryColor: Colors.black,
     materialTapTargetSize: MaterialTapTargetSize.padded,
-    textTheme: TextTheme(
-      titleLarge: titleLarge,
-      titleMedium: titleMedium,
-    ),
+    // textTheme: TextTheme(
+    //   titleLarge: titleLarge,
+    //   titleMedium: titleMedium,
+    // ),
   );
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     materialTapTargetSize: MaterialTapTargetSize.padded,
-    textTheme: TextTheme(
-      titleLarge: titleLarge,
-      titleMedium: titleMedium,
-    ),
+    // textTheme: TextTheme(
+    //   titleLarge: titleLarge,
+    //   titleMedium: titleMedium,
+    // ),
   );
 
   static const double smallBreakpoint = 480;

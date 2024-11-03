@@ -23,7 +23,10 @@ class IntroScreen extends StatelessWidget {
           const LargeGap(),
           Text(
             'Repeater',
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             'An app to assist hafiz in scheduling timetables.',

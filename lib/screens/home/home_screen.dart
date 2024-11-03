@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
-import 'package:repeater/screens/home/juz_details_screen.dart';
-import 'package:repeater/screens/home/rubus_progress_indicator.dart';
+import 'package:repeater/screens/home/juz_list_tile.dart';
+import 'package:repeater/screens/home/schedule_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
@@ -97,17 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const ListTile(title: Text('You got no task.'))
         else
           ...todaySchedules.map((scheduleEntry) {
-            final juzNumber = scheduleEntry.juzNumber;
-            final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
-            final text = 'Manzil | Juz $juzNumber - Rubu $rubuNumbers';
-            final time =
-                TimeOfDay.fromDateTime(scheduleEntry.startDate).format(context);
-            // final juz = user.juzs[juzNumber - 1];
-            return ListTile(
-              title: Text(text),
-              subtitle: Text(time),
-              trailing: const Icon(Icons.chevron_right),
-            );
+            return ScheduleListTile(scheduleEntry: scheduleEntry);
           }),
         const SectionTitle('Upcoming Schedules'),
         if (upcomingSchedules.isEmpty)
@@ -116,16 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         else
           ...upcomingSchedules.map((scheduleEntry) {
-            final juzNumber = scheduleEntry.juzNumber;
-            final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
-            final text = 'Manzil | Juz $juzNumber - Rubu $rubuNumbers';
-            final date = scheduleEntry.startDate.toString();
-            // final juz = user.juzs[juzNumber - 1];
-            return ListTile(
-              title: Text(text),
-              subtitle: Text(date),
-              trailing: const Icon(Icons.chevron_right),
-            );
+            return ScheduleListTile(scheduleEntry: scheduleEntry);
           }),
       ];
 
@@ -171,24 +152,43 @@ class _HomeScreenState extends State<HomeScreen> {
         else
           ...filteredJuzs.map((juz) {
             final juzNumber = user.juzs.indexOf(juz) + 1;
-            return ListTile(
-              leading: CircleAvatar(
-                child: Text('$juzNumber'),
-              ),
-              title: Text('Juz $juzNumber'),
-              subtitle: ClipRRect(
-                borderRadius: Styles.smallBorderRadius,
-                child: RubusProgressIndicator(rubus: juz.rubus),
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => JuzDetailsScreen(number: juzNumber),
-                  ),
-                );
-              },
+            return JuzListTile(
+              juz: juz,
+              juzNumber: juzNumber,
             );
           }),
       ];
+}
+
+class ScheduleListTile extends StatelessWidget {
+  const ScheduleListTile({
+    super.key,
+    required this.scheduleEntry,
+  });
+
+  final ScheduleEntry scheduleEntry;
+
+  @override
+  Widget build(BuildContext context) {
+    final juzNumber = scheduleEntry.juzNumber;
+    final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
+    final text = 'Manzil | Juz $juzNumber - Rubu $rubuNumbers';
+    final time =
+        TimeOfDay.fromDateTime(scheduleEntry.startDate).format(context);
+
+    return ListTile(
+      title: Text(text),
+      subtitle: Text(time),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ScheduleDetailsScreen(
+              scheduleEntry: scheduleEntry,
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
