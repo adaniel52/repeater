@@ -14,6 +14,11 @@
             "title": "Mad Muttasil & Munfasil",
             "imageUrl": "https://adaniel52.github.io/repeater/api/notes/contents/mad-muttasil-munfasil/image.png",
             "contentUrl": "https://adaniel52.github.io/repeater/api/notes/contents/mad-muttasil-munfasil/index.html"
+        },
+        {
+            "title": "Alif Lam",
+            "imageUrl": "https://adaniel52.github.io/repeater/api/notes/contents/alif-lam/image.png",
+            "contentUrl": "https://adaniel52.github.io/repeater/api/notes/contents/alif-lam/index.html"
         }
     ]
 }
