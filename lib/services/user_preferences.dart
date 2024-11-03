@@ -89,12 +89,12 @@ class UserPreferences extends ChangeNotifier {
   Future<void> logIn() async {
     final user = getUser()!;
     final now = DateTime.now();
-    final currentSchedule = <ScheduleEntry>[];
+    final currentSchedule = List<ScheduleEntry>.from(user.schedules);
     final newSchedules = <ScheduleEntry>[];
 
-    currentSchedule.addAll(user.schedules);
-    for (final scheduleEntry in currentSchedule) {
+    for (final scheduleEntry in List.from(currentSchedule)) {
       if (scheduleEntry.startDate.isBefore(now)) {
+        print(currentSchedule);
         currentSchedule.remove(scheduleEntry);
         print('removed ${scheduleEntry.startDate}');
       }
@@ -102,22 +102,34 @@ class UserPreferences extends ChangeNotifier {
 
     // if (user.lastLoginTime.day != now.day) {}
 
-    if (user.manzilSchedules.isEmpty ||
-        user.getLatestStartDate(user.manzilSchedules).isBefore(now)) {
+    final manzilSchedules = user.getSchedulesByReviewType('Manzil');
+    final sabaqSchedules = user.getSchedulesByReviewType('Sabaq');
+
+    if (manzilSchedules.isEmpty ||
+        user.getLatestStartDate(manzilSchedules).isBefore(now)) {
       newSchedules.addAll(ScheduleService().scheduleManzil(user));
+    }
+
+    if (sabaqSchedules.isEmpty ||
+        user.getLatestStartDate(sabaqSchedules).isBefore(now)) {
+      newSchedules.addAll(ScheduleService().scheduleSabaq(user));
     }
 
     for (final scheduleEntry in newSchedules) {
       AwesomeNotifications().listScheduledNotifications();
       NotificationService().scheduleNotification(scheduleEntry);
-      print('add ${scheduleEntry.startDate}');
+      print('add ${scheduleEntry.reviewType} ${scheduleEntry.startDate}');
     }
 
-    newSchedules.addAll(currentSchedule);
+    currentSchedule.addAll(newSchedules);
+
+    currentSchedule.sort((a, b) => a.startDate.compareTo(b.startDate));
 
     await updateUser(
       lastLoginTime: now,
-      schedules: newSchedules,
+      schedules: currentSchedule,
     );
+
+    print('login');
   }
 }

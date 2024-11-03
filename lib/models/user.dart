@@ -75,9 +75,15 @@ class User {
   String get themeMode => _themeMode ?? 'System';
   int get colorScheme => _colorScheme ?? Colors.teal.value;
 
-  List<ScheduleEntry> get manzilSchedules => schedules
+  // List<ScheduleEntry> get manzilSchedules => schedules
+  //     .where(
+  //       (scheduleEntry) => scheduleEntry.reviewType == 'Manzil',
+  //     )
+  //     .toList();
+
+  List<ScheduleEntry> getSchedulesByReviewType(String reviewType) => schedules
       .where(
-        (scheduleEntry) => scheduleEntry.reviewType == 'Manzil',
+        (scheduleEntry) => scheduleEntry.reviewType == reviewType,
       )
       .toList();
 

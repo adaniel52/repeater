@@ -4,7 +4,8 @@ import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_list_tile.dart';
-import 'package:repeater/screens/home/schedule_details_screen.dart';
+import 'package:repeater/screens/home/schedule_list_tile.dart';
+import 'package:repeater/screens/main/init.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
@@ -70,12 +71,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user =
-        Provider.of<UserPreferences>(context, listen: false).getUser()!;
+    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+    final user = userPrefs.getUser()!;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const Init()),
+                (_) => false,
+              );
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
       ),
       body: CustomListView(
         children: [
@@ -158,37 +170,4 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }),
       ];
-}
-
-class ScheduleListTile extends StatelessWidget {
-  const ScheduleListTile({
-    super.key,
-    required this.scheduleEntry,
-  });
-
-  final ScheduleEntry scheduleEntry;
-
-  @override
-  Widget build(BuildContext context) {
-    final juzNumber = scheduleEntry.juzNumber;
-    final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
-    final text = 'Manzil | Juz $juzNumber - Rubu $rubuNumbers';
-    final time =
-        TimeOfDay.fromDateTime(scheduleEntry.startDate).format(context);
-
-    return ListTile(
-      title: Text(text),
-      subtitle: Text(time),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ScheduleDetailsScreen(
-              scheduleEntry: scheduleEntry,
-            ),
-          ),
-        );
-      },
-    );
-  }
 }

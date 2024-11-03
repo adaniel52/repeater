@@ -7,9 +7,10 @@ class ScheduleService {
   factory ScheduleService() => _instance;
 
   List<ScheduleEntry> scheduleManzil(User user) {
-    final memorizedJuzs =
-        user.juzs.where((juz) => juz.isFullyMemorized).toList();
-    final schedules = user.schedules;
+    final schedules = <ScheduleEntry>[];
+    final memorizedJuzs = user.juzs
+        .where((juz) => juz.isFullyMemorized || juz.isPartiallyMemorized)
+        .toList();
     final now = DateTime.now().copyWith(
       second: 0,
       millisecond: 0,
@@ -38,6 +39,51 @@ class ScheduleService {
         ],
       );
     }
+
+    return schedules;
+  }
+
+  List<ScheduleEntry> scheduleSabaq(User user) {
+    final schedules = <ScheduleEntry>[];
+    final juz = user.juzs
+        .firstWhere((juz) => juz.isPartiallyMemorized || juz.isNotMemorized);
+    final juzNumber = user.juzs.indexOf(juz) + 1;
+    final rubu = juz.rubus.firstWhere((rubu) => !rubu.isMemorized);
+    final rubuNumber = juz.rubus.indexOf(rubu) + 1;
+    final now = DateTime.now().copyWith(
+      second: 0,
+      millisecond: 0,
+      microsecond: 0,
+    );
+
+    final scheduleEntry = ScheduleEntry(
+      reviewType: 'Sabaq',
+      juzNumber: juzNumber,
+      rubuNumbers: [rubuNumber],
+    );
+
+    schedules.addAll([
+      scheduleEntry.copyWith(
+        startDate:
+            now.add(const Duration(days: 1)).copyWith(hour: 8, minute: 30),
+        fraction: '1 / 4',
+      ),
+      scheduleEntry.copyWith(
+        startDate:
+            now.add(const Duration(days: 1)).copyWith(hour: 20, minute: 0),
+        fraction: '2 / 4',
+      ),
+      scheduleEntry.copyWith(
+        startDate:
+            now.add(const Duration(days: 2)).copyWith(hour: 8, minute: 30),
+        fraction: '3 / 4',
+      ),
+      scheduleEntry.copyWith(
+        startDate:
+            now.add(const Duration(days: 2)).copyWith(hour: 20, minute: 0),
+        fraction: '4 / 4',
+      ),
+    ]);
 
     return schedules;
   }

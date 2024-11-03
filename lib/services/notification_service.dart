@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
 import 'package:repeater/main.dart';
 import 'package:repeater/models/schedule_entry.dart';
-import 'package:repeater/screens/home/juz_details_screen.dart';
 import 'package:repeater/screens/home/schedule_details_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';

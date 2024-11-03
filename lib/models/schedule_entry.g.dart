@@ -21,13 +21,14 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
       .._reviewType = fields[1] as String?
       .._juzNumber = fields[2] as int?
       .._rubuNumbers = (fields[3] as List).cast<int>()
-      .._isCompleted = fields[4] as bool?;
+      .._fraction = fields[4] as String?
+      .._isCompleted = fields[5] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, ScheduleEntry obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj._startDate)
       ..writeByte(1)
@@ -37,6 +38,8 @@ class ScheduleEntryAdapter extends TypeAdapter<ScheduleEntry> {
       ..writeByte(3)
       ..write(obj._rubuNumbers)
       ..writeByte(4)
+      ..write(obj._fraction)
+      ..writeByte(5)
       ..write(obj._isCompleted);
   }
 
