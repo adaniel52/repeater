@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
@@ -88,24 +89,35 @@ class UserPreferences extends ChangeNotifier {
   Future<void> logIn() async {
     final user = getUser()!;
     final now = DateTime.now();
-    final schedules = <ScheduleEntry>[];
-    schedules.addAll(user.schedules);
+    final currentSchedule = <ScheduleEntry>[];
+    final newSchedules = <ScheduleEntry>[];
 
-    if (user.lastLoginTime.day != now.day) {
-      if (user.manzilSchedules.isEmpty ||
-          user.getLatestStartDate(user.manzilSchedules).isBefore(now)) {
-        schedules.addAll(ScheduleService().scheduleManzil(user));
+    currentSchedule.addAll(user.schedules);
+    for (final scheduleEntry in currentSchedule) {
+      if (scheduleEntry.startDate.isBefore(now)) {
+        currentSchedule.remove(scheduleEntry);
+        print('removed ${scheduleEntry.startDate}');
       }
     }
 
-    await NotificationService().clearAll();
-    for (var scheduleEntry in schedules) {
-      NotificationService().scheduleNotification(scheduleEntry);
+    // if (user.lastLoginTime.day != now.day) {}
+
+    if (user.manzilSchedules.isEmpty ||
+        user.getLatestStartDate(user.manzilSchedules).isBefore(now)) {
+      newSchedules.addAll(ScheduleService().scheduleManzil(user));
     }
+
+    for (final scheduleEntry in newSchedules) {
+      AwesomeNotifications().listScheduledNotifications();
+      NotificationService().scheduleNotification(scheduleEntry);
+      print('add ${scheduleEntry.startDate}');
+    }
+
+    newSchedules.addAll(currentSchedule);
 
     await updateUser(
       lastLoginTime: now,
-      schedules: schedules,
+      schedules: newSchedules,
     );
   }
 }

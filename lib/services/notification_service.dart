@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:repeater/main.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/screens/home/juz_details_screen.dart';
+import 'package:repeater/screens/home/schedule_details_screen.dart';
+import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 
 const remindersChannelName = 'Reminders';
@@ -19,9 +21,17 @@ class NotificationService {
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
+    final user = UserPreferences().getUser()!;
+    final startDate = DateTime.parse(receivedAction.payload!['startDate']!);
+    print(startDate.toString());
+    final scheduleEntry = user.schedules
+        .firstWhere((scheduleEntry) => scheduleEntry.startDate == startDate);
+
     MainApp.navigatorKey.currentState?.push(
       MaterialPageRoute(
-        builder: (context) => const JuzDetailsScreen(number: 1),
+        builder: (context) => ScheduleDetailsScreen(
+          scheduleEntry: scheduleEntry,
+        ),
       ),
     );
   }
@@ -44,11 +54,11 @@ class NotificationService {
           channelShowBadge: true,
         ),
       ],
-      debug: true,
     );
     AwesomeNotifications().setListeners(
       onActionReceivedMethod: onActionReceivedMethod,
     );
+
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
@@ -77,6 +87,9 @@ class NotificationService {
         title: title,
         body: body,
         timeoutAfter: const Duration(hours: 1),
+        payload: {
+          'startDate': '$startDate',
+        },
       ),
       schedule: NotificationCalendar(
         allowWhileIdle: true,

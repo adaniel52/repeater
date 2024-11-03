@@ -33,7 +33,7 @@ class Juz {
   bool get isNotReviewed => rubus.every((rubu) => !rubu.isReviewed);
 
   set isFullyMemorized(bool value) {
-    for (var rubu in _rubus) {
+    for (final rubu in _rubus) {
       rubu.isMemorized = value;
     }
   }

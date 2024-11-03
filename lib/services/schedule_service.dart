@@ -16,7 +16,7 @@ class ScheduleService {
       microsecond: 0,
     );
 
-    for (var juz in memorizedJuzs) {
+    for (final juz in memorizedJuzs) {
       final index = memorizedJuzs.indexOf(juz);
       final juzNumber = user.juzs.indexOf(juz) + 1;
       final startDate = now.add(Duration(days: index + 1));
