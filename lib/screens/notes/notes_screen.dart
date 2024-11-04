@@ -65,7 +65,7 @@ class _NotesScreenState extends State<NotesScreen> {
       body: (_notes.isEmpty)
           ? Center(
               child: isConnected
-                  ? const CircularProgressIndicator.adaptive()
+                  ? const CircularProgressIndicator()
                   : const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

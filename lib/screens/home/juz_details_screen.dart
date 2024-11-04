@@ -49,7 +49,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
           const MediumGap(),
           ...rubus.map((rubu) {
             final rubuNumber = rubus.indexOf(rubu) + 1;
-            return SwitchListTile.adaptive(
+            return SwitchListTile(
               title: Text('Rubu $rubuNumber'),
               value: rubu.isMemorized,
               onChanged: (value) => setState(() => rubu.isMemorized = value),

@@ -38,7 +38,7 @@ class _InitState extends State<Init> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator.adaptive(),
+        child: CircularProgressIndicator(),
       ),
     );
   }
