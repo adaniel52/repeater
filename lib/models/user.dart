@@ -8,10 +8,10 @@ part 'user.g.dart';
 @HiveType(typeId: 0)
 class User {
   @HiveField(0)
-  int? _juz;
+  int? _juzNumber;
 
   @HiveField(1)
-  int? _rubu;
+  int? _rubuNumber;
 
   @HiveField(2)
   List<Juz> _juzs;
@@ -29,15 +29,15 @@ class User {
   int? _colorScheme;
 
   User({
-    int? juz,
-    int? rubu,
+    int? juzNumber,
+    int? rubuNumber,
     List<Juz>? juzs,
     DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
     String? themeMode,
     int? colorScheme,
-  })  : _juz = juz,
-        _rubu = rubu,
+  })  : _juzNumber = juzNumber,
+        _rubuNumber = rubuNumber,
         _juzs = juzs ?? List.generate(30, (_) => Juz()),
         _lastLoginTime = lastLoginTime ??
             DateTime.now().subtract(
@@ -48,8 +48,8 @@ class User {
         _colorScheme = colorScheme;
 
   User copyWith({
-    int? juz,
-    int? rubu,
+    int? juzNumber,
+    int? rubuNumber,
     List<Juz>? juzs,
     DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
@@ -57,8 +57,8 @@ class User {
     int? colorScheme,
   }) {
     return User(
-      juz: juz ?? this.juz,
-      rubu: rubu ?? this.rubu,
+      juzNumber: juzNumber ?? this.juzNumber,
+      rubuNumber: rubuNumber ?? this.rubuNumber,
       juzs: juzs ?? this.juzs,
       lastLoginTime: lastLoginTime ?? this.lastLoginTime,
       schedules: schedules ?? this.schedules,
@@ -67,8 +67,8 @@ class User {
     );
   }
 
-  int? get juz => _juz;
-  int? get rubu => _rubu;
+  int? get juzNumber => _juzNumber;
+  int? get rubuNumber => _rubuNumber;
   List<Juz> get juzs => _juzs;
   DateTime get lastLoginTime => _lastLoginTime;
   List<ScheduleEntry> get schedules => _schedules ?? [];

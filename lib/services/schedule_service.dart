@@ -8,9 +8,8 @@ class ScheduleService {
 
   List<ScheduleEntry> scheduleManzil(User user) {
     final schedules = <ScheduleEntry>[];
-    final memorizedJuzs = user.juzs
-        .where((juz) => juz.isFullyMemorized || juz.isPartiallyMemorized)
-        .toList();
+    final memorizedJuzs =
+        user.juzs.where((juz) => juz.isFullyMemorized).toList();
     final now = DateTime.now().copyWith(
       second: 0,
       millisecond: 0,
@@ -43,13 +42,54 @@ class ScheduleService {
     return schedules;
   }
 
+  List<ScheduleEntry> scheduleSabqi(User user) {
+    final schedules = <ScheduleEntry>[];
+    final juz = (user.juzNumber == null)
+        ? user.juzs
+            .firstWhere((juz) => juz.isPartiallyMemorized || juz.isNotMemorized)
+        : user.juzs[user.juzNumber! - 1];
+    final rubus = juz.rubus.where((rubu) => rubu.isMemorized).toList();
+    final startDate = DateTime.now().add(const Duration(days: 1)).copyWith(
+          second: 0,
+          millisecond: 0,
+          microsecond: 0,
+        );
+
+    final juzNumber = user.juzs.indexOf(juz) + 1;
+    final rubuNumbers = <int>[];
+
+    for (var rubu in rubus) {
+      final rubuNumber = rubus.indexOf(rubu) + 1;
+      rubuNumbers.add(rubuNumber);
+    }
+
+    if (rubuNumbers.isEmpty) rubuNumbers.add(1);
+
+    schedules.addAll(
+      [
+        ScheduleEntry(
+          startDate: startDate.copyWith(hour: 7, minute: 30),
+          reviewType: 'Sabqi',
+          juzNumber: juzNumber,
+          rubuNumbers: rubuNumbers,
+        ),
+      ],
+    );
+
+    return schedules;
+  }
+
   List<ScheduleEntry> scheduleSabaq(User user) {
     final schedules = <ScheduleEntry>[];
-    final juz = user.juzs
-        .firstWhere((juz) => juz.isPartiallyMemorized || juz.isNotMemorized);
+    final juz = (user.juzNumber == null)
+        ? user.juzs
+            .firstWhere((juz) => juz.isPartiallyMemorized || juz.isNotMemorized)
+        : user.juzs[user.juzNumber! - 1];
     final juzNumber = user.juzs.indexOf(juz) + 1;
+
     final rubu = juz.rubus.firstWhere((rubu) => !rubu.isMemorized);
     final rubuNumber = juz.rubus.indexOf(rubu) + 1;
+
     final now = DateTime.now().copyWith(
       second: 0,
       millisecond: 0,
@@ -66,22 +106,22 @@ class ScheduleService {
       scheduleEntry.copyWith(
         startDate:
             now.add(const Duration(days: 1)).copyWith(hour: 8, minute: 30),
-        fraction: '1 / 4',
+        fraction: '1/4',
       ),
       scheduleEntry.copyWith(
         startDate:
             now.add(const Duration(days: 1)).copyWith(hour: 20, minute: 0),
-        fraction: '2 / 4',
+        fraction: '2/4',
       ),
       scheduleEntry.copyWith(
         startDate:
             now.add(const Duration(days: 2)).copyWith(hour: 8, minute: 30),
-        fraction: '3 / 4',
+        fraction: '3/4',
       ),
       scheduleEntry.copyWith(
         startDate:
             now.add(const Duration(days: 2)).copyWith(hour: 20, minute: 0),
-        fraction: '4 / 4',
+        fraction: '4/4',
       ),
     ]);
 

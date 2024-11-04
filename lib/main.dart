@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:repeater/services/notification_service.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
-import 'package:repeater/utils/map_theme_mode.dart';
+import 'package:repeater/utils/theme_mode.dart';
 import 'package:repeater/screens/main/init.dart';
 
 void main() async {
@@ -22,7 +22,12 @@ void main() async {
       title: 'test',
       body: 'test',
     ),
+    schedule: NotificationCalendar.fromDate(
+      date: DateTime.now().add(const Duration(seconds: 10)),
+    ),
   );
+
+  print('noti in 10');
 
   runApp(
     MultiProvider(

@@ -17,8 +17,8 @@ class UserAdapter extends TypeAdapter<User> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return User()
-      .._juz = fields[0] as int?
-      .._rubu = fields[1] as int?
+      .._juzNumber = fields[0] as int?
+      .._rubuNumber = fields[1] as int?
       .._juzs = (fields[2] as List).cast<Juz>()
       .._lastLoginTime = fields[3] as DateTime
       .._schedules = (fields[4] as List?)?.cast<ScheduleEntry>()
@@ -31,9 +31,9 @@ class UserAdapter extends TypeAdapter<User> {
     writer
       ..writeByte(7)
       ..writeByte(0)
-      ..write(obj._juz)
+      ..write(obj._juzNumber)
       ..writeByte(1)
-      ..write(obj._rubu)
+      ..write(obj._rubuNumber)
       ..writeByte(2)
       ..write(obj._juzs)
       ..writeByte(3)

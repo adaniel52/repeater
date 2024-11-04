@@ -5,9 +5,9 @@ import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_list_tile.dart';
 import 'package:repeater/screens/home/schedule_list_tile.dart';
-import 'package:repeater/screens/main/init.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
+import 'package:repeater/utils/date_time.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/section_title.dart';
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final tempTodaySchedules = <ScheduleEntry>[];
     final tempUpcomingSchedules = <ScheduleEntry>[];
     for (final scheduleEntry in user.schedules) {
-      if (scheduleEntry.startDate.day == now.day) {
+      if (isToday(scheduleEntry.startDate)) {
         tempTodaySchedules.add(scheduleEntry);
       } else if (scheduleEntry.startDate.isAfter(now)) {
         tempUpcomingSchedules.add(scheduleEntry);
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userPrefs = Provider.of<UserPreferences>(context, listen: false);
+    final userPrefs = Provider.of<UserPreferences>(context);
     final user = userPrefs.getUser()!;
 
     return Scaffold(
@@ -79,11 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Home'),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const Init()),
-                (_) => false,
-              );
+            onPressed: () async {
+              await userPrefs.logIn();
+              _getSchedules();
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -92,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomListView(
         children: [
           ..._tasksSection(user),
-          if (user.juz != null) ...[
+          if (user.juzNumber != null) ...[
             const LargeGap(),
             ..._memorizationSection(user),
           ],
@@ -127,12 +125,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ListTile(
           leading: const Icon(Icons.book_outlined),
           title: const Text('Current Juz'),
-          trailing: Text(user.juz.toString()),
+          trailing: Text(user.juzNumber.toString()),
         ),
         ListTile(
           leading: const Icon(Icons.brightness_low_outlined),
           title: const Text('Current Rubu'),
-          trailing: Text(user.rubu.toString()),
+          trailing: Text(user.rubuNumber.toString()),
         ),
       ];
 

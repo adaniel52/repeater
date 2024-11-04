@@ -51,6 +51,10 @@ class NotificationService {
           importance: NotificationImportance.Max,
           defaultColor: Styles.themeColor,
           channelShowBadge: true,
+          playSound: true,
+          enableVibration: true,
+          criticalAlerts: true,
+          enableLights: true,
         ),
       ],
     );
@@ -63,6 +67,8 @@ class NotificationService {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
+
+    AwesomeNotifications().resetGlobalBadge();
   }
 
   int getNextNotificationId() {
@@ -79,27 +85,30 @@ class NotificationService {
     final startDate = scheduleEntry.startDate;
 
     AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: getNextNotificationId(),
-        channelKey: remindersChannelName,
-        category: NotificationCategory.Reminder,
-        title: title,
-        body: body,
-        timeoutAfter: const Duration(hours: 1),
-        payload: {
-          'startDate': '$startDate',
-        },
-      ),
-      schedule: NotificationCalendar(
-        allowWhileIdle: true,
-        day: startDate.day,
-        hour: startDate.hour,
-        minute: startDate.minute,
-      ),
-    );
+        content: NotificationContent(
+          id: -1,
+          channelKey: remindersChannelName,
+          category: NotificationCategory.Reminder,
+          title: title,
+          body: body,
+          timeoutAfter: const Duration(hours: 1),
+          payload: {
+            'startDate': '$startDate',
+          },
+        ),
+        schedule: NotificationCalendar.fromDate(
+          allowWhileIdle: true,
+          date: startDate,
+        ),
+        actionButtons: [
+          NotificationActionButton(
+            key: 'completed',
+            label: 'Mark as Completed',
+          ),
+        ]);
   }
 
-  Future<void> clearAll() async {
-    AwesomeNotifications().cancelAll();
-  }
+  // Future<void> clearAll() async {
+  //   AwesomeNotifications().cancelAll();
+  // }
 }

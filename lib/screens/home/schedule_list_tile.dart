@@ -17,7 +17,7 @@ class ScheduleListTile extends StatelessWidget {
     final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
     final reviewType = scheduleEntry.reviewType;
     final fraction =
-        (scheduleEntry.fraction == null) ? '' : ' (${scheduleEntry.fraction})';
+        (scheduleEntry.fraction == null) ? '' : ' · ${scheduleEntry.fraction}';
     final text = '$reviewType | Juz $juzNumber · Rubu $rubuNumbers$fraction';
     final date =
         '${DateFormat.yMMMd().format(scheduleEntry.startDate)} · ${DateFormat.jm().format(scheduleEntry.startDate)}';

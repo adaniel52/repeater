@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
@@ -7,6 +6,7 @@ import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/notification_service.dart';
 import 'package:repeater/services/schedule_service.dart';
+import 'package:repeater/utils/date_time.dart';
 
 class UserPreferences extends ChangeNotifier {
   static final UserPreferences _instance = UserPreferences._internal();
@@ -45,8 +45,8 @@ class UserPreferences extends ChangeNotifier {
     int? colorScheme,
   }) async {
     final user = getUser()!.copyWith(
-      juz: juz,
-      rubu: rubu,
+      juzNumber: juz,
+      rubuNumber: rubu,
       juzs: juzs,
       lastLoginTime: lastLoginTime,
       schedules: schedules,
@@ -92,9 +92,9 @@ class UserPreferences extends ChangeNotifier {
     final currentSchedule = List<ScheduleEntry>.from(user.schedules);
     final newSchedules = <ScheduleEntry>[];
 
-    for (final scheduleEntry in List.from(currentSchedule)) {
+    for (final scheduleEntry in List<ScheduleEntry>.from(currentSchedule)) {
+      if (isToday(scheduleEntry.startDate)) continue;
       if (scheduleEntry.startDate.isBefore(now)) {
-        print(currentSchedule);
         currentSchedule.remove(scheduleEntry);
         print('removed ${scheduleEntry.startDate}');
       }
@@ -104,6 +104,7 @@ class UserPreferences extends ChangeNotifier {
 
     final manzilSchedules = user.getSchedulesByReviewType('Manzil');
     final sabaqSchedules = user.getSchedulesByReviewType('Sabaq');
+    final sabqiSchedules = user.getSchedulesByReviewType('Sabqi');
 
     if (manzilSchedules.isEmpty ||
         user.getLatestStartDate(manzilSchedules).isBefore(now)) {
@@ -114,9 +115,12 @@ class UserPreferences extends ChangeNotifier {
         user.getLatestStartDate(sabaqSchedules).isBefore(now)) {
       newSchedules.addAll(ScheduleService().scheduleSabaq(user));
     }
+    if (sabqiSchedules.isEmpty ||
+        user.getLatestStartDate(sabqiSchedules).isBefore(now)) {
+      newSchedules.addAll(ScheduleService().scheduleSabqi(user));
+    }
 
     for (final scheduleEntry in newSchedules) {
-      AwesomeNotifications().listScheduledNotifications();
       NotificationService().scheduleNotification(scheduleEntry);
       print('add ${scheduleEntry.reviewType} ${scheduleEntry.startDate}');
     }

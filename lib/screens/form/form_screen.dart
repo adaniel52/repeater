@@ -65,8 +65,8 @@ class _FormScreenState extends State<FormScreen> {
     final userPrefs = Provider.of<UserPreferences>(context, listen: false);
     await userPrefs.createUser(
       User(
-        juz: int.tryParse(_juzController.text),
-        rubu: int.tryParse(_rubuController.text),
+        juzNumber: int.tryParse(_juzController.text),
+        rubuNumber: int.tryParse(_rubuController.text),
         juzs: juzs,
       ),
     );

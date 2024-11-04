@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:repeater/models/schedule_entry.dart';
+import 'package:repeater/screens/main/main_navigation.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 
 class ScheduleDetailsScreen extends StatelessWidget {
@@ -14,7 +15,9 @@ class ScheduleDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final reviewType = scheduleEntry.reviewType!;
     final juzNumber = 'Juz ${scheduleEntry.juzNumber}';
-    final rubuNumbers = 'Rubu ${scheduleEntry.rubuNumbers.join(', ')}';
+    final fraction =
+        (scheduleEntry.fraction == null) ? '' : ' · ${scheduleEntry.fraction}';
+    final rubuNumbers = 'Rubu ${scheduleEntry.rubuNumbers.join(', ')}$fraction';
     final date = DateFormat.yMMMd().format(scheduleEntry.startDate);
     final time = DateFormat.jm().format(scheduleEntry.startDate);
 
@@ -58,7 +61,12 @@ class ScheduleDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const MainNavigation()),
+                      (_) => false,
+                    );
+                  },
                   child: const Text('Mark as Completed'),
                 ),
                 OutlinedButton(
