@@ -75,12 +75,6 @@ class User {
   String get themeMode => _themeMode ?? 'System';
   int get colorScheme => _colorScheme ?? Colors.teal.value;
 
-  // List<ScheduleEntry> get manzilSchedules => schedules
-  //     .where(
-  //       (scheduleEntry) => scheduleEntry.reviewType == 'Manzil',
-  //     )
-  //     .toList();
-
   List<ScheduleEntry> getSchedulesByReviewType(String reviewType) => schedules
       .where(
         (scheduleEntry) => scheduleEntry.reviewType == reviewType,
@@ -93,4 +87,7 @@ class User {
         .reduce((a, b) => a.isAfter(b) ? a : b);
     return latestStartDate;
   }
+
+  ScheduleEntry getScheduleEntryByDate(DateTime date) =>
+      schedules.firstWhere((scheduleEntry) => scheduleEntry.startDate == date);
 }

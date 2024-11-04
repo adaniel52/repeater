@@ -22,7 +22,6 @@ class NotificationService {
       ReceivedAction receivedAction) async {
     final user = UserPreferences().getUser()!;
     final startDate = DateTime.parse(receivedAction.payload!['startDate']!);
-    print(startDate.toString());
     final scheduleEntry = user.schedules
         .firstWhere((scheduleEntry) => scheduleEntry.startDate == startDate);
 
@@ -80,32 +79,29 @@ class NotificationService {
   void scheduleNotification(ScheduleEntry scheduleEntry) {
     final juzNumber = scheduleEntry.juzNumber;
     final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
-    final title = 'Manzil';
-    final body = 'Juz $juzNumber - Rubu $rubuNumbers';
+    final fraction =
+        (scheduleEntry.fraction == null) ? '' : ' · ${scheduleEntry.fraction}';
+    final title = scheduleEntry.reviewType;
+    final body = 'Juz $juzNumber · Rubu $rubuNumbers$fraction';
     final startDate = scheduleEntry.startDate;
 
     AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: -1,
-          channelKey: remindersChannelName,
-          category: NotificationCategory.Reminder,
-          title: title,
-          body: body,
-          timeoutAfter: const Duration(hours: 1),
-          payload: {
-            'startDate': '$startDate',
-          },
-        ),
-        schedule: NotificationCalendar.fromDate(
-          allowWhileIdle: true,
-          date: startDate,
-        ),
-        actionButtons: [
-          NotificationActionButton(
-            key: 'completed',
-            label: 'Mark as Completed',
-          ),
-        ]);
+      content: NotificationContent(
+        id: -1,
+        channelKey: remindersChannelName,
+        category: NotificationCategory.Reminder,
+        title: title,
+        body: body,
+        timeoutAfter: const Duration(hours: 1),
+        payload: {
+          'startDate': '$startDate',
+        },
+      ),
+      schedule: NotificationCalendar.fromDate(
+        allowWhileIdle: true,
+        date: startDate,
+      ),
+    );
   }
 
   // Future<void> clearAll() async {

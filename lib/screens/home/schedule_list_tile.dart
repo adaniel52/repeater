@@ -22,10 +22,24 @@ class ScheduleListTile extends StatelessWidget {
     final date =
         '${DateFormat.yMMMd().format(scheduleEntry.startDate)} · ${DateFormat.jm().format(scheduleEntry.startDate)}';
 
+    final textStyle = TextStyle(
+      decoration: scheduleEntry.isCompleted ? TextDecoration.lineThrough : null,
+    );
+
     return ListTile(
-      title: Text(text),
-      subtitle: Text(date),
-      trailing: const Icon(Icons.chevron_right),
+      title: Text(text, style: textStyle),
+      subtitle: Text(date, style: textStyle),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (scheduleEntry.isCompleted)
+            const Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          const Icon(Icons.chevron_right),
+        ],
+      ),
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(

@@ -77,26 +77,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await userPrefs.logIn();
-              _getSchedules();
-            },
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
       ),
-      body: CustomListView(
-        children: [
-          ..._tasksSection(user),
-          if (user.juzNumber != null) ...[
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await userPrefs.logIn();
+          _getSchedules();
+        },
+        child: CustomListView(
+          children: [
+            ..._tasksSection(user),
+            if (user.juzNumber != null) ...[
+              const LargeGap(),
+              ..._memorizationSection(user),
+            ],
             const LargeGap(),
-            ..._memorizationSection(user),
+            ..._overallProgressSection(user),
           ],
-          const LargeGap(),
-          ..._overallProgressSection(user),
-        ],
+        ),
       ),
     );
   }

@@ -59,5 +59,9 @@ class ScheduleEntry {
   int get juzNumber => _juzNumber!;
   List<int> get rubuNumbers => _rubuNumbers;
   String? get fraction => _fraction;
-  bool? get isCompleted => _isCompleted;
+  bool get isCompleted => _isCompleted ?? false;
+
+  set isCompleted(bool value) {
+    isCompleted = value;
+  }
 }

@@ -27,8 +27,6 @@ void main() async {
     ),
   );
 
-  print('noti in 10');
-
   runApp(
     MultiProvider(
       providers: [

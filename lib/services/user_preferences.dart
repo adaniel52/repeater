@@ -36,8 +36,8 @@ class UserPreferences extends ChangeNotifier {
   }
 
   Future<void> updateUser({
-    int? juz,
-    int? rubu,
+    int? juzNumber,
+    int? rubuNumber,
     List<Juz>? juzs,
     DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
@@ -45,8 +45,8 @@ class UserPreferences extends ChangeNotifier {
     int? colorScheme,
   }) async {
     final user = getUser()!.copyWith(
-      juzNumber: juz,
-      rubuNumber: rubu,
+      juzNumber: juzNumber,
+      rubuNumber: rubuNumber,
       juzs: juzs,
       lastLoginTime: lastLoginTime,
       schedules: schedules,
@@ -96,7 +96,6 @@ class UserPreferences extends ChangeNotifier {
       if (isToday(scheduleEntry.startDate)) continue;
       if (scheduleEntry.startDate.isBefore(now)) {
         currentSchedule.remove(scheduleEntry);
-        print('removed ${scheduleEntry.startDate}');
       }
     }
 
@@ -122,7 +121,6 @@ class UserPreferences extends ChangeNotifier {
 
     for (final scheduleEntry in newSchedules) {
       NotificationService().scheduleNotification(scheduleEntry);
-      print('add ${scheduleEntry.reviewType} ${scheduleEntry.startDate}');
     }
 
     currentSchedule.addAll(newSchedules);
@@ -133,7 +131,5 @@ class UserPreferences extends ChangeNotifier {
       lastLoginTime: now,
       schedules: currentSchedule,
     );
-
-    print('login');
   }
 }
