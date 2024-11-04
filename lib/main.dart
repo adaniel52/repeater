@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -14,18 +13,6 @@ void main() async {
   await Hive.initFlutter();
   await UserPreferences().init();
   await NotificationService().init();
-
-  AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: 100,
-      channelKey: 'Reminders',
-      title: 'test',
-      body: 'test',
-    ),
-    schedule: NotificationCalendar.fromDate(
-      date: DateTime.now().add(const Duration(seconds: 10)),
-    ),
-  );
 
   runApp(
     MultiProvider(
