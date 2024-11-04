@@ -6,9 +6,11 @@ import 'package:repeater/screens/home/schedule_details_screen.dart';
 class ScheduleListTile extends StatelessWidget {
   const ScheduleListTile({
     super.key,
+    this.enabled = true,
     required this.scheduleEntry,
   });
 
+  final bool enabled;
   final ScheduleEntry scheduleEntry;
 
   @override
@@ -29,26 +31,30 @@ class ScheduleListTile extends StatelessWidget {
     return ListTile(
       title: Text(text, style: textStyle),
       subtitle: Text(date, style: textStyle),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (scheduleEntry.isCompleted)
-            const Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-          const Icon(Icons.chevron_right),
-        ],
-      ),
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ScheduleDetailsScreen(
-              scheduleEntry: scheduleEntry,
-            ),
-          ),
-        );
-      },
+      trailing: (enabled)
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (scheduleEntry.isCompleted)
+                  const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ),
+                const Icon(Icons.chevron_right),
+              ],
+            )
+          : null,
+      onTap: (enabled)
+          ? () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ScheduleDetailsScreen(
+                    scheduleEntry: scheduleEntry,
+                  ),
+                ),
+              );
+            }
+          : null,
     );
   }
 }

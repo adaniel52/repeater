@@ -41,6 +41,7 @@ class ScheduleDetailsScreen extends StatelessWidget {
       int? rubuNumber;
 
       if (user.juzNumber != null && scheduleEntry.fraction == '4/4') {
+        //not khatam
         if (scheduleEntry.isCompleted) {
           //incompleting + set to current juz
           juzNumber = scheduleEntry.juzNumber;
@@ -61,12 +62,33 @@ class ScheduleDetailsScreen extends StatelessWidget {
 
           if (lastRubuNumber == 8) {
             //increment juz
-            juzNumber = scheduleEntry.juzNumber + 1;
-            rubuNumber = 1;
+            if (scheduleEntry.juzNumber == 30) {
+              userPrefs.setKhatam();
+            } else {
+              juzNumber = scheduleEntry.juzNumber + 1;
+              rubuNumber = 1;
+            }
           } else {
             rubuNumber = lastRubuNumber + 1;
           }
 
+          userPrefs.updateRubu(
+            scheduleEntry.juzNumber,
+            lastRubuNumber,
+            Rubu(isMemorized: true),
+          );
+        }
+      } else {
+        //khatam
+        if (scheduleEntry.isCompleted) {
+          juzNumber = scheduleEntry.juzNumber;
+          rubuNumber = lastRubuNumber;
+          userPrefs.updateRubu(
+            scheduleEntry.juzNumber,
+            lastRubuNumber,
+            Rubu(isMemorized: false),
+          );
+        } else {
           userPrefs.updateRubu(
             scheduleEntry.juzNumber,
             lastRubuNumber,

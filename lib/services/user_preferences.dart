@@ -62,6 +62,19 @@ class UserPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setKhatam() async {
+    final user = getUser()!;
+    final newUser = User(
+      juzs: user.juzs,
+      lastLoginTime: user.lastLoginTime,
+      schedules: user.schedules,
+      themeMode: user.themeMode,
+      colorScheme: user.colorScheme,
+    );
+    await createUser(newUser);
+    notifyListeners();
+  }
+
   Future<void> updateRubu(int juzNumber, int rubuNumber, Rubu rubu) async {
     final user = getUser()!;
 
@@ -86,7 +99,11 @@ class UserPreferences extends ChangeNotifier {
     await updateUser(juzs: updatedJuzs);
   }
 
-  Future<void> logIn() async {
+  Future<void> logIn({
+    bool shouldReschedule = false,
+  }) async {
+    if (shouldReschedule) await updateUser(schedules: []);
+
     final user = getUser()!;
     final now = DateTime.now();
     final currentSchedule = List<ScheduleEntry>.from(user.schedules);
@@ -98,8 +115,6 @@ class UserPreferences extends ChangeNotifier {
         currentSchedule.remove(scheduleEntry);
       }
     }
-
-    // if (user.lastLoginTime.day != now.day) {}
 
     final manzilSchedules = user.getSchedulesByReviewType('Manzil');
     final sabaqSchedules = user.getSchedulesByReviewType('Sabaq');
@@ -124,7 +139,6 @@ class UserPreferences extends ChangeNotifier {
     }
 
     currentSchedule.addAll(newSchedules);
-
     currentSchedule.sort((a, b) => a.startDate.compareTo(b.startDate));
 
     await updateUser(

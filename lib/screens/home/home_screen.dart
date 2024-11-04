@@ -5,6 +5,7 @@ import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/screens/home/juz_list_tile.dart';
 import 'package:repeater/screens/home/schedule_list_tile.dart';
+import 'package:repeater/screens/home/upcoming_schedules_screen.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/utils/date_time.dart';
@@ -101,20 +102,27 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _tasksSection(User user) => [
         const SectionTitle('Schedules'),
         if (todaySchedules.isEmpty)
-          const ListTile(title: Text('You got no task.'))
+          const ListTile(
+            leading: Icon(Icons.do_disturb_on),
+            title: Text('You got no task for today.'),
+          )
         else
           ...todaySchedules.map((scheduleEntry) {
             return ScheduleListTile(scheduleEntry: scheduleEntry);
           }),
-        const SectionTitle('Upcoming Schedules'),
-        if (upcomingSchedules.isEmpty)
-          const ListTile(
-            title: Text('You got no upcoming tasks.'),
-          )
-        else
-          ...upcomingSchedules.map((scheduleEntry) {
-            return ScheduleListTile(scheduleEntry: scheduleEntry);
-          }),
+        ListTile(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    UpcomingSchedulesScreen(schedules: upcomingSchedules),
+              ),
+            );
+          },
+          leading: const Icon(Icons.upcoming),
+          title: const Text('See upcoming schedules...'),
+          trailing: const Icon(Icons.chevron_right),
+        ),
       ];
 
   List<Widget> _memorizationSection(User user) => [

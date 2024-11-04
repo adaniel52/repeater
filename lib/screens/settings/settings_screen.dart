@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/screens/form/intro_screen.dart';
+import 'package:repeater/screens/main/main_navigation.dart';
 import 'package:repeater/services/user_preferences.dart';
+import 'package:repeater/utils/bool_alert_dialog.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/section_title.dart';
@@ -43,36 +45,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _resetData() async {
-    showAdaptiveDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirmation'),
-        content: const Text('Are you sure you want to reset the app data?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('No'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await UserPreferences().resetUser();
-              if (!context.mounted) return;
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (_) => const IntroScreen(),
-                ),
-                (_) => false,
-              );
-            },
-            child: const Text(
-              'Yes',
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-        ],
+    final result = await showBoolAlertDialog(
+      context,
+      title: 'Reset Data',
+      content: 'All app data will be removed.',
+      falseText: const Text('Cancel'),
+      trueText: const Text(
+        'Reset',
+        style: TextStyle(color: Colors.red),
       ),
+    );
+
+    if (!result) return;
+
+    await UserPreferences().resetUser();
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) => const IntroScreen(),
+      ),
+      (_) => false,
+    );
+  }
+
+  void _resetSchedules() async {
+    final result = await showBoolAlertDialog(
+      context,
+      title: 'Reset Schedule',
+      content:
+          'The app will generate some new schedules to replace the current ones.',
+      falseText: const Text('Cancel'),
+      trueText: const Text(
+        'Reset',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+
+    if (!result) return;
+
+    await UserPreferences().logIn(shouldReschedule: true);
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) => const MainNavigation(),
+      ),
+      (_) => false,
     );
   }
 
@@ -91,10 +108,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _setColorSchemeTile(userPrefs),
           const MediumGap(),
           const SectionTitle('More'),
+          _rescheduleTile(),
           _resetDataTile(),
-          // const AboutListTile(
-          //   icon: Icon(Icons.info),
-          // ),
+          _aboutAppTile(),
         ],
       ),
     );
@@ -144,9 +160,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
         },
       );
 
+  Widget _rescheduleTile() => ListTile(
+        leading: const Icon(Icons.calendar_month),
+        title: const Text('Reset Schedules'),
+        onTap: _resetSchedules,
+      );
+
   Widget _resetDataTile() => ListTile(
         leading: const Icon(Icons.delete),
         title: const Text('Reset Data'),
         onTap: _resetData,
+      );
+  Widget _aboutAppTile() => const AboutListTile(
+        icon: Icon(Icons.info),
+        applicationIcon: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          child: Image(
+            image: AssetImage('assets/icon/icon.png'),
+            width: 50,
+          ),
+        ),
+        applicationVersion: 'v0.1.0',
+        aboutBoxChildren: [
+          Text('An app to assist hafiz in scheduling timetables.'),
+        ],
       );
 }
