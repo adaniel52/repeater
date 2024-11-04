@@ -43,7 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _resetData() async {
-    showDialog(
+    showAdaptiveDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirmation'),

@@ -52,7 +52,7 @@ class NoteCard extends StatelessWidget {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(
+              child: CircularProgressIndicator.adaptive(
                 value: loadingProgress.expectedTotalBytes != null
                     ? loadingProgress.cumulativeBytesLoaded /
                         (loadingProgress.expectedTotalBytes ?? 1)

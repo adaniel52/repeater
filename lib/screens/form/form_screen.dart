@@ -130,7 +130,7 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Widget _khatamForm() => CenteredScrollableColumn(children: [
-        SwitchListTile(
+        SwitchListTile.adaptive(
           title: Text(
             'Khatam',
             style: Theme.of(context).textTheme.titleMedium,
@@ -220,7 +220,7 @@ class _FormScreenState extends State<FormScreen> {
         ...juzs.map((juz) {
           final juzNumber = juzs.indexOf(juz) + 1;
 
-          return SwitchListTile(
+          return SwitchListTile.adaptive(
             title: Text('Juz $juzNumber'),
             value: juz.isFullyMemorized,
             onChanged: (value) => setState(() => juz.isFullyMemorized = value),
