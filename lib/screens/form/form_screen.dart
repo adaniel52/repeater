@@ -149,11 +149,8 @@ class _FormScreenState extends State<FormScreen> {
             subtitle: const Text('Fill in your current memorization info.'),
           ),
           const SmallGap(),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Styles.screenSpacing,
-            ),
-            child: Form(
+          ListTile(
+            title: Form(
               key: _memorizationInfoFormKey,
               child: Column(
                 children: [
