@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:repeater/models/rubu.dart';
+import 'package:repeater/models/maqra.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/screens/main/main_navigation.dart';
 import 'package:repeater/services/user_preferences.dart';
@@ -23,7 +23,8 @@ class ScheduleDetailsScreen extends StatelessWidget {
     final juzNumber = 'Juz ${scheduleEntry.juzNumber}';
     final fraction =
         (scheduleEntry.fraction == null) ? '' : ' · ${scheduleEntry.fraction}';
-    final rubuNumbers = 'Rubu ${scheduleEntry.rubuNumbers.join(', ')}$fraction';
+    final maqraNumbers =
+        'Maqra ${scheduleEntry.maqraNumbers.join(', ')}$fraction';
     final date = DateFormat.yMMMd().format(scheduleEntry.startDate);
     final time = DateFormat.jm().format(scheduleEntry.startDate);
 
@@ -35,10 +36,10 @@ class ScheduleDetailsScreen extends StatelessWidget {
       final index = schedules.indexOf(scheduleEntry);
       schedules[index] = newScheduleEntry;
 
-      final lastRubuNumber = scheduleEntry.rubuNumbers.last;
+      final lastMaqraNumber = scheduleEntry.maqraNumbers.last;
 
       int? juzNumber;
-      int? rubuNumber;
+      int? maqraNumber;
 
       if (user.juzNumber != null && scheduleEntry.fraction == '4/4') {
         //not khatam
@@ -46,53 +47,53 @@ class ScheduleDetailsScreen extends StatelessWidget {
           //incompleting + set to current juz
           juzNumber = scheduleEntry.juzNumber;
 
-          if (lastRubuNumber == 8) {
-            rubuNumber = 8;
+          if (lastMaqraNumber == 8) {
+            maqraNumber = 8;
           } else {
-            rubuNumber = lastRubuNumber;
+            maqraNumber = lastMaqraNumber;
           }
 
-          userPrefs.updateRubu(
+          userPrefs.updateMaqra(
             scheduleEntry.juzNumber,
-            lastRubuNumber,
-            Rubu(isMemorized: false),
+            lastMaqraNumber,
+            Maqra(isMemorized: false),
           );
         } else {
           //completing
 
-          if (lastRubuNumber == 8) {
+          if (lastMaqraNumber == 8) {
             //increment juz
             if (scheduleEntry.juzNumber == 30) {
               userPrefs.setKhatam();
             } else {
               juzNumber = scheduleEntry.juzNumber + 1;
-              rubuNumber = 1;
+              maqraNumber = 1;
             }
           } else {
-            rubuNumber = lastRubuNumber + 1;
+            maqraNumber = lastMaqraNumber + 1;
           }
 
-          userPrefs.updateRubu(
+          userPrefs.updateMaqra(
             scheduleEntry.juzNumber,
-            lastRubuNumber,
-            Rubu(isMemorized: true),
+            lastMaqraNumber,
+            Maqra(isMemorized: true),
           );
         }
       } else {
         //khatam
         if (scheduleEntry.isCompleted) {
           juzNumber = scheduleEntry.juzNumber;
-          rubuNumber = lastRubuNumber;
-          userPrefs.updateRubu(
+          maqraNumber = lastMaqraNumber;
+          userPrefs.updateMaqra(
             scheduleEntry.juzNumber,
-            lastRubuNumber,
-            Rubu(isMemorized: false),
+            lastMaqraNumber,
+            Maqra(isMemorized: false),
           );
         } else {
-          userPrefs.updateRubu(
+          userPrefs.updateMaqra(
             scheduleEntry.juzNumber,
-            lastRubuNumber,
-            Rubu(isMemorized: true),
+            lastMaqraNumber,
+            Maqra(isMemorized: true),
           );
         }
       }
@@ -100,7 +101,7 @@ class ScheduleDetailsScreen extends StatelessWidget {
       userPrefs.updateUser(
         schedules: schedules,
         juzNumber: juzNumber,
-        rubuNumber: rubuNumber,
+        maqraNumber: maqraNumber,
       );
 
       Navigator.of(context).pushAndRemoveUntil(
@@ -128,7 +129,7 @@ class ScheduleDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(juzNumber),
-                Text(rubuNumbers),
+                Text(maqraNumbers),
               ],
             ),
           ),

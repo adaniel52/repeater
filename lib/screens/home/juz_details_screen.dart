@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:repeater/models/rubu.dart';
+import 'package:repeater/models/maqra.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/screens/main/main_navigation.dart';
-import 'package:repeater/widgets/section_title.dart';
 
 class JuzDetailsScreen extends StatefulWidget {
   final int number;
@@ -20,15 +19,15 @@ class JuzDetailsScreen extends StatefulWidget {
 }
 
 class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
-  List<Rubu> rubus = [];
+  List<Maqra> maqras = [];
 
   @override
   void initState() {
     super.initState();
     final user =
         Provider.of<UserPreferences>(context, listen: false).getUser()!;
-    final originalRubus = user.juzs[widget.number - 1].rubus;
-    rubus = originalRubus.map((rubu) => rubu.copyWith()).toList();
+    final originalMaqras = user.juzs[widget.number - 1].maqras;
+    maqras = originalMaqras.map((maqra) => maqra.copyWith()).toList();
   }
 
   @override
@@ -45,14 +44,20 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
       body: CustomListView(
         width: Styles.largeBreakpoint,
         children: [
-          const SectionTitle('Which rubu did you still remembered?'),
+          ListTile(
+            title: Text(
+              'Memorized Maqras',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            subtitle: const Text('Which maqras did you still remember?'),
+          ),
           const MediumGap(),
-          ...rubus.map((rubu) {
-            final rubuNumber = rubus.indexOf(rubu) + 1;
+          ...maqras.map((maqra) {
+            final maqraNumber = maqras.indexOf(maqra) + 1;
             return SwitchListTile(
-              title: Text('Rubu $rubuNumber'),
-              value: rubu.isMemorized,
-              onChanged: (value) => setState(() => rubu.isMemorized = value),
+              title: Text('Maqra $maqraNumber'),
+              value: maqra.isMemorized,
+              onChanged: (value) => setState(() => maqra.isMemorized = value),
             );
           }),
           const LargeGap(),
@@ -61,9 +66,9 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
               child: const Text('Confirm Changes'),
               onPressed: () async {
                 await Provider.of<UserPreferences>(context, listen: false)
-                    .updateRubus(
+                    .updateMaqras(
                   widget.number,
-                  rubus,
+                  maqras,
                 );
                 if (!context.mounted) return;
                 Navigator.of(context).pushAndRemoveUntil(

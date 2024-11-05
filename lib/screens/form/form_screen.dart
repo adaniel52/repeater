@@ -19,7 +19,7 @@ class FormScreen extends StatefulWidget {
 class _FormScreenState extends State<FormScreen> {
   late PageController _pageController;
   late TextEditingController _juzController;
-  late TextEditingController _rubuController;
+  late TextEditingController _maqraController;
   final _memorizationInfoFormKey = GlobalKey<FormState>();
 
   int index = 0;
@@ -31,14 +31,14 @@ class _FormScreenState extends State<FormScreen> {
     super.initState();
     _pageController = PageController();
     _juzController = TextEditingController();
-    _rubuController = TextEditingController();
+    _maqraController = TextEditingController();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     _juzController.dispose();
-    _rubuController.dispose();
+    _maqraController.dispose();
     super.dispose();
   }
 
@@ -66,7 +66,7 @@ class _FormScreenState extends State<FormScreen> {
     await userPrefs.createUser(
       User(
         juzNumber: int.tryParse(_juzController.text),
-        rubuNumber: int.tryParse(_rubuController.text),
+        maqraNumber: int.tryParse(_maqraController.text),
         juzs: juzs,
       ),
     );
@@ -180,17 +180,17 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   const MediumGap(),
                   TextFormField(
-                    controller: _rubuController,
+                    controller: _maqraController,
                     decoration: const InputDecoration(
-                      labelText: 'Rubu*',
+                      labelText: 'Maqra*',
                       helperText: 'Choose a number between 1 - 8.',
                       border: OutlineInputBorder(
                         borderRadius: Styles.mediumBorderRadius,
                       ),
                     ),
                     validator: (value) {
-                      final rubu = int.tryParse(value!);
-                      if (rubu == null || rubu < 1 || rubu > 8) {
+                      final maqra = int.tryParse(value!);
+                      if (maqra == null || maqra < 1 || maqra > 8) {
                         return 'Invalid input!';
                       } else {
                         return null;

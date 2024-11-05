@@ -78,11 +78,11 @@ class NotificationService {
 
   void scheduleNotification(ScheduleEntry scheduleEntry) {
     final juzNumber = scheduleEntry.juzNumber;
-    final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
+    final maqraNumbers = scheduleEntry.maqraNumbers.join(', ');
     final fraction =
         (scheduleEntry.fraction == null) ? '' : ' · ${scheduleEntry.fraction}';
     final title = scheduleEntry.reviewType;
-    final body = 'Juz $juzNumber · Rubu $rubuNumbers$fraction';
+    final body = 'Juz $juzNumber · Maqra $maqraNumbers$fraction';
     final startDate = scheduleEntry.startDate;
 
     AwesomeNotifications().createNotification(

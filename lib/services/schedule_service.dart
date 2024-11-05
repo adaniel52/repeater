@@ -27,13 +27,13 @@ class ScheduleService {
             startDate: startDate.copyWith(hour: 6, minute: 30),
             reviewType: 'Manzil',
             juzNumber: juzNumber,
-            rubuNumbers: [1, 2, 3, 4],
+            maqraNumbers: [1, 2, 3, 4],
           ),
           ScheduleEntry(
             startDate: startDate.copyWith(hour: 17, minute: 0),
             reviewType: 'Manzil',
             juzNumber: juzNumber,
-            rubuNumbers: [5, 6, 7, 8],
+            maqraNumbers: [5, 6, 7, 8],
           ),
         ],
       );
@@ -48,7 +48,7 @@ class ScheduleService {
         ? user.juzs
             .firstWhere((juz) => juz.isPartiallyMemorized || juz.isNotMemorized)
         : user.juzs[user.juzNumber! - 1];
-    final rubus = juz.rubus.where((rubu) => rubu.isMemorized).toList();
+    final maqras = juz.maqras.where((maqra) => maqra.isMemorized).toList();
     final startDate = DateTime.now().add(const Duration(days: 1)).copyWith(
           second: 0,
           millisecond: 0,
@@ -56,14 +56,14 @@ class ScheduleService {
         );
 
     final juzNumber = user.juzs.indexOf(juz) + 1;
-    final rubuNumbers = <int>[];
+    final maqraNumbers = <int>[];
 
-    for (var rubu in rubus) {
-      final rubuNumber = rubus.indexOf(rubu) + 1;
-      rubuNumbers.add(rubuNumber);
+    for (var maqra in maqras) {
+      final maqraNumber = maqras.indexOf(maqra) + 1;
+      maqraNumbers.add(maqraNumber);
     }
 
-    if (rubuNumbers.isEmpty) rubuNumbers.add(1);
+    if (maqraNumbers.isEmpty) maqraNumbers.add(1);
 
     schedules.addAll(
       [
@@ -71,7 +71,7 @@ class ScheduleService {
           startDate: startDate.copyWith(hour: 7, minute: 30),
           reviewType: 'Sabqi',
           juzNumber: juzNumber,
-          rubuNumbers: rubuNumbers,
+          maqraNumbers: maqraNumbers,
         ),
       ],
     );
@@ -87,8 +87,8 @@ class ScheduleService {
         : user.juzs[user.juzNumber! - 1];
     final juzNumber = user.juzs.indexOf(juz) + 1;
 
-    final rubu = juz.rubus.firstWhere((rubu) => !rubu.isMemorized);
-    final rubuNumber = juz.rubus.indexOf(rubu) + 1;
+    final maqra = juz.maqras.firstWhere((maqra) => !maqra.isMemorized);
+    final maqraNumber = juz.maqras.indexOf(maqra) + 1;
 
     final now = DateTime.now().copyWith(
       second: 0,
@@ -99,7 +99,7 @@ class ScheduleService {
     final scheduleEntry = ScheduleEntry(
       reviewType: 'Sabaq',
       juzNumber: juzNumber,
-      rubuNumbers: [rubuNumber],
+      maqraNumbers: [maqraNumber],
     );
 
     schedules.addAll([

@@ -1,40 +1,40 @@
 import 'package:hive/hive.dart';
-import 'package:repeater/models/rubu.dart';
+import 'package:repeater/models/maqra.dart';
 
 part 'juz.g.dart';
 
 @HiveType(typeId: 1)
 class Juz {
   @HiveField(0)
-  List<Rubu> _rubus;
+  List<Maqra> _maqras;
 
   Juz({
-    List<Rubu>? rubus,
-  }) : _rubus = rubus ?? List.generate(8, (_) => Rubu());
+    List<Maqra>? maqras,
+  }) : _maqras = maqras ?? List.generate(8, (_) => Maqra());
 
   Juz copyWith({
-    List<Rubu>? rubus,
+    List<Maqra>? maqras,
   }) {
     return Juz(
-      rubus: rubus ?? this.rubus,
+      maqras: maqras ?? this.maqras,
     );
   }
 
-  List<Rubu> get rubus => _rubus;
+  List<Maqra> get maqras => _maqras;
 
-  bool get isFullyMemorized => rubus.every((rubu) => rubu.isMemorized);
+  bool get isFullyMemorized => maqras.every((maqra) => maqra.isMemorized);
   bool get isPartiallyMemorized =>
-      rubus.any((rubu) => rubu.isMemorized) && !isFullyMemorized;
-  bool get isNotMemorized => rubus.every((rubu) => !rubu.isMemorized);
+      maqras.any((maqra) => maqra.isMemorized) && !isFullyMemorized;
+  bool get isNotMemorized => maqras.every((maqra) => !maqra.isMemorized);
 
-  bool get isFullyReviewed => rubus.every((rubu) => rubu.isReviewed);
+  bool get isFullyReviewed => maqras.every((maqra) => maqra.isReviewed);
   bool get isPartiallyReviewed =>
-      rubus.any((rubu) => rubu.isReviewed) && !isFullyReviewed;
-  bool get isNotReviewed => rubus.every((rubu) => !rubu.isReviewed);
+      maqras.any((maqra) => maqra.isReviewed) && !isFullyReviewed;
+  bool get isNotReviewed => maqras.every((maqra) => !maqra.isReviewed);
 
   set isFullyMemorized(bool value) {
-    for (final rubu in _rubus) {
-      rubu.isMemorized = value;
+    for (final maqra in _maqras) {
+      maqra.isMemorized = value;
     }
   }
 }

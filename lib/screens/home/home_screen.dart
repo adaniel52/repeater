@@ -134,8 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         ListTile(
           leading: const Icon(Icons.brightness_low_outlined),
-          title: const Text('Current Rubu'),
-          trailing: Text(user.rubuNumber.toString()),
+          title: const Text('Current Maqra'),
+          trailing: Text(user.maqraNumber.toString()),
         ),
       ];
 

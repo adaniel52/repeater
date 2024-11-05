@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:repeater/models/juz.dart';
-import 'package:repeater/models/rubu.dart';
+import 'package:repeater/models/maqra.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
 import 'package:repeater/services/notification_service.dart';
@@ -19,7 +19,7 @@ class UserPreferences extends ChangeNotifier {
   Future<void> init() async {
     Hive.registerAdapter(UserAdapter());
     Hive.registerAdapter(JuzAdapter());
-    Hive.registerAdapter(RubuAdapter());
+    Hive.registerAdapter(MaqraAdapter());
     Hive.registerAdapter(ScheduleEntryAdapter());
     // for reset purposes
     // Hive.deleteBoxFromDisk('userBox');
@@ -37,7 +37,7 @@ class UserPreferences extends ChangeNotifier {
 
   Future<void> updateUser({
     int? juzNumber,
-    int? rubuNumber,
+    int? maqraNumber,
     List<Juz>? juzs,
     DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
@@ -46,7 +46,7 @@ class UserPreferences extends ChangeNotifier {
   }) async {
     final user = getUser()!.copyWith(
       juzNumber: juzNumber,
-      rubuNumber: rubuNumber,
+      maqraNumber: maqraNumber,
       juzs: juzs,
       lastLoginTime: lastLoginTime,
       schedules: schedules,
@@ -75,11 +75,12 @@ class UserPreferences extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateRubu(int juzNumber, int rubuNumber, Rubu rubu) async {
+  Future<void> updateMaqra(int juzNumber, int maqraNumber, Maqra maqra) async {
     final user = getUser()!;
 
     final updatedJuz = user.juzs[juzNumber - 1].copyWith(
-      rubus: List.from(user.juzs[juzNumber - 1].rubus)..[rubuNumber - 1] = rubu,
+      maqras: List.from(user.juzs[juzNumber - 1].maqras)
+        ..[maqraNumber - 1] = maqra,
     );
 
     final updatedJuzs = List<Juz>.from(user.juzs)..[juzNumber - 1] = updatedJuz;
@@ -87,11 +88,11 @@ class UserPreferences extends ChangeNotifier {
     await updateUser(juzs: updatedJuzs);
   }
 
-  Future<void> updateRubus(int juzNumber, List<Rubu> rubus) async {
+  Future<void> updateMaqras(int juzNumber, List<Maqra> maqras) async {
     final user = getUser()!;
 
     final updatedJuz = user.juzs[juzNumber - 1].copyWith(
-      rubus: rubus,
+      maqras: maqras,
     );
 
     final updatedJuzs = List<Juz>.from(user.juzs)..[juzNumber - 1] = updatedJuz;
@@ -106,12 +107,14 @@ class UserPreferences extends ChangeNotifier {
 
     final user = getUser()!;
     final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final tomorrow = today.add(const Duration(days: 1));
     final currentSchedule = List<ScheduleEntry>.from(user.schedules);
     final newSchedules = <ScheduleEntry>[];
 
     for (final scheduleEntry in List<ScheduleEntry>.from(currentSchedule)) {
       if (isToday(scheduleEntry.startDate)) continue;
-      if (scheduleEntry.startDate.isBefore(now)) {
+      if (scheduleEntry.startDate.isBefore(today)) {
         currentSchedule.remove(scheduleEntry);
       }
     }
@@ -121,16 +124,16 @@ class UserPreferences extends ChangeNotifier {
     final sabqiSchedules = user.getSchedulesByReviewType('Sabqi');
 
     if (manzilSchedules.isEmpty ||
-        user.getLatestStartDate(manzilSchedules).isBefore(now)) {
+        user.getLatestStartDate(manzilSchedules).isBefore(tomorrow)) {
       newSchedules.addAll(ScheduleService().scheduleManzil(user));
     }
 
     if (sabaqSchedules.isEmpty ||
-        user.getLatestStartDate(sabaqSchedules).isBefore(now)) {
+        user.getLatestStartDate(sabaqSchedules).isBefore(tomorrow)) {
       newSchedules.addAll(ScheduleService().scheduleSabaq(user));
     }
     if (sabqiSchedules.isEmpty ||
-        user.getLatestStartDate(sabqiSchedules).isBefore(now)) {
+        user.getLatestStartDate(sabqiSchedules).isBefore(tomorrow)) {
       newSchedules.addAll(ScheduleService().scheduleSabqi(user));
     }
 

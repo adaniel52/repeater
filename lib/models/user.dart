@@ -11,7 +11,7 @@ class User {
   int? _juzNumber;
 
   @HiveField(1)
-  int? _rubuNumber;
+  int? _maqraNumber;
 
   @HiveField(2)
   List<Juz> _juzs;
@@ -30,14 +30,14 @@ class User {
 
   User({
     int? juzNumber,
-    int? rubuNumber,
+    int? maqraNumber,
     List<Juz>? juzs,
     DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
     String? themeMode,
     int? colorScheme,
   })  : _juzNumber = juzNumber,
-        _rubuNumber = rubuNumber,
+        _maqraNumber = maqraNumber,
         _juzs = juzs ?? List.generate(30, (_) => Juz()),
         _lastLoginTime = lastLoginTime ??
             DateTime.now().subtract(
@@ -49,7 +49,7 @@ class User {
 
   User copyWith({
     int? juzNumber,
-    int? rubuNumber,
+    int? maqraNumber,
     List<Juz>? juzs,
     DateTime? lastLoginTime,
     List<ScheduleEntry>? schedules,
@@ -58,7 +58,7 @@ class User {
   }) {
     return User(
       juzNumber: juzNumber ?? this.juzNumber,
-      rubuNumber: rubuNumber ?? this.rubuNumber,
+      maqraNumber: maqraNumber ?? this.maqraNumber,
       juzs: juzs ?? this.juzs,
       lastLoginTime: lastLoginTime ?? this.lastLoginTime,
       schedules: schedules ?? this.schedules,
@@ -68,7 +68,7 @@ class User {
   }
 
   int? get juzNumber => _juzNumber;
-  int? get rubuNumber => _rubuNumber;
+  int? get maqraNumber => _maqraNumber;
   List<Juz> get juzs => _juzs;
   DateTime get lastLoginTime => _lastLoginTime;
   List<ScheduleEntry> get schedules => _schedules ?? [];

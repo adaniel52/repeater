@@ -14,7 +14,7 @@ class ScheduleEntry {
   int? _juzNumber;
 
   @HiveField(3)
-  List<int> _rubuNumbers;
+  List<int> _maqraNumbers;
 
   @HiveField(4)
   String? _fraction;
@@ -26,13 +26,13 @@ class ScheduleEntry {
     DateTime? startDate,
     String? reviewType,
     int? juzNumber,
-    List<int>? rubuNumbers,
+    List<int>? maqraNumbers,
     String? fraction,
     bool? isCompleted,
   })  : _startDate = startDate ?? DateTime.now(),
         _reviewType = reviewType,
         _juzNumber = juzNumber,
-        _rubuNumbers = rubuNumbers ?? List.generate(8, (index) => index + 1),
+        _maqraNumbers = maqraNumbers ?? List.generate(8, (index) => index + 1),
         _fraction = fraction,
         _isCompleted = isCompleted;
 
@@ -40,7 +40,7 @@ class ScheduleEntry {
     DateTime? startDate,
     String? reviewType,
     int? juzNumber,
-    List<int>? rubuNumbers,
+    List<int>? maqraNumbers,
     String? fraction,
     bool? isCompleted,
   }) {
@@ -48,7 +48,7 @@ class ScheduleEntry {
       startDate: startDate ?? this.startDate,
       reviewType: reviewType ?? this.reviewType,
       juzNumber: juzNumber ?? this.juzNumber,
-      rubuNumbers: rubuNumbers ?? this.rubuNumbers,
+      maqraNumbers: maqraNumbers ?? this.maqraNumbers,
       fraction: fraction ?? this.fraction,
       isCompleted: isCompleted ?? this.isCompleted,
     );
@@ -57,7 +57,7 @@ class ScheduleEntry {
   DateTime get startDate => _startDate;
   String? get reviewType => _reviewType;
   int get juzNumber => _juzNumber!;
-  List<int> get rubuNumbers => _rubuNumbers;
+  List<int> get maqraNumbers => _maqraNumbers;
   String? get fraction => _fraction;
   bool get isCompleted => _isCompleted ?? false;
 

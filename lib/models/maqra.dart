@@ -1,26 +1,26 @@
 import 'package:hive/hive.dart';
 
-part 'rubu.g.dart';
+part 'maqra.g.dart';
 
 @HiveType(typeId: 2)
-class Rubu {
+class Maqra {
   @HiveField(0)
   bool? _isMemorized;
 
   @HiveField(1)
   bool? _isReviewed;
 
-  Rubu({
+  Maqra({
     bool? isMemorized,
     bool? isReviewed,
   })  : _isMemorized = isMemorized,
         _isReviewed = isReviewed;
 
-  Rubu copyWith({
+  Maqra copyWith({
     bool? isMemorized,
     bool? isReviewed,
   }) {
-    return Rubu(
+    return Maqra(
       isMemorized: isMemorized ?? this.isMemorized,
       isReviewed: isReviewed ?? this.isReviewed,
     );

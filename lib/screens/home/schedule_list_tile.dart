@@ -16,11 +16,11 @@ class ScheduleListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final juzNumber = scheduleEntry.juzNumber;
-    final rubuNumbers = scheduleEntry.rubuNumbers.join(', ');
+    final maqraNumbers = scheduleEntry.maqraNumbers.join(', ');
     final reviewType = scheduleEntry.reviewType;
     final fraction =
         (scheduleEntry.fraction == null) ? '' : ' · ${scheduleEntry.fraction}';
-    final text = '$reviewType | Juz $juzNumber · Rubu $rubuNumbers$fraction';
+    final text = '$reviewType | Juz $juzNumber · Maqra $maqraNumbers$fraction';
     final date =
         '${DateFormat.yMMMd().format(scheduleEntry.startDate)} · ${DateFormat.jm().format(scheduleEntry.startDate)}';
 
