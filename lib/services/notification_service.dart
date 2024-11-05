@@ -1,5 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:repeater/main.dart';
 import 'package:repeater/models/schedule_entry.dart';
@@ -13,9 +13,6 @@ class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
   NotificationService._internal();
   factory NotificationService() => _instance;
-
-  static const _notificationIdKey = 'notificationId';
-  static late Box<int> _notificationIdBox;
 
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
@@ -35,10 +32,7 @@ class NotificationService {
   }
 
   Future<void> init() async {
-    _notificationIdBox = await Hive.openBox('notificationIdBox');
-    if (!_notificationIdBox.containsKey(_notificationIdKey)) {
-      _notificationIdBox.put(_notificationIdKey, -1);
-    }
+    if (kIsWeb) return;
 
     AwesomeNotifications().initialize(
       'resource://drawable/ic_launcher_foreground',
@@ -70,13 +64,9 @@ class NotificationService {
     AwesomeNotifications().resetGlobalBadge();
   }
 
-  int getNextNotificationId() {
-    final newId = (_notificationIdBox.get(_notificationIdKey)! + 1) % 64;
-    _notificationIdBox.put(_notificationIdKey, newId);
-    return newId;
-  }
-
   void scheduleNotification(ScheduleEntry scheduleEntry) {
+    if (kIsWeb) return;
+
     final juzNumber = scheduleEntry.juzNumber;
     final maqraNumbers = scheduleEntry.maqraNumbers.join(', ');
     final fraction =
@@ -103,8 +93,4 @@ class NotificationService {
       ),
     );
   }
-
-  // Future<void> clearAll() async {
-  //   AwesomeNotifications().cancelAll();
-  // }
 }

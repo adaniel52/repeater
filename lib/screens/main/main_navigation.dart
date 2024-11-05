@@ -21,6 +21,11 @@ class _MainNavigationState extends State<MainNavigation> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
