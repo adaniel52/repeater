@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/schedule_entry.dart';
 import 'package:repeater/models/user.dart';
+import 'package:repeater/screens/home/edit_screen.dart';
 import 'package:repeater/screens/home/juz_list_tile.dart';
 import 'package:repeater/screens/home/schedule_list_tile.dart';
 import 'package:repeater/screens/home/upcoming_schedules_screen.dart';
@@ -86,11 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: CustomListView(
           children: [
+            ..._memorizationSection(user),
+            const LargeGap(),
             ..._tasksSection(user),
-            if (user.juzNumber != null) ...[
-              const LargeGap(),
-              ..._memorizationSection(user),
-            ],
             const LargeGap(),
             ..._overallProgressSection(user),
           ],
@@ -103,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const SectionTitle('Schedules'),
         if (todaySchedules.isEmpty)
           const ListTile(
-            leading: Icon(Icons.do_disturb_on),
+            leading: Icon(Icons.not_started),
             title: Text('You got no task for today.'),
           )
         else
@@ -111,32 +110,53 @@ class _HomeScreenState extends State<HomeScreen> {
             return ScheduleListTile(scheduleEntry: scheduleEntry);
           }),
         ListTile(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    UpcomingSchedulesScreen(schedules: upcomingSchedules),
-              ),
-            );
-          },
-          leading: const Icon(Icons.upcoming),
-          title: const Text('See upcoming schedules...'),
-          trailing: const Icon(Icons.chevron_right),
+          title: FilledButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      UpcomingSchedulesScreen(schedules: upcomingSchedules),
+                ),
+              );
+            },
+            icon: const Icon(Icons.upcoming),
+            label: const Text('See Upcoming Schedules'),
+          ),
         ),
       ];
 
   List<Widget> _memorizationSection(User user) => [
-        const SectionTitle('Memorization'),
+        const SectionTitle('Memorization Info'),
         ListTile(
-          leading: const Icon(Icons.book_outlined),
-          title: const Text('Current Juz'),
-          trailing: Text(user.juzNumber.toString()),
+          leading: const Icon(Icons.book),
+          title: const Text('Has Khatam'),
+          trailing: Text((user.juzNumber == null) ? 'Yes' : 'No'),
         ),
+        if (user.juzNumber != null) ...[
+          ListTile(
+            leading: const Icon(Icons.menu_book),
+            title: const Text('Current Juz'),
+            trailing: Text(user.juzNumber.toString()),
+          ),
+          ListTile(
+            leading: const Icon(Icons.brightness_low_outlined),
+            title: const Text('Current Maqra'),
+            trailing: Text(user.maqraNumber.toString()),
+          ),
+        ],
         ListTile(
-          leading: const Icon(Icons.brightness_low_outlined),
-          title: const Text('Current Maqra'),
-          trailing: Text(user.maqraNumber.toString()),
-        ),
+          title: FilledButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const EditScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.edit),
+            label: const Text('Edit Info'),
+          ),
+        )
       ];
 
   List<Widget> _overallProgressSection(User user) => [
@@ -162,6 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         if (filteredJuzs.isEmpty)
           const ListTile(
+            leading: Icon(Icons.not_interested),
             title: Text('No results.'),
           )
         else

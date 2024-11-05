@@ -146,9 +146,12 @@ class ScheduleDetailsScreen extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: FilledButton(
+            title: FilledButton.icon(
               onPressed: markAsCompleted,
-              child: Text(
+              icon: Icon(
+                scheduleEntry.isCompleted ? Icons.close : Icons.check,
+              ),
+              label: Text(
                 scheduleEntry.isCompleted
                     ? 'Mark as Incompleted'
                     : 'Mark as Completed',

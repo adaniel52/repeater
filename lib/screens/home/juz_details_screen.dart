@@ -62,8 +62,9 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
           }),
           const LargeGap(),
           ListTile(
-            title: FilledButton(
-              child: const Text('Confirm Changes'),
+            title: FilledButton.icon(
+              icon: const Icon(Icons.check),
+              label: const Text('Confirm Changes'),
               onPressed: () async {
                 await Provider.of<UserPreferences>(context, listen: false)
                     .updateMaqras(
