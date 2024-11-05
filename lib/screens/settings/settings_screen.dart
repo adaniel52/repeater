@@ -44,36 +44,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     currentColor = Color(user.colorScheme);
   }
 
-  void _resetData() async {
-    final result = await showBoolAlertDialog(
-      context,
-      title: 'Reset Data',
-      content: 'All app data will be removed.',
-      falseText: const Text('Cancel'),
-      trueText: const Text(
-        'Reset',
-        style: TextStyle(color: Colors.red),
-      ),
-    );
-
-    if (!result) return;
-
-    await UserPreferences().resetUser();
-    if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) => const IntroScreen(),
-      ),
-      (_) => false,
-    );
-  }
-
   void _resetSchedules() async {
     final result = await showBoolAlertDialog(
       context,
-      title: 'Reset Schedule',
+      title: 'Reset Schedules',
       content:
-          'The app will generate some new schedules to replace the current ones.',
+          'The app will generate new schedules as if you are new to the app.',
       falseText: const Text('Cancel'),
       trueText: const Text(
         'Reset',
@@ -88,6 +64,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) => const MainNavigation(),
+      ),
+      (_) => false,
+    );
+  }
+
+  void _resetData() async {
+    final result = await showBoolAlertDialog(
+      context,
+      title: 'Reset Data',
+      content: 'All app data will be deleted and cannot be restored.',
+      falseText: const Text('Cancel'),
+      trueText: const Text(
+        'Reset',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+
+    if (!result) return;
+
+    await UserPreferences().resetUser();
+    if (!mounted) return;
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) => const IntroScreen(),
       ),
       (_) => false,
     );

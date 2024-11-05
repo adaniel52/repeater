@@ -48,58 +48,59 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: CustomListView(
-          needPadding: true,
-          width: Styles.largeBreakpoint,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => NotePhotoView(imageUrl: widget.imageUrl),
-                  ),
-                );
-              },
-              child: Hero(
-                tag: widget.imageUrl,
-                child: ClipRRect(
-                  borderRadius: Styles.mediumBorderRadius,
-                  child: Image(
-                    image: NetworkImage(widget.imageUrl),
-                  ),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: CustomListView(
+        needPadding: true,
+        width: Styles.largeBreakpoint,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => NotePhotoView(imageUrl: widget.imageUrl),
+                ),
+              );
+            },
+            child: Hero(
+              tag: widget.imageUrl,
+              child: ClipRRect(
+                borderRadius: Styles.mediumBorderRadius,
+                child: Image(
+                  image: NetworkImage(widget.imageUrl),
                 ),
               ),
             ),
-            const MediumGap(),
-            const Divider(),
-            const MediumGap(),
-            (htmlContent == '')
-                ? (isConnected)
-                    ? const LinearProgressIndicator()
-                    : Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.wifi_off),
-                            const Text(
-                              'No internet connection!',
-                              textAlign: TextAlign.center,
-                            ),
-                            TextButton(
-                              onPressed: _fetchContent,
-                              child: const Text('Retry'),
-                            ),
-                          ],
-                        ),
-                      )
-                : Html(
-                    data: htmlContent,
-                    extensions: const [VideoHtmlExtension()],
-                  ),
-          ],
-        ));
+          ),
+          const MediumGap(),
+          const Divider(),
+          const MediumGap(),
+          (htmlContent == '')
+              ? (isConnected)
+                  ? const LinearProgressIndicator()
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.wifi_off),
+                          const Text(
+                            'No internet connection!',
+                            textAlign: TextAlign.center,
+                          ),
+                          TextButton(
+                            onPressed: _fetchContent,
+                            child: const Text('Retry'),
+                          ),
+                        ],
+                      ),
+                    )
+              : Html(
+                  data: htmlContent,
+                  extensions: const [VideoHtmlExtension()],
+                ),
+        ],
+      ),
+    );
   }
 }
