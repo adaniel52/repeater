@@ -25,18 +25,19 @@ h1 {
     margin-bottom: 0;
 }
 
-#app-version {
-    font-size: 14px;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
 #app-description {
     color: rgb(162, 162, 162);
     font-size: large;
     font-weight: 600;
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+#app-version {
+    color: rgb(162, 162, 162);
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .btn {
