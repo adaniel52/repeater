@@ -66,13 +66,17 @@ class _NotesScreenState extends State<NotesScreen> {
           ? Center(
               child: isConnected
                   ? const CircularProgressIndicator()
-                  : const Column(
+                  : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.wifi_off),
-                        Text(
+                        const Icon(Icons.wifi_off),
+                        const Text(
                           'No internet connection!',
                           textAlign: TextAlign.center,
+                        ),
+                        TextButton(
+                          onPressed: _fetchData,
+                          child: const Text('Retry'),
                         ),
                       ],
                     ),
