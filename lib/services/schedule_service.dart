@@ -63,7 +63,9 @@ class ScheduleService {
       maqraNumbers.add(maqraNumber);
     }
 
-    if (user.juzNumber != null) maqraNumbers.add(user.maqraNumber!);
+    if (user.juzNumber != null && !maqraNumbers.contains(user.maqraNumber)) {
+      maqraNumbers.add(user.maqraNumber!);
+    }
     if (maqraNumbers.isEmpty) return [];
 
     maqraNumbers.sort();

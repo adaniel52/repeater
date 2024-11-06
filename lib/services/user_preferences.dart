@@ -112,13 +112,6 @@ class UserPreferences extends ChangeNotifier {
     final currentSchedule = List<ScheduleEntry>.from(user.schedules);
     final newSchedules = <ScheduleEntry>[];
 
-    for (final scheduleEntry in List<ScheduleEntry>.from(currentSchedule)) {
-      if (isToday(scheduleEntry.startDate)) continue;
-      if (scheduleEntry.startDate.isBefore(today)) {
-        currentSchedule.remove(scheduleEntry);
-      }
-    }
-
     final manzilSchedules = user.getSchedulesByReviewType('Manzil');
     final sabaqSchedules = user.getSchedulesByReviewType('Sabaq');
     final sabqiSchedules = user.getSchedulesByReviewType('Sabqi');
@@ -129,7 +122,7 @@ class UserPreferences extends ChangeNotifier {
     }
 
     if (sabaqSchedules.isEmpty ||
-        user.getLatestStartDate(sabaqSchedules).isBefore(tomorrow)) {
+        user.getLatestStartDate(sabaqSchedules).isBefore(today)) {
       newSchedules.addAll(ScheduleService().scheduleSabaq(user));
     }
     if (sabqiSchedules.isEmpty ||
@@ -139,6 +132,13 @@ class UserPreferences extends ChangeNotifier {
 
     for (final scheduleEntry in newSchedules) {
       NotificationService().scheduleNotification(scheduleEntry);
+    }
+
+    for (final scheduleEntry in List<ScheduleEntry>.from(currentSchedule)) {
+      if (isToday(scheduleEntry.startDate)) continue;
+      if (scheduleEntry.startDate.isBefore(today)) {
+        currentSchedule.remove(scheduleEntry);
+      }
     }
 
     currentSchedule.addAll(newSchedules);

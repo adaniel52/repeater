@@ -206,7 +206,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             width: 50,
           ),
         ),
-        applicationVersion: 'v0.2.0',
+        applicationVersion: 'v0.2.1',
         aboutBoxChildren: [
           Text('An app to assist hafiz in scheduling timetables.'),
         ],

@@ -66,7 +66,11 @@ class ScheduleDetailsScreen extends StatelessWidget {
             if (scheduleEntry.juzNumber == 30) {
               userPrefs.setKhatam();
             } else {
-              juzNumber = scheduleEntry.juzNumber + 1;
+              juzNumber = scheduleEntry.juzNumber;
+              do {
+                juzNumber = juzNumber! + 1;
+              } while (user.juzs[juzNumber - 1].isFullyMemorized);
+              print(juzNumber);
               maqraNumber = 1;
             }
           } else {
