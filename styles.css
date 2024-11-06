@@ -21,7 +21,7 @@ main {
 }
 
 h1 {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 0;
 }
 
@@ -36,8 +36,7 @@ h1 {
 #app-version {
     color: rgb(162, 162, 162);
     font-size: 14px;
-    margin-top: 0;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .btn {
