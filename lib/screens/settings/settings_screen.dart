@@ -7,6 +7,7 @@ import 'package:repeater/utils/bool_alert_dialog.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
 import 'package:repeater/widgets/section_title.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -30,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Colors.deepOrange,
     Colors.pink,
   ];
+  final sendFeedbackUrl =
+      Uri.parse('https://adaniel52.github.io/repeater/links/feedback/');
 
   @override
   void initState() {
@@ -93,6 +96,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Future<void> _launchUrl(Uri url) async {
+    print('launched');
+    print(await launchUrl(url));
+  }
+
   @override
   Widget build(BuildContext context) {
     final userPrefs = Provider.of<UserPreferences>(context, listen: false);
@@ -106,10 +114,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SectionTitle('Appearance'),
           _setThemeTile(userPrefs),
           _setColorSchemeTile(userPrefs),
-          const MediumGap(),
-          const SectionTitle('More'),
+          const LargeGap(),
+          const SectionTitle('Danger Zone'),
           _rescheduleTile(),
           _resetDataTile(),
+          const LargeGap(),
+          const SectionTitle('Extras'),
+          _sendFeedbackTile(),
           _aboutAppTile(),
         ],
       ),
@@ -171,6 +182,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text('Reset Data'),
         onTap: _resetData,
       );
+
+  Widget _sendFeedbackTile() => ListTile(
+        onTap: () async {
+          await _launchUrl(sendFeedbackUrl);
+        },
+        leading: const Icon(Icons.mail),
+        title: const Text('Send Feedback'),
+      );
+
   Widget _aboutAppTile() => const AboutListTile(
         icon: Icon(Icons.info),
         applicationIcon: ClipRRect(
