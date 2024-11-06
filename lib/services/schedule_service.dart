@@ -63,17 +63,18 @@ class ScheduleService {
       maqraNumbers.add(maqraNumber);
     }
 
-    if (maqraNumbers.isEmpty) maqraNumbers.add(1);
+    if (user.juzNumber != null) maqraNumbers.add(user.maqraNumber!);
+    if (maqraNumbers.isEmpty) return [];
 
-    schedules.addAll(
-      [
-        ScheduleEntry(
-          startDate: startDate.copyWith(hour: 7, minute: 30),
-          reviewType: 'Sabqi',
-          juzNumber: juzNumber,
-          maqraNumbers: maqraNumbers,
-        ),
-      ],
+    maqraNumbers.sort();
+
+    schedules.add(
+      ScheduleEntry(
+        startDate: startDate.copyWith(hour: 7, minute: 30),
+        reviewType: 'Sabqi',
+        juzNumber: juzNumber,
+        maqraNumbers: maqraNumbers,
+      ),
     );
 
     return schedules;

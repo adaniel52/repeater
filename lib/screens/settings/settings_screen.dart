@@ -97,8 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _launchUrl(Uri url) async {
-    print('launched');
-    print(await launchUrl(url));
+    await launchUrl(url);
   }
 
   @override
