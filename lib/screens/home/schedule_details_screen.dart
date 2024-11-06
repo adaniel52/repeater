@@ -70,7 +70,6 @@ class ScheduleDetailsScreen extends StatelessWidget {
               do {
                 juzNumber = juzNumber! + 1;
               } while (user.juzs[juzNumber - 1].isFullyMemorized);
-              print(juzNumber);
               maqraNumber = 1;
             }
           } else {
