@@ -110,34 +110,17 @@ class _HomeScreenState extends State<HomeScreen> {
             return ScheduleListTile(scheduleEntry: scheduleEntry);
           }),
         ListTile(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FilledButton.icon(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          UpcomingSchedulesScreen(schedules: upcomingSchedules),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.upcoming),
-                label: const Text('See Upcoming Schedules'),
-              ),
-              OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          UpcomingSchedulesScreen(schedules: upcomingSchedules),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.table_chart),
-                label: const Text('See Schedules Records'),
-              ),
-            ],
+          title: FilledButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      UpcomingSchedulesScreen(schedules: upcomingSchedules),
+                ),
+              );
+            },
+            icon: const Icon(Icons.upcoming),
+            label: const Text('See Upcoming Schedules'),
           ),
         ),
       ];

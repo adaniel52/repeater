@@ -31,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Colors.deepOrange,
     Colors.pink,
   ];
+  final userGuideUrl =
+      Uri.parse('https://adaniel52.github.io/repeater/links/guide/');
   final sendFeedbackUrl =
       Uri.parse('https://adaniel52.github.io/repeater/links/feedback/');
 
@@ -119,6 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _resetDataTile(),
           const LargeGap(),
           const SectionTitle('Extras'),
+          _userGuideTile(),
           _sendFeedbackTile(),
           _aboutAppTile(),
         ],
@@ -182,10 +185,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         onTap: _resetData,
       );
 
+  Widget _userGuideTile() => ListTile(
+        onTap: () async => await _launchUrl(userGuideUrl),
+        leading: const Icon(Icons.library_books),
+        title: const Text('User Guide'),
+      );
+
   Widget _sendFeedbackTile() => ListTile(
-        onTap: () async {
-          await _launchUrl(sendFeedbackUrl);
-        },
+        onTap: () async => await _launchUrl(sendFeedbackUrl),
         leading: const Icon(Icons.mail),
         title: const Text('Send Feedback'),
       );
