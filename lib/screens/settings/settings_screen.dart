@@ -52,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context,
       title: 'Reset Schedules',
       content:
-          'The app will generate new schedules as if you are new to the app.',
+          'The app will generate new schedules as if you are new to the app. Useful if you have edited your memorization info.',
       falseText: const Text('Cancel'),
       trueText: const Text(
         'Reset',

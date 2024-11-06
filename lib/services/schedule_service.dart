@@ -89,7 +89,9 @@ class ScheduleService {
     final juzNumber = user.juzs.indexOf(juz) + 1;
 
     final maqra = juz.maqras.firstWhere((maqra) => !maqra.isMemorized);
-    final maqraNumber = juz.maqras.indexOf(maqra) + 1;
+    final maqraNumber = (user.juzNumber == null)
+        ? juz.maqras.indexOf(maqra) + 1
+        : user.maqraNumber!;
 
     final now = DateTime.now().copyWith(
       second: 0,
