@@ -1,3 +1,5 @@
+<img width="200" alt="App icon" src="./assets/icon/rounded.png" />
+
 # Repeater 📖
 An app to assist hafiz Quran in scheduling revision timetables.
 
@@ -6,8 +8,8 @@ An app to assist hafiz Quran in scheduling revision timetables.
 * Please note that the codebase may contain bugs or unoptimized code.
 
 ## 📸 Screenshots
-<img width="400" alt="Screenshot of the home page." src="https://github.com/user-attachments/assets/0cbf3597-6eb1-4df7-9491-7dc55c74d272" />
-<img width="400" alt="Screenshot of the notes page." src="https://github.com/user-attachments/assets/71a378bc-17c9-4557-b379-49db5d750c1a" />
+<img width="400" alt="Screenshot of the home page" src="https://github.com/user-attachments/assets/0cbf3597-6eb1-4df7-9491-7dc55c74d272" />
+<img width="400" alt="Screenshot of the notes page" src="https://github.com/user-attachments/assets/71a378bc-17c9-4557-b379-49db5d750c1a" />
 <img width="400" alt="Screenshot of the settings page" src="https://github.com/user-attachments/assets/94a7fc80-68a7-4aed-a3db-98331a39537c" />
 
 ## 🌟 Overview
