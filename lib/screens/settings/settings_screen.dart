@@ -169,7 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         },
         onSelected: (value) async {
           setState(() => currentColor = value);
-          await userPrefs.updateUser(colorScheme: currentColor.value);
+          await userPrefs.updateUser(colorScheme: currentColor.toARGB32());
         },
       );
 

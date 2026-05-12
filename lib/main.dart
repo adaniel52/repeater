@@ -34,7 +34,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<UserPreferences>(context).getUser();
     final colorScheme =
-        Color(user == null ? Colors.teal.value : user.colorScheme);
+        Color(user == null ? Colors.teal.toARGB32() : user.colorScheme);
 
     return MaterialApp(
       title: 'Repeater',

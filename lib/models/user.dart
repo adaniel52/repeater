@@ -73,7 +73,7 @@ class User {
   DateTime get lastLoginTime => _lastLoginTime;
   List<ScheduleEntry> get schedules => _schedules ?? [];
   String get themeMode => _themeMode ?? 'System';
-  int get colorScheme => _colorScheme ?? Colors.teal.value;
+  int get colorScheme => _colorScheme ?? Colors.teal.toARGB32();
 
   List<ScheduleEntry> getSchedulesByReviewType(String reviewType) => schedules
       .where(
