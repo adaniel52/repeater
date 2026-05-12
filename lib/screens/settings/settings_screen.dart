@@ -35,6 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       Uri.parse('https://adaniel52.github.io/repeater/links/guide/');
   final sendFeedbackUrl =
       Uri.parse('https://adaniel52.github.io/repeater/links/feedback/');
+  final websiteUrl = Uri.parse('https://adaniel52.github.io/repeater/');
 
   @override
   void initState() {
@@ -49,15 +50,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     currentColor = Color(user.colorScheme);
   }
 
-  void _resetSchedules() async {
+  void _recreateSchedules() async {
     final result = await showBoolAlertDialog(
       context,
-      title: 'Reset Schedules',
+      title: 'Recreate Schedules?',
       content:
-          'The app will generate new schedules as if you are new to the app. Useful if you have edited your memorization info.',
+          'New schedules will be created to replace current ones. Useful if you have edited your memorization info.',
       falseText: const Text('Cancel'),
       trueText: const Text(
-        'Reset',
+        'Recreate',
         style: TextStyle(color: Colors.red),
       ),
     );
@@ -77,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _resetData() async {
     final result = await showBoolAlertDialog(
       context,
-      title: 'Reset Data',
+      title: 'Reset Data?',
       content: 'All app data will be deleted and cannot be restored.',
       falseText: const Text('Cancel'),
       trueText: const Text(
@@ -123,6 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SectionTitle('Extras'),
           _userGuideTile(),
           _sendFeedbackTile(),
+          _websiteTile(),
           _aboutAppTile(),
         ],
       ),
@@ -175,8 +177,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _rescheduleTile() => ListTile(
         leading: const Icon(Icons.calendar_month),
-        title: const Text('Reset Schedules'),
-        onTap: _resetSchedules,
+        title: const Text('Recreate Schedules'),
+        onTap: _recreateSchedules,
       );
 
   Widget _resetDataTile() => ListTile(
@@ -197,6 +199,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text('Send Feedback'),
       );
 
+  Widget _websiteTile() => ListTile(
+        onTap: () async => await _launchUrl(websiteUrl),
+        leading: const Icon(Icons.language),
+        title: const Text('Website'),
+      );
+
   Widget _aboutAppTile() => const AboutListTile(
         icon: Icon(Icons.info),
         applicationIcon: ClipRRect(
@@ -206,7 +214,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             width: 50,
           ),
         ),
-        applicationVersion: 'v0.2.1',
+        applicationVersion: 'v0.2.2-beta',
         aboutBoxChildren: [
           Text('An app to assist hafiz in scheduling timetables.'),
         ],

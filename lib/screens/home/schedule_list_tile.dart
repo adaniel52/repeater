@@ -6,11 +6,11 @@ import 'package:repeater/screens/home/schedule_details_screen.dart';
 class ScheduleListTile extends StatelessWidget {
   const ScheduleListTile({
     super.key,
-    this.enabled = true,
+    this.editable = true,
     required this.scheduleEntry,
   });
 
-  final bool enabled;
+  final bool editable;
   final ScheduleEntry scheduleEntry;
 
   @override
@@ -31,7 +31,7 @@ class ScheduleListTile extends StatelessWidget {
     return ListTile(
       title: Text(text, style: textStyle),
       subtitle: Text(date, style: textStyle),
-      trailing: (enabled)
+      trailing: (editable)
           ? Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -44,7 +44,7 @@ class ScheduleListTile extends StatelessWidget {
               ],
             )
           : null,
-      onTap: (enabled)
+      onTap: (editable)
           ? () {
               Navigator.of(context).push(
                 MaterialPageRoute(

@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (todaySchedules.isEmpty)
           const ListTile(
             leading: Icon(Icons.not_started),
-            title: Text('You got no task for today.'),
+            title: Text('You have no task for today.'),
           )
         else
           ...todaySchedules.map((scheduleEntry) {
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             icon: const Icon(Icons.edit),
-            label: const Text('Edit Info'),
+            label: const Text('Edit'),
           ),
         )
       ];

@@ -8,10 +8,7 @@
             "name": "debug",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "debug",
-            "args": [
-                "-v"
-            ]
+            "flutterMode": "debug"
         },
         {
             "name": "profile",

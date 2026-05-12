@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repeater/models/juz.dart';
 import 'package:repeater/models/user.dart';
+import 'package:repeater/screens/main/init.dart';
 import 'package:repeater/services/user_preferences.dart';
 import 'package:repeater/utils/constants/styles.dart';
 import 'package:repeater/widgets/centered_scrollable_column.dart';
 import 'package:repeater/widgets/custom_list_view.dart';
 import 'package:repeater/widgets/gap.dart';
-import 'package:repeater/screens/main/main_navigation.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -74,7 +74,7 @@ class _FormScreenState extends State<FormScreen> {
     if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (_) => const MainNavigation(),
+        builder: (_) => const Init(),
       ),
       (_) => false,
     );
@@ -85,13 +85,11 @@ class _FormScreenState extends State<FormScreen> {
     final screens = [
       _khatamForm(),
       _memorizedJuzsForm(),
-      const Center(child: Text('Confirm?')),
+      _confirmatinForm(),
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Form'),
-      ),
+      appBar: AppBar(),
       body: PageView.builder(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
@@ -171,9 +169,8 @@ class _FormScreenState extends State<FormScreen> {
                         return null;
                       }
                     },
-                    onChanged: (_) {
-                      _memorizationInfoFormKey.currentState!.validate();
-                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    textInputAction: TextInputAction.next,
                   ),
                   const MediumGap(),
                   TextFormField(
@@ -193,9 +190,9 @@ class _FormScreenState extends State<FormScreen> {
                         return null;
                       }
                     },
-                    onChanged: (_) {
-                      _memorizationInfoFormKey.currentState!.validate();
-                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (value) => _goToNextPage(),
                   ),
                   const ScreenGap(),
                 ],
@@ -223,5 +220,23 @@ class _FormScreenState extends State<FormScreen> {
             onChanged: (value) => setState(() => juz.isFullyMemorized = value),
           );
         }),
+      ]);
+
+  Widget _confirmatinForm() => CenteredScrollableColumn(children: [
+        Text(
+          'Confirm?',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.bold),
+        ),
+        Text(
+          'You can always change these info later.',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(color: Styles.greyText),
+          textAlign: TextAlign.center,
+        ),
       ]);
 }

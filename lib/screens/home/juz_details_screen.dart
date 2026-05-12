@@ -64,7 +64,7 @@ class _JuzDetailsScreenState extends State<JuzDetailsScreen> {
           ListTile(
             title: FilledButton.icon(
               icon: const Icon(Icons.check),
-              label: const Text('Confirm Changes'),
+              label: const Text('Confirm'),
               onPressed: () async {
                 await Provider.of<UserPreferences>(context, listen: false)
                     .updateMaqras(

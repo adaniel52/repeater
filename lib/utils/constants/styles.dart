@@ -5,11 +5,13 @@ class Styles {
     // web status bar color flickering workaround
     primaryColor: Colors.black,
     materialTapTargetSize: MaterialTapTargetSize.padded,
+    appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
   );
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     materialTapTargetSize: MaterialTapTargetSize.padded,
+    appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
   );
 
   static const double smallBreakpoint = 480;

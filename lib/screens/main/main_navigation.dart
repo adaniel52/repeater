@@ -56,6 +56,7 @@ class _MainNavigationState extends State<MainNavigation> {
         children: [
           if (width >= Styles.largeBreakpoint)
             NavigationRail(
+              groupAlignment: 0,
               selectedIndex: index,
               onDestinationSelected: (value) => setState(() => index = value),
               backgroundColor: Theme.of(context).colorScheme.surfaceContainer,

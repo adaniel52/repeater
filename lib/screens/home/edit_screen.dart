@@ -111,9 +111,8 @@ class _EditScreenState extends State<EditScreen> {
                           return null;
                         }
                       },
-                      onChanged: (_) {
-                        _memorizationInfoFormKey.currentState!.validate();
-                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      textInputAction: TextInputAction.next,
                     ),
                     const MediumGap(),
                     TextFormField(
@@ -133,9 +132,9 @@ class _EditScreenState extends State<EditScreen> {
                           return null;
                         }
                       },
-                      onChanged: (_) {
-                        _memorizationInfoFormKey.currentState!.validate();
-                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (value) => _updateChanges(),
                     ),
                     const ScreenGap(),
                   ],
@@ -147,7 +146,7 @@ class _EditScreenState extends State<EditScreen> {
             title: FilledButton.icon(
               onPressed: _updateChanges,
               icon: const Icon(Icons.check),
-              label: const Text('Confirm Changes'),
+              label: const Text('Confirm'),
             ),
           ),
         ],

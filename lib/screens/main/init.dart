@@ -41,11 +41,10 @@ class _InitState extends State<Init> {
         );
 
         if (!kIsWeb) return;
-
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Web Detected'),
+            title: const Text('Notice for Web Users'),
             content: const Text(
               'Due to some limitations, you will not receive push notifications for reminders.',
             ),
