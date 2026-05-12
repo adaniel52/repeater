@@ -1,6 +1,6 @@
 <img width="200" alt="App icon" src="./assets/icon/rounded.png" />
 
-# Repeater 📖
+# 📖 Repeater
 An app to assist hafiz Quran in scheduling revision timetables.
 
 ## ⚠️ Notice
