@@ -59,7 +59,7 @@ class ScheduleService {
     final maqraNumbers = <int>[];
 
     for (var maqra in maqras) {
-      final maqraNumber = maqras.indexOf(maqra) + 1;
+      final maqraNumber = juz.maqras.indexOf(maqra) + 1;
       maqraNumbers.add(maqraNumber);
     }
 

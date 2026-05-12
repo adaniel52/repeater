@@ -31,30 +31,27 @@ class ScheduleListTile extends StatelessWidget {
     return ListTile(
       title: Text(text, style: textStyle),
       subtitle: Text(date, style: textStyle),
-      trailing: (editable)
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (scheduleEntry.isCompleted)
-                  const Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ),
-                const Icon(Icons.chevron_right),
-              ],
-            )
-          : null,
-      onTap: (editable)
-          ? () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ScheduleDetailsScreen(
-                    scheduleEntry: scheduleEntry,
-                  ),
-                ),
-              );
-            }
-          : null,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (scheduleEntry.isCompleted)
+            const Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          const Icon(Icons.chevron_right),
+        ],
+      ),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ScheduleDetailsScreen(
+              scheduleEntry: scheduleEntry,
+              editable: false,
+            ),
+          ),
+        );
+      },
     );
   }
 }

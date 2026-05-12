@@ -9,9 +9,11 @@ import 'package:repeater/widgets/custom_list_view.dart';
 
 class ScheduleDetailsScreen extends StatelessWidget {
   final ScheduleEntry scheduleEntry;
+  final bool editable;
   const ScheduleDetailsScreen({
     super.key,
     required this.scheduleEntry,
+    this.editable = true,
   });
 
   @override
@@ -28,7 +30,7 @@ class ScheduleDetailsScreen extends StatelessWidget {
     final date = DateFormat.yMMMd().format(scheduleEntry.startDate);
     final time = DateFormat.jm().format(scheduleEntry.startDate);
 
-    void markAsCompleted() {
+    void toggleCompletion() {
       final newScheduleEntry = scheduleEntry.copyWith(
         isCompleted: !scheduleEntry.isCompleted,
       );
@@ -36,76 +38,67 @@ class ScheduleDetailsScreen extends StatelessWidget {
       final index = schedules.indexOf(scheduleEntry);
       schedules[index] = newScheduleEntry;
 
-      final lastMaqraNumber = scheduleEntry.maqraNumbers.last;
+      final juzNumber = scheduleEntry.juzNumber;
+      final maqraNumber = scheduleEntry.maqraNumbers.last;
+      final hasKhatam = user.juzNumber == null;
 
-      int? juzNumber;
-      int? maqraNumber;
+      var newJuzNumber = juzNumber;
+      var newMaqraNumber = maqraNumber;
+      var newHasKhatam = hasKhatam;
 
-      if (user.juzNumber != null && scheduleEntry.fraction == '4/4') {
-        //not khatam
-        if (scheduleEntry.isCompleted) {
-          //incompleting + set to current juz
-          juzNumber = scheduleEntry.juzNumber;
-
-          if (lastMaqraNumber == 8) {
-            maqraNumber = 8;
+      // check if sabaq
+      if (scheduleEntry.fraction == '4/4') {
+        if (!scheduleEntry.isCompleted) {
+          // completing
+          if (maqraNumber != 8) {
+            // same juz
+            newMaqraNumber = maqraNumber + 1;
           } else {
-            maqraNumber = lastMaqraNumber;
-          }
-
-          userPrefs.updateMaqra(
-            scheduleEntry.juzNumber,
-            lastMaqraNumber,
-            Maqra(isMemorized: false),
-          );
-        } else {
-          //completing
-
-          if (lastMaqraNumber == 8) {
-            //increment juz
-            if (scheduleEntry.juzNumber == 30) {
-              userPrefs.setKhatam();
+            // new juz
+            if (juzNumber != 30) {
+              newJuzNumber = juzNumber + 1;
+              newMaqraNumber = 1;
             } else {
-              juzNumber = scheduleEntry.juzNumber;
-              do {
-                juzNumber = juzNumber! + 1;
-              } while (user.juzs[juzNumber - 1].isFullyMemorized);
-              maqraNumber = 1;
+              newHasKhatam = true;
             }
-          } else {
-            maqraNumber = lastMaqraNumber + 1;
           }
 
           userPrefs.updateMaqra(
-            scheduleEntry.juzNumber,
-            lastMaqraNumber,
+            juzNumber,
+            maqraNumber,
             Maqra(isMemorized: true),
-          );
-        }
-      } else {
-        //khatam
-        if (scheduleEntry.isCompleted) {
-          juzNumber = scheduleEntry.juzNumber;
-          maqraNumber = lastMaqraNumber;
-          userPrefs.updateMaqra(
-            scheduleEntry.juzNumber,
-            lastMaqraNumber,
-            Maqra(isMemorized: false),
           );
         } else {
+          // incompleting
+          if (maqraNumber != 1) {
+            // same juz
+            newMaqraNumber = maqraNumber;
+          } else {
+            // old juz
+            if (juzNumber != 1) {
+              newJuzNumber = juzNumber - 1;
+              newMaqraNumber = 8;
+            } else {
+              newJuzNumber = 1;
+              newMaqraNumber = 1;
+            }
+          }
+
           userPrefs.updateMaqra(
-            scheduleEntry.juzNumber,
-            lastMaqraNumber,
-            Maqra(isMemorized: true),
+            juzNumber,
+            maqraNumber,
+            Maqra(isMemorized: false),
           );
         }
       }
 
       userPrefs.updateUser(
         schedules: schedules,
-        juzNumber: juzNumber,
-        maqraNumber: maqraNumber,
+        juzNumber: newJuzNumber,
+        maqraNumber: newMaqraNumber,
       );
+
+      if (newHasKhatam) userPrefs.setKhatam();
 
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const MainNavigation()),
@@ -150,7 +143,7 @@ class ScheduleDetailsScreen extends StatelessWidget {
           ),
           ListTile(
             title: FilledButton.icon(
-              onPressed: markAsCompleted,
+              onPressed: (editable) ? toggleCompletion : null,
               icon: Icon(
                 scheduleEntry.isCompleted ? Icons.close : Icons.check,
               ),

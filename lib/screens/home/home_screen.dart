@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             icon: const Icon(Icons.upcoming),
-            label: const Text('See Upcoming Schedules'),
+            label: const Text('View Upcoming Schedules'),
           ),
         ),
       ];
