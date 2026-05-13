@@ -58,7 +58,7 @@ SPEC CHECKSUMS:
   IosAwnCore: 32019505f4a4909fa9079ee401b2c82aeeab78a8
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
-  video_player_avfoundation: dd410b52df6d2466a42d28550e33e4146928280a
+  video_player_avfoundation: 3453f792138786248960ca029747fcd9f318ef52
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
 
 PODFILE CHECKSUM: cd4cb4cfe906aa332ab2c4a480b0fcad2e28660c

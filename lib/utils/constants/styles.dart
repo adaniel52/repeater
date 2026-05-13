@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Styles {
   static final lightTheme = ThemeData(
     // web status bar color flickering workaround
     primaryColor: Colors.black,
     materialTapTargetSize: MaterialTapTargetSize.padded,
-    appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    ),
   );
 
   static final darkTheme = ThemeData(
